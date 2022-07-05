@@ -1,8 +1,6 @@
-using System.Linq;
 using Actors.NastyUFO.Buildings;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Editor.CustomEditors
 {
