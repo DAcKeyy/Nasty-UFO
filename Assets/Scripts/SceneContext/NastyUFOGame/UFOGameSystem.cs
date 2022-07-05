@@ -1,7 +1,7 @@
 ﻿using Generation.Base;
-using SceneContext.UFO.Base;
+using SceneContext.NastyUFOGame.Base;
 
-namespace SceneContext.UFO
+namespace SceneContext.NastyUFOGame
 {
 	public class UFOGameSystem : StateMachine
 	{

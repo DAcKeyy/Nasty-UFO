@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace SceneContext.UFO.Base
+namespace SceneContext.NastyUFOGame.Base
 {
 	public abstract class GameState
 	{

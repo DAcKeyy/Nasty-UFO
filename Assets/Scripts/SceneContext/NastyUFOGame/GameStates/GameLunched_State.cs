@@ -1,6 +1,6 @@
-﻿using SceneContext.UFO.Base;
+﻿using SceneContext.NastyUFOGame.Base;
 
-namespace SceneContext.UFO.GameStates
+namespace SceneContext.NastyUFOGame.GameStates
 {
 	public class LunchedState : GameState
 	{
