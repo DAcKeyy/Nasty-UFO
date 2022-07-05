@@ -12,7 +12,7 @@ namespace Generation.Contexts.NastyUFO
 		//Генератор сам не знает что он генерирует... хе хе
 		private readonly ILevelGenerator _buildingsGenerator;
 		private readonly ILevelGenerator _cloudsGenerator;
-		private readonly NastyUFOLevelGenerationSettings _levelGenerationSettings;
+		private readonly NastyUFOLevelGeneration_Settings _levelGenerationSettings;
 		private readonly UFO _player;
 		private Mode _generatorMod = Mode.WaitToRun;
 		private Vector2 _lastPlayerPosition;
@@ -20,7 +20,7 @@ namespace Generation.Contexts.NastyUFO
 		
 		//конструктора не пугаться, эти все вещи нужны генераторам
 		protected NastyUFOLevelGenerator(
-			NastyUFOLevelGenerationSettings settings,
+			NastyUFOLevelGeneration_Settings settings,
 			UFO player,
 			Camera mainCamera)
 		{

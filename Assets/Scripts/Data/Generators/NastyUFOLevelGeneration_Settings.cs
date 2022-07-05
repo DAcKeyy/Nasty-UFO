@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Data.Generators
 {
 	[Serializable]
-	public struct NastyUFOLevelGenerationSettings
+	public struct NastyUFOLevelGeneration_Settings
 	{
 		[Header("Общее")][Space(10)]
 		//TODO От _generationStartPosition можно избавиться просчитывая _clearingRange и позицию игрока

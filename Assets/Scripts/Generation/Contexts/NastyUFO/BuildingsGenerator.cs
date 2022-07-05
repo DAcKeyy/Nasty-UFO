@@ -10,14 +10,14 @@ namespace Generation.Contexts.NastyUFO
 {
 	public class BuildingsGenerator : ILevelGenerator
 	{
-		private readonly NastyUFOLevelGenerationSettings _settings;
+		private readonly NastyUFOLevelGeneration_Settings _settings;
 		private readonly MonoPool<ModularBuilding> _buildingsPool;
 		private readonly BuildingsFactory _buildingsFactory;
 		private readonly Camera _mainCamera;
 		private readonly UFO _player;
 
 		public BuildingsGenerator(
-			NastyUFOLevelGenerationSettings settings, 
+			NastyUFOLevelGeneration_Settings settings, 
 			BuildingsFactory buildingsFactory,
 			Camera mainCamera,
 			UFO player)

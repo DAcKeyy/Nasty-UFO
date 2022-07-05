@@ -9,7 +9,7 @@ namespace Generation
     public class LevelGenerator : MonoBehaviour
     {
         //TODO Убрать зависимость от NastyUFOLevelGenerationSettings
-        private NastyUFOLevelGenerationSettings _levelSettings;
+        private NastyUFOLevelGeneration_Settings _levelSettings;
         private ILevelGenerator _levelGeneration;
         private IEnumerator _updateCoroutine;
         
