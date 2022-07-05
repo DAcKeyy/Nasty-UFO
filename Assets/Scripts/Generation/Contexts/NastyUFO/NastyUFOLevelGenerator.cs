@@ -30,6 +30,7 @@ namespace Generation.Contexts.NastyUFO
 		
 		public void Create()
 		{
+			Debug.Log("gODDAMN");
 			_lastPlayerPosition = _player.transform.position;
 			_buildingsGenerator.Create();
 			_cloudsGenerator.Create();

@@ -1,9 +1,6 @@
 fileFormatVersion: 2
-guid: bc0deae6aef64634cb1fc40c78c80424
-labels:
-- Architecture
-folderAsset: yes
-DefaultImporter:
+guid: cd0f99029f27bf349a53ed2c6d9584bc
+PrefabImporter:
   externalObjects: {}
   userData: 
   assetBundleName: 

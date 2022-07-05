@@ -33,14 +33,14 @@ namespace Generation.Contexts.NastyUFO
 		//TODO Создавать облака не только в даль по игре но и в ширь, в горизонт
 		
 		public void Create()
-		{
+		{	
 			//TODO Убрать магическое число
 			var прогонГенератораОблаковВметрах = _settings._clearingRange * 2; 
 			
 			for (var x = 0; x < прогонГенератораОблаковВметрах; x += (int)_settings._cloudsGapRange)
 			{
 				var cloud = RollDaCloud(_settings._cloudsSpawnChance);
-				
+				Debug.Log(cloud);
 				//если облачко не заролялось то некст
 				if(cloud == null) continue;
 
