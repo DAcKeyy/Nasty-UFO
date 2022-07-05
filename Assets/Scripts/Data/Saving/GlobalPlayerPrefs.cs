@@ -2,7 +2,7 @@
 
 namespace Data.Saving
 {
-    public static class GlobalPrefs
+    public static class GlobalPlayerPrefs
     {
         public static int CurrentScore
         {

@@ -29,8 +29,8 @@ namespace UI.Canvases
 
         public void Update()
         {
-            _scoreValueText.text = GlobalPrefs.CurrentScore.ToString();
-            _scoreBestValueText.text = GlobalPrefs.BestScore.ToString();
+            _scoreValueText.text = GlobalPlayerPrefs.CurrentScore.ToString();
+            _scoreBestValueText.text = GlobalPlayerPrefs.BestScore.ToString();
         }
     }
 }
