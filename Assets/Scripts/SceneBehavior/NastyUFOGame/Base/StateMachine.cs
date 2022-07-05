@@ -12,12 +12,13 @@ namespace SceneBehavior.NastyUFOGame.Base
 		
 		protected List<GameState> MachineSatesList;
 
-		public async Task SwitchState<T>(T newState) where T : GameState
+		public async Task SwitchState<T>() where T : GameState
 		{
 			var state = MachineSatesList.FirstOrDefault(gameState => gameState is T);
+			Debug.Log($"Try to new game state: {state.GetType().BaseType}");
 			if (state is T == false) throw new NotFiniteNumberException($"{typeof(T)} not initialized in states list");
-			await CurrentState.Stop();
-			await state.Startup();
+			await CurrentState.Exit();
+			await state.Enter();
 			CurrentState = state;
 		}
 	}

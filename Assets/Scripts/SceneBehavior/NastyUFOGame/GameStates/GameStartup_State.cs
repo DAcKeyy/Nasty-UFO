@@ -1,23 +1,31 @@
 ﻿using System.Threading.Tasks;
 using Generation.Base;
 using SceneBehavior.NastyUFOGame.Base;
+using UnityEngine;
 
 namespace SceneBehavior.NastyUFOGame.GameStates
 {
-	public class Startup_State : GameState
+	public class GameStartup_State : GameState
 	{
-		private ILevelGenerator UfoLevelGenerator;
+		private ILevelGenerator _UfoLevelGenerator;
+		private StateMachine _thisMachine;
 		
-		public Startup_State(ILevelGenerator levelGenerator) : base()
+		public GameStartup_State(ILevelGenerator levelGenerator, StateMachine thisMachine) : base()
 		{
-			UfoLevelGenerator = levelGenerator;
+			_UfoLevelGenerator = levelGenerator;
+			_thisMachine = thisMachine;
 		}
 		
-		public override Task Startup()
+		public override Task Enter()
 		{
-			UfoLevelGenerator.Create();
+			_UfoLevelGenerator.Create();
 			
 			return Task.CompletedTask;
+		}
+
+		public async override Task Jump()
+		{
+			await _thisMachine.SwitchState<GameLunched_State>();
 		}
 	}
 }

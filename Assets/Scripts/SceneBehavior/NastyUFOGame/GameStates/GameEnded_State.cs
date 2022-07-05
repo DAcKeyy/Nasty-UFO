@@ -14,7 +14,7 @@ namespace SceneBehavior.NastyUFOGame.GameStates
 		}
 
 
-		public override Task Startup()
+		public override Task Enter()
 		{
 			_player.Die();
 			
@@ -23,7 +23,7 @@ namespace SceneBehavior.NastyUFOGame.GameStates
 			return Task.CompletedTask;
 		}
 
-		public override Task Stop()
+		public override Task Exit()
 		{
 			//TODO Выход из игры
 			return Task.CompletedTask;

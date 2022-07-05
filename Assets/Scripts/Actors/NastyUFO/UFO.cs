@@ -9,9 +9,7 @@ namespace Actors.NastyUFO
     public class UFO : MonoBehaviour
     {
         public bool IsAlive => !_isDied;
-        
-        [SerializeField] 
-        private UnityEvent _dieEvent;
+        [SerializeField] private UnityEvent _dieEvent;
         private bool _isDied;
 
         private void Start()
@@ -35,6 +33,11 @@ namespace Actors.NastyUFO
             */
         }
 
+        public void BeginSweeping()
+        {
+            GetComponent<UFOMovement>().ChangeState(2);
+        }
+        
         public void Die()
         {
             if(_isDied) return;

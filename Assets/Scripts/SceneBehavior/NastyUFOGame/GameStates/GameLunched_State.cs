@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Actors.NastyUFO;
 using Data.Generators;
 using Generation.Base;
 using SceneBehavior.NastyUFOGame.Base;
@@ -9,20 +10,26 @@ namespace SceneBehavior.NastyUFOGame.GameStates
 	{
 		private ILevelGenerator _levelGenerator;
 		private NastyUFOLevelGeneration_Settings _settings;
+		private UFO _player;
 		
 		public GameLunched_State(
 			ILevelGenerator levelGenerator, 
-			NastyUFOLevelGeneration_Settings settings) : base()
+			NastyUFOLevelGeneration_Settings settings,
+			UFO player) : base()
 		{
 			_levelGenerator = levelGenerator;
 			_settings = settings;
+			_player = player;
 		}
 
-		public async override Task Startup()
+		public async override Task Enter()
 		{
+			_player.BeginSweeping();
+			
 			while (true)
 			{
 				_levelGenerator.Update();
+				
 				await Task.Delay((int)(_settings._levelUpdateRate * 1000));//ms
 			}
 		}

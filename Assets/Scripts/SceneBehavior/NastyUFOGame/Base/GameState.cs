@@ -9,7 +9,7 @@ namespace SceneBehavior.NastyUFOGame.Base
 
 		}
 
-		public async virtual Task Startup()
+		public async virtual Task Enter()
 		{
 			
 		}
@@ -19,7 +19,7 @@ namespace SceneBehavior.NastyUFOGame.Base
 			
 		}	
 
-		public async virtual Task Stop()
+		public async virtual Task Exit()
 		{
 			
 		}

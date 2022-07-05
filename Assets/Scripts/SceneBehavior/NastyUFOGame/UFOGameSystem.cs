@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Actors.NastyUFO;
 using Data.Generators;
 using Generation.Base;
@@ -34,23 +35,21 @@ namespace SceneBehavior.NastyUFOGame
 
 			MachineSatesList = new List<GameState>()
 			{
-				new Startup_State(_UFOLevelGenerator),
-				new WaitForInput_State(),
-				new GameLunched_State(_UFOLevelGenerator, _settings),
+				new GameStartup_State(_UFOLevelGenerator, this),
+				new GameLunched_State(_UFOLevelGenerator, _settings, _player),
 				new GameEnded_State(_player)
 			};
+
+			CurrentState = MachineSatesList[0];
 		}
 
-		private void Start()
-		{
-			SwitchState(MachineSatesList[0]);
-		}
+		private void Start() => OnStart();
 
-		public void OnStart() => CurrentState.Startup();
+		public void OnStart() => CurrentState.Enter();
 
 		public void OnPause() => CurrentState.Pause();
 		
-		public void OnStop() => CurrentState.Stop();
+		public void OnStop() => CurrentState.Exit();
 		
 		public void OnJump() => CurrentState.Jump();
 	}
