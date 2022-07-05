@@ -23,7 +23,7 @@ namespace SceneContext.NastyUFOGame
 
 		private void Awake()
 		{
-			_settings = Resources.Load<LevelGenerationSettings_ScriptableObject>("Data/Settings/Level Generation Settings.asset")._settings;
+			_settings = Resources.Load<LevelGenerationSettings_ScriptableObject>("Data/Settings/Level Generation Settings")._settings;
 			_UFOLevelGenerator = new NastyUFOLevelGenerator(_settings, _player, Camera.main);
 			
 			//TODO InputAction вынести в отдельный для обработки класс и дёргать методы тут от туда
@@ -41,9 +41,9 @@ namespace SceneContext.NastyUFOGame
 			};
 		}
 
-		private async void Start()
+		private void Start()
 		{
-			await SwitchState(MachineSatesList[0]);
+			SwitchState(MachineSatesList[0]);
 		}
 
 		public void OnStart() => CurrentState.Startup();
