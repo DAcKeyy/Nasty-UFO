@@ -4,6 +4,7 @@ using UnityEngine.Events;
 
 namespace Actors.NastyUFO
 {
+    [SelectionBase]
     [RequireComponent(typeof(UFOMovement))]
     public class UFO : MonoBehaviour
     {
