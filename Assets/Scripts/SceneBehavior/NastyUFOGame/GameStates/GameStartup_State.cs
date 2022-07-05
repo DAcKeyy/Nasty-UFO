@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Generation.Base;
-using SceneContext.NastyUFOGame.Base;
+using SceneBehavior.NastyUFOGame.Base;
 
-namespace SceneContext.NastyUFOGame.GameStates
+namespace SceneBehavior.NastyUFOGame.GameStates
 {
 	public class Startup_State : GameState
 	{

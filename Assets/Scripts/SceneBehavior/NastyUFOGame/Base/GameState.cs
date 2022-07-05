@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
-namespace SceneContext.NastyUFOGame.Base
+namespace SceneBehavior.NastyUFOGame.Base
 {
 	public abstract class GameState
 	{

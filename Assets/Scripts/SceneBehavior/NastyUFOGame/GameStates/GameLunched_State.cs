@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Data.Generators;
 using Generation.Base;
-using SceneContext.NastyUFOGame.Base;
-using UnityEngine;
+using SceneBehavior.NastyUFOGame.Base;
 
-namespace SceneContext.NastyUFOGame.GameStates
+namespace SceneBehavior.NastyUFOGame.GameStates
 {
 	public class GameLunched_State : GameState
 	{

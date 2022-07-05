@@ -3,12 +3,12 @@ using Actors.NastyUFO;
 using Data.Generators;
 using Generation.Base;
 using Generation.Contexts.NastyUFO;
-using SceneContext.NastyUFOGame.Base;
-using SceneContext.NastyUFOGame.GameStates;
+using SceneBehavior.NastyUFOGame.Base;
+using SceneBehavior.NastyUFOGame.GameStates;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace SceneContext.NastyUFOGame
+namespace SceneBehavior.NastyUFOGame
 {
 	public class UFOGameSystem : StateMachine
 	{

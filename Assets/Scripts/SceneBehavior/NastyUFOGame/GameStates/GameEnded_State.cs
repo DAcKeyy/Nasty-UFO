@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using Actors.NastyUFO;
-using SceneContext.NastyUFOGame.Base;
-using UnityEditor.VersionControl;
+﻿using Actors.NastyUFO;
+using SceneBehavior.NastyUFOGame.Base;
 using Task = System.Threading.Tasks.Task;
 
-namespace SceneContext.NastyUFOGame.GameStates
+namespace SceneBehavior.NastyUFOGame.GameStates
 {
 	public class GameEnded_State : GameState
 	{

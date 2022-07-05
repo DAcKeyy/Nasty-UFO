@@ -1,20 +1,20 @@
 ﻿using Cinemachine;
 using UnityEngine;
 
-namespace Actors.Camera
+namespace GameCamera
 {
     [RequireComponent(typeof(CinemachineVirtualCamera))]
     public class FollowingCamera : MonoBehaviour , ICamera
     {
         private CinemachineVirtualCamera _camera;
-        
-        public void Start()
+
+        private void Start()
         {
             _camera = GetComponent<CinemachineVirtualCamera>();
-            /*
-            signalBus.Subscribe<PlayerDiedSignal>(x => FollowTarget(null));*/
+            
+            //signalBus.Subscribe<PlayerDiedSignal>(x => FollowTarget(null));
         }
-        
+
         public void FollowTarget(GameObject target)
         {
             if (target == null)

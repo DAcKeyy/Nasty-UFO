@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Threading.Tasks;
-using SceneContext.NastyUFOGame.Base;
+﻿using System.Threading.Tasks;
+using SceneBehavior.NastyUFOGame.Base;
 
-namespace SceneContext.NastyUFOGame.GameStates
+namespace SceneBehavior.NastyUFOGame.GameStates
 {
 	public class WaitForInput_State : GameState
 	{

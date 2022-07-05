@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace SceneContext.NastyUFOGame.Base
+namespace SceneBehavior.NastyUFOGame.Base
 {
 	public abstract class StateMachine: MonoBehaviour
 	{
