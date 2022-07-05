@@ -1,7 +1,7 @@
 ﻿using Cinemachine;
 using UnityEngine;
 
-namespace Scenes.Actors.Camera
+namespace Actors.Camera
 {
     [RequireComponent(typeof(CinemachineVirtualCamera))]
     public class FollowingCamera : MonoBehaviour , ICamera

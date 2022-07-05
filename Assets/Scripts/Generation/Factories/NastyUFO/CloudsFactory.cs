@@ -1,11 +1,11 @@
 ﻿using System;
-using Scenes.Actors.NastyUFO;
-using UnityEngine;
 using System.Collections.Generic;
+using Actors.NastyUFO;
 using Miscellaneous.Interfaces;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Scenes.Generation.Factories.NastyUFO
+namespace Generation.Factories.NastyUFO
 {
 	public class CloudsFactory : IFactory<Vector3,Cloud>
 	{

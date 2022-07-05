@@ -1,4 +1,4 @@
-﻿namespace Scenes.Generation.Base
+﻿namespace Generation.Base
 {
     public interface ILevelGenerator
     {

@@ -1,13 +1,13 @@
 ﻿using System;
+using Actors.NastyUFO;
 using Data.Generators;
-using Data.Pools;
-using Scenes.Actors.NastyUFO;
-using Scenes.Generation.Base;
-using Scenes.Generation.Factories.NastyUFO;
+using Generation.Base;
+using Generation.Factories.NastyUFO;
+using Miscellaneous.Pools;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Scenes.Generation.Contexts.NastyUFO
+namespace Generation.Contexts.NastyUFO
 {
 	public class CloudsGenerator : ILevelGenerator
 	{

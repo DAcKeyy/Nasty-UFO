@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Scenes.Actors.NastyUFO.Buildings
+namespace Actors.NastyUFO.Buildings
 {
 	public class ModularBuilding : MonoBehaviour
 	{

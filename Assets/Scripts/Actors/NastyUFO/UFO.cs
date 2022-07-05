@@ -1,10 +1,8 @@
-using System;
-using Scenes.Actors.Movement;
+using Actors.Movement;
 using UnityEngine;
 using UnityEngine.Events;
 
-
-namespace Scenes.Actors.NastyUFO
+namespace Actors.NastyUFO
 {
     [RequireComponent(typeof(UFOMovement))]
     public class UFO : MonoBehaviour

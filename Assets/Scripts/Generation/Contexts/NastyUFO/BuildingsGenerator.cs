@@ -1,12 +1,12 @@
-﻿using Data.Generators;
-using Data.Pools;
-using Scenes.Actors.NastyUFO;
-using Scenes.Actors.NastyUFO.Buildings;
-using Scenes.Generation.Base;
-using Scenes.Generation.Factories.NastyUFO;	
+﻿using Actors.NastyUFO;
+using Actors.NastyUFO.Buildings;
+using Data.Generators;
+using Generation.Base;
+using Generation.Factories.NastyUFO;
+using Miscellaneous.Pools;
 using UnityEngine;
 
-namespace Scenes.Generation.Contexts.NastyUFO
+namespace Generation.Contexts.NastyUFO
 {
 	public class BuildingsGenerator : ILevelGenerator
 	{

@@ -1,7 +1,6 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Scenes.Actors.NastyUFO
+namespace Actors.NastyUFO
 {
 	[RequireComponent(typeof(BoxCollider))]
 	public class Land : MonoBehaviour

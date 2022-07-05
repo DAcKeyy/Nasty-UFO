@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using Data.Generators;
-using Scenes.Generation.Base;
+using Generation.Base;
 using UnityEngine;
 
-namespace Scenes.Generation
+namespace Generation
 {
     //безпечный опекун
     public class LevelGenerator : MonoBehaviour

@@ -1,6 +1,6 @@
-﻿using Scenes.Generation.Base;
+﻿using Generation.Base;
 
-namespace Scenes.Generation.Contexts.NastyUFO
+namespace Generation.Contexts.NastyUFO
 {
 	public class LandGenerator : ILevelGenerator
 	{

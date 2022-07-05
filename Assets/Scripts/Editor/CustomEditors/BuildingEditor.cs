@@ -1,5 +1,5 @@
 using System.Linq;
-using Scenes.Actors.NastyUFO.Buildings;
+using Actors.NastyUFO.Buildings;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;

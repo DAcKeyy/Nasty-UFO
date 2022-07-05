@@ -1,8 +1,8 @@
-﻿using Miscellaneous.Interfaces;
-using Scenes.Actors.NastyUFO;
+﻿using Actors.NastyUFO;
+using Miscellaneous.Interfaces;
 using UnityEngine;
 
-namespace Scenes.Generation.Factories.NastyUFO
+namespace Generation.Factories.NastyUFO
 {
 	public class LandFactory : IFactory<Vector3, Land>
 	{

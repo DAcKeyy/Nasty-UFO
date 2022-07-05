@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Scenes.Actors.NastyUFO
+namespace Actors.NastyUFO
 {
     public class Cloud : MonoBehaviour
     {

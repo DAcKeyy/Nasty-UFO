@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using Actors.NastyUFO.Buildings;
 using Miscellaneous.Interfaces;
-using Scenes.Actors.NastyUFO.Buildings;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Scenes.Generation.Factories.NastyUFO
+namespace Generation.Factories.NastyUFO
 {
 	public class BuildingsFactory : IFactory<Vector2, Quaternion, ModularBuilding>
 	{

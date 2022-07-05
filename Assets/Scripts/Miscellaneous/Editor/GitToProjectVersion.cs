@@ -4,7 +4,7 @@ using System.Text;
 using UnityEditor;
 using UnityEngine;
 
-namespace Editor
+namespace Miscellaneous.Editor
 {
     public class GitException : InvalidOperationException
     {

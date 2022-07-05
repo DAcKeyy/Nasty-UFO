@@ -1,11 +1,11 @@
 ﻿using System;
+using Actors.NastyUFO;
 using Data.Generators;
-using Scenes.Actors.NastyUFO;
-using Scenes.Generation.Base;
-using Scenes.Generation.Factories.NastyUFO;
+using Generation.Base;
+using Generation.Factories.NastyUFO;
 using UnityEngine;
 
-namespace Scenes.Generation.Contexts.NastyUFO
+namespace Generation.Contexts.NastyUFO
 {
 	public class NastyUFOLevelGenerator : ILevelGenerator
 	{

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Data.Pools;
+﻿using System.Collections.Generic;
+using Miscellaneous.Pools;
 using UnityEngine;
-using UnityEngine.Animations;
 using Random = UnityEngine.Random;
 
-namespace Scenes.Generation.Base
+namespace Generation.Base
 {
 	public static class GeneratorTools<T> where T : MonoBehaviour
     {

@@ -1,7 +1,6 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Scenes.Actors.NastyUFO.Buildings
+namespace Actors.NastyUFO.Buildings
 {
 	public class BuildingFloor : MonoBehaviour
 	{

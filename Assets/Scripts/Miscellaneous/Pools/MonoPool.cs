@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Data.Pools
+namespace Miscellaneous.Pools
 {
     public class MonoPool<T> where T : MonoBehaviour
     {

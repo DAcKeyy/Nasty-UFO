@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Scenes.Actors.Movement
+namespace Actors.Movement
 {
 	[RequireComponent(typeof(Rigidbody))]
 	public class UFOMovement : MonoBehaviour

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Data.Extensions
+namespace Miscellaneous.Extensions.Variables
 {
     [Serializable]
     public class MinMaxUInt

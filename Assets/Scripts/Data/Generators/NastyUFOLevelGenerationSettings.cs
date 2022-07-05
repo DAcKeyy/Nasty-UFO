@@ -1,5 +1,5 @@
 ﻿using System;
-using Scenes.Generation.Factories.NastyUFO;
+using Generation.Factories.NastyUFO;
 using UnityEngine;
 
 namespace Data.Generators
