@@ -1,18 +1,57 @@
-﻿using Generation.Base;
+﻿using System.Collections.Generic;
+using Actors.NastyUFO;
+using Data.Generators;
+using Generation.Base;
+using Generation.Contexts.NastyUFO;
 using SceneContext.NastyUFOGame.Base;
+using SceneContext.NastyUFOGame.GameStates;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace SceneContext.NastyUFOGame
 {
 	public class UFOGameSystem : StateMachine
 	{
-		private ILevelGenerator _UFOLevelGenerator;
+		[SerializeField] private InputActionAsset _inputActionAsset;
+		[SerializeField] private UFO _player;
+		private NastyUFOLevelGeneration_Settings _settings;
+		protected ILevelGenerator _UFOLevelGenerator;
 		
-		public void OnStart() => StartCoroutine(State.Startup());
+		//TODO InputAction вынести в отдельный для обработки класс и дёргать методы тут от туда
+		private InputAction _jumpAction;
+		private InputAction _pauseAction;
 
-		public void OnPause() => StartCoroutine(State.Pause());
+		private void Awake()
+		{
+			_settings = Resources.Load<LevelGenerationSettings_ScriptableObject>("Data/Settings/Level Generation Settings.asset")._settings;
+			_UFOLevelGenerator = new NastyUFOLevelGenerator(_settings, _player, Camera.main);
+			
+			//TODO InputAction вынести в отдельный для обработки класс и дёргать методы тут от туда
+			_jumpAction = _inputActionAsset.FindActionMap("Game").FindAction("Jump");
+			_pauseAction = _inputActionAsset.FindActionMap("Game").FindAction("Pause");
+			_jumpAction.performed += context => OnJump();
+			_pauseAction.performed += context => OnPause();
+
+			MachineSatesList = new List<GameState>()
+			{
+				new Startup_State(_UFOLevelGenerator),
+				new WaitForInput_State(),
+				new GameLunched_State(_UFOLevelGenerator, _settings),
+				new GameEnded_State(_player)
+			};
+		}
+
+		private async void Start()
+		{
+			await SwitchState(MachineSatesList[0]);
+		}
+
+		public void OnStart() => CurrentState.Startup();
+
+		public void OnPause() => CurrentState.Pause();
 		
-		public void OnStop() => StartCoroutine(State.Stop());
+		public void OnStop() => CurrentState.Stop();
 		
-		public void OnJump() => StartCoroutine(State.Jump());
+		public void OnJump() => CurrentState.Jump();
 	}
 }

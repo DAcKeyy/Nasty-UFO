@@ -1,34 +1,38 @@
 ﻿using System.Collections;
+using System.Threading.Tasks;
 
 namespace SceneContext.NastyUFOGame.Base
 {
 	public abstract class GameState
 	{
-		protected UFOGameSystem GameSystem;
-
-		public GameState(UFOGameSystem statesGameSystem)
+		public GameState()
 		{
-			GameSystem = statesGameSystem;
+
 		}
 
-		public virtual IEnumerator Startup()
+		public async virtual Task Startup()
 		{
-			yield break;
+			
 		}
 
-		public virtual IEnumerator Pause()
+		public async virtual Task Pause()
 		{
-			yield break;
+			
 		}	
 
-		public virtual IEnumerator Stop()
+		public async virtual Task Stop()
 		{
-			yield break;
+			
 		}
 
-		public virtual IEnumerator Jump()
+		public async virtual Task Jump()
 		{
-			yield break;
+			
+		}
+		
+		public async virtual Task Reset()
+		{
+			
 		}
 	}
 }

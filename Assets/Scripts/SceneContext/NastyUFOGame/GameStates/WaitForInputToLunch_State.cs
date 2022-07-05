@@ -1,12 +1,20 @@
-﻿using SceneContext.NastyUFOGame.Base;
+﻿using System.Collections;
+using System.Threading.Tasks;
+using SceneContext.NastyUFOGame.Base;
 
 namespace SceneContext.NastyUFOGame.GameStates
 {
-	public class WaitForInputState : GameState
+	public class WaitForInput_State : GameState
 	{
-		public WaitForInputState(UFOGameSystem statesGameSystem) : base(statesGameSystem)
+		public WaitForInput_State() : base()
 		{
 			
+		}
+
+		public override Task Jump()
+		{
+			//SetSta
+			return Task.CompletedTask;
 		}
 	}
 }

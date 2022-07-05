@@ -1,19 +1,24 @@
 ﻿using System.Collections;
+using System.Threading.Tasks;
+using Generation.Base;
 using SceneContext.NastyUFOGame.Base;
 
 namespace SceneContext.NastyUFOGame.GameStates
 {
-	public class StartupState : GameState 
+	public class Startup_State : GameState
 	{
-		public StartupState(UFOGameSystem statesGameSystem) : base(statesGameSystem)
+		private ILevelGenerator UfoLevelGenerator;
+		
+		public Startup_State(ILevelGenerator levelGenerator) : base()
 		{
+			UfoLevelGenerator = levelGenerator;
+		}
+		
+		public override Task Startup()
+		{
+			UfoLevelGenerator.Create();
 			
+			return Task.CompletedTask;
 		}
-		
-		public override IEnumerator Startup()
-		{
-			return base.Startup();
-		}
-		
 	}
 }

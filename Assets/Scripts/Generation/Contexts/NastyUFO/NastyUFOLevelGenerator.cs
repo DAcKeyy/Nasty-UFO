@@ -18,8 +18,7 @@ namespace Generation.Contexts.NastyUFO
 		private Vector2 _lastPlayerPosition;
 		private bool isGameStarted;
 		
-		//конструктора не пугаться, эти все вещи нужны генераторам
-		protected NastyUFOLevelGenerator(
+		public NastyUFOLevelGenerator(
 			NastyUFOLevelGeneration_Settings settings,
 			UFO player,
 			Camera mainCamera)

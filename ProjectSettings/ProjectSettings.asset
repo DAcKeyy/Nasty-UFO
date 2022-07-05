@@ -134,7 +134,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: '[5.7.2022] commit:ba1d8e9'
+  bundleVersion: '[5.7.2022] commit:56c46ea'
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -807,7 +807,7 @@ PlayerSettings:
     m_VersionCode: 1
     m_VersionName: 
   apiCompatibilityLevel: 6
-  activeInputHandler: 0
+  activeInputHandler: 1
   cloudProjectId: 
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
