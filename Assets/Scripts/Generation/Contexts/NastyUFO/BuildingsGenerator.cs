@@ -1,10 +1,12 @@
-﻿using Actors.NastyUFO;
+﻿using System;
+using Actors.NastyUFO;
 using Actors.NastyUFO.Buildings;
 using Data.Generators;
 using Generation.Base;
 using Generation.Factories.NastyUFO;
 using Miscellaneous.Pools;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Generation.Contexts.NastyUFO
 {
@@ -36,9 +38,12 @@ namespace Generation.Contexts.NastyUFO
 			
 			for (var x = 0; x < прогонДомовВМетрах; x += (int)_settings._buildingDistanceGap)
 			{
+				//Теорема пифагора где вычисляем предел спауна облака в линии игры
+				var camToPlayerDist = Vector3.Distance(_mainCamera.transform.position, _player.transform.position);
+				var maxSpawnDist = (float)Math.Sqrt(Math.Pow(_settings._clearingRange, 2) - Math.Pow(camToPlayerDist, 2));
 				var modularBuilding = _buildingsFactory.Create(
 					new Vector3(
-						_settings._generationStartPosition.x,
+						_settings._generationStartPosition.x + maxSpawnDist,
 						_settings._generationStartPosition.y,
 						_player.transform.position.z),
 					Quaternion.Euler(new Vector3(0, 180, 0))); //TODO Как узнать куда повернуть дом? - сделать плечи дома были парралельны вектору движения камеры
@@ -46,11 +51,6 @@ namespace Generation.Contexts.NastyUFO
 				modularBuilding.AssembleBuilding(
 					(ushort) Random.Range(_settings._buildingsFloorsRandomRange.x, _settings._buildingsFloorsRandomRange.y));
 				
-				if(_buildingsPool.PrefabPool.Count == 0)
-					modularBuilding.transform.position = new Vector3(
-						Mathf.Clamp(-_settings._clearingRange + x, -_settings._clearingRange, _settings._clearingRange),
-						_settings._generationStartPosition.y,
-						_player.transform.position.z);
 
 				_buildingsPool.AddObject(modularBuilding);
 			}

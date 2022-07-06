@@ -41,5 +41,10 @@ namespace Generation.Base
 
 		    return Vector3.Distance(point_A, point_B);
 	    }
+
+	    public static bool IsInRange(Vector3 Target, Vector3 Center, float range)
+	    {
+		    return Vector3.Distance(Target, Center) < range;
+	    }
     }
 }

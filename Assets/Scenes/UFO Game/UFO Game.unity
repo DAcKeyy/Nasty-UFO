@@ -627,6 +627,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputActionAsset: {fileID: -944628639613478452, guid: 1b0226b2197469e49a1c0d0a7861b65b, type: 3}
   _player: {fileID: 1286840498}
+  _mainCamera: {fileID: 1049768827}
 --- !u!1 &1792072361
 GameObject:
   m_ObjectHideFlags: 3

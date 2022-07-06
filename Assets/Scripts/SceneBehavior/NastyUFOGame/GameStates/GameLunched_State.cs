@@ -3,6 +3,7 @@ using Actors.NastyUFO;
 using Data.Generators;
 using Generation.Base;
 using SceneBehavior.NastyUFOGame.Base;
+using UnityEngine;
 
 namespace SceneBehavior.NastyUFOGame.GameStates
 {
@@ -25,11 +26,11 @@ namespace SceneBehavior.NastyUFOGame.GameStates
 		public async override Task Enter()
 		{
 			_player.BeginSweeping();
-			
+			_levelGenerator.SetMode(2);
 			while (true)
 			{
 				_levelGenerator.Update();
-				
+				Debug.Log("Не запущен");
 				await Task.Delay((int)(_settings._levelUpdateRate * 1000));//ms
 			}
 		}

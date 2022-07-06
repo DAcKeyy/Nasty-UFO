@@ -16,16 +16,19 @@ MonoBehaviour:
     _generationStartPosition: {x: -40, y: 0}
     _levelUpdateRate: 1
     _clearingRange: 80
+    _generationCenter: {fileID: 0}
     _buildingsFactorySettings:
       _buildPrefabPool:
       - {fileID: 2340096964073113256, guid: 1564435503f11d344acf5bcfed57acf5, type: 3}
     _buildingDistanceGap: 13.87
     _buildingsFloorsRandomRange: {x: 4, y: 8}
-    _cloudsRandomShift: {x: 1, y: 1, z: 30}
+    _cloudsRandomShift: {x: 50, y: 50, z: 50}
     _cloudsSpawnChance: 1
-    _cloudsGapRange: 13
-    _cloudsHeight: 13
+    _cloudsGapRange: 30
+    _cloudsHeight: 30.2
+    _aditionCloudsOnLine: 1
     _cloudsFactorySettings:
+      _cloudsScale: 1
       _cloudsPoolList:
       - {fileID: 2989933158699613147, guid: cd0f99029f27bf349a53ed2c6d9584bc, type: 3}
       - {fileID: 6780054780669958022, guid: 1fe4a9f0cb5c3c14f974ad3373056c1e, type: 3}

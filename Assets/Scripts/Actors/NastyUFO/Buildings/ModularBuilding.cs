@@ -12,7 +12,7 @@ namespace Actors.NastyUFO.Buildings
 		
 		public void AssembleBuilding(ushort requiredFloors)
 		{
-			Debug.Log(transform.rotation.eulerAngles);
+			//Debug.Log(transform.rotation.eulerAngles);
 			
 			if (requiredFloors == 0) throw new Exception("Сторить дом без этажей не прикольно");
 			
@@ -39,7 +39,7 @@ namespace Actors.NastyUFO.Buildings
 					MakeRoof();
 				}
 				
-				Debug.Log(buildingFloorComponent.transform.rotation.eulerAngles);
+				//Debug.Log(buildingFloorComponent.transform.rotation.eulerAngles);
 				
 				ClearBuildModule();
 			}

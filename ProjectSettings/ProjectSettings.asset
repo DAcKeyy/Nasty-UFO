@@ -134,7 +134,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: '[5.7.2022] commit:d8c3611'
+  bundleVersion: '[6.7.2022] commit:c911486'
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
