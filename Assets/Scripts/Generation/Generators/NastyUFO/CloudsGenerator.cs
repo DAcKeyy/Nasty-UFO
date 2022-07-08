@@ -10,41 +10,41 @@ using Random = UnityEngine.Random;
 
 namespace Generation.Contexts.NastyUFO
 {
-	public class CloudsGenerator : ILevelGenerator
+	public class CloudsGenerator : LevelGenerator<Cloud>
 	{
 		private readonly NastyUFOLevelGeneration_Settings _settings;
 		private readonly MonoPool<Cloud> _cloudsPool;
 		private readonly CloudsFactory _cloudsFactory;
+		
 		private readonly Camera _mainCamera;
 		private readonly UFO _player;
-		private float _specialClearingRangeForClouds;
 
 		public CloudsGenerator(
+			ref MonoPool<Cloud> cloudsPool,
 			NastyUFOLevelGeneration_Settings settings, 
 			CloudsFactory cloudsFactory,
 			Camera mainCamera,
-			UFO player)
+			UFO player) : base(ref cloudsPool)
 		{
+			_cloudsPool = cloudsPool;
 			_settings = settings;
 			_cloudsFactory = cloudsFactory;
-			_cloudsPool = new MonoPool<Cloud>();
 			_mainCamera = mainCamera;
 			_player = player;
 		}
 		
 		//TODO Создавать облака не только в даль по игре но и в ширь, в горизонт
 		
-		public void Create()
-		{	
-			_specialClearingRangeForClouds = _settings._clearingRange * _settings._cloudsFactorySettings._cloudsScale;
-			
+		public override void Create()
+		{
+
 			//TODO Убрать магическое число
-			var прогонГенератораОблаковВметрах = _specialClearingRangeForClouds * 2; 
+			var прогонГенератораОблаковВметрах = _settings._clearingRange * 2; 
 			
 			for (var x = 0; x < прогонГенератораОблаковВметрах; x += (int)_settings._cloudsGapRange)
 			{
 				var spawnPosition = new Vector3(
-					Mathf.Clamp(-_specialClearingRangeForClouds + x, -_specialClearingRangeForClouds , _specialClearingRangeForClouds),
+					Mathf.Clamp(-_settings._clearingRange + x, -_settings._clearingRange , _settings._clearingRange),
 					_settings._cloudsHeight + _settings._generationStartPosition.y,
 					Random.Range(0, _settings._cloudsRandomShift.z));//рандомно его поддвигаем 
 				
@@ -62,17 +62,10 @@ namespace Generation.Contexts.NastyUFO
 				}
 			}
 		}
-
 		
 		//этот апдейт лучше делать с хорошей задержкой
-		public void Update()
+		public override void Update()
 		{
-			GeneratorTools<Cloud>.ClearFarObjects(_cloudsPool, 
-				_specialClearingRangeForClouds + 
-				_settings._cloudsRandomShift.z + 
-				(_settings._aditionCloudsOnLine * _settings._cloudsGapRange), 
-				_settings._generationCenter);
-
 			//берём последнее облако
 			var lastCreatedCloud = _cloudsPool.GetLast();
 			
@@ -82,7 +75,7 @@ namespace Generation.Contexts.NastyUFO
 			var cameraAndLastCloudDistance = Vector3.Distance(_mainCamera.transform.position, lastCreatedCloud.transform.position);
 			
 			//если ласт облачко не достаточно далеко до радиуса чистки..
-			if (Mathf.Abs(cameraAndLastCloudDistance - _specialClearingRangeForClouds) < _settings._cloudsGapRange * _settings._cloudsFactorySettings._cloudsScale) 
+			if (Mathf.Abs(cameraAndLastCloudDistance - _settings._clearingRange) < _settings._cloudsGapRange * _settings._cloudsFactorySettings._cloudsScale) 
 				return;
 
 			var cloudHeight = _settings._cloudsHeight + _settings._generationStartPosition.y;
@@ -105,11 +98,6 @@ namespace Generation.Contexts.NastyUFO
 			{
 				_cloudsPool.AddObject(additionCloud);
 			}
-		}
-
-		public void SetMode(int mode)
-		{
-			throw new System.NotImplementedException();
 		}
 
 		private Cloud[] SpawnCloudsLine(Cloud originCloud)

@@ -1,57 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Actors.NastyUFO;
 using Data.Generators;
 using Generation.Base;
 using Generation.Contexts.NastyUFO;
+using Miscellaneous.Pools;
 using SceneBehavior.NastyUFOGame.Base;
 using SceneBehavior.NastyUFOGame.GameStates;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace SceneBehavior.NastyUFOGame
 {
 	public class UFOGameSystem : StateMachine
 	{
-		[SerializeField] private InputActionAsset _inputActionAsset;
-		[SerializeField] private UFO _player;
-		[SerializeField] private Camera _mainCamera;
-		private NastyUFOLevelGeneration_Settings _settings;
-		protected ILevelGenerator _UFOLevelGenerator;
+		private readonly LevelGenerator<MonoBehaviour> _ufoLevelGenerator;
+		//TODO Можно сделать счётки созданных обектов, хз, по проекту это не надо (но можно)
+		private readonly MonoPool<MonoBehaviour> _objectPool;
 		
-		//TODO InputAction вынести в отдельный для обработки класс и дёргать методы тут от туда
-		private InputAction _jumpAction;
-		private InputAction _pauseAction;
-
-		private void Awake()
+		//TODO Прокидывать сюда UI
+		public UFOGameSystem(
+			NastyUFOLevelGeneration_Settings settings, 
+			UFO player,
+			Camera camera 
+			/*, UISetting uiSettings*/)
 		{
-			_settings = Resources.Load<LevelGenerationSettings_ScriptableObject>("Data/Settings/Level Generation Settings")._settings;
-			_UFOLevelGenerator = new NastyUFOLevelGenerator(_settings, _player, _mainCamera);
-			
-			//TODO InputAction вынести в отдельный для обработки класс и дёргать методы тут от туда
-			_jumpAction = _inputActionAsset.FindActionMap("Game").FindAction("Jump");
-			_pauseAction = _inputActionAsset.FindActionMap("Game").FindAction("Pause");
-			_jumpAction.performed += context => OnJump();
-			_pauseAction.performed += context => OnPause();
-
+			_objectPool = new MonoPool<MonoBehaviour>();
+			_ufoLevelGenerator = new NastyUFOLevelGenerator(ref _objectPool, settings, player, camera);
 			MachineSatesList = new List<GameState>()
 			{
-				new GameStartup_State(_UFOLevelGenerator, this, _settings),
-				new GameLunched_State(_UFOLevelGenerator, _settings, _player),
-				new GameEnded_State(_player)
+				new GameStartup_State(ref _ufoLevelGenerator, this, settings, ref _objectPool, player),
+				new GameLunched_State(ref _ufoLevelGenerator, settings, player, ref _objectPool),
+				new GameEnded_State(player)
 			};
-
+			
 			CurrentState = MachineSatesList[0];
 		}
 
-		private void Start() => OnStart();
-
-		public async void OnStart() => await CurrentState.Enter();
-
-		public async void OnPause() => await CurrentState.Pause();
+		public async void Start() => await CurrentState.Enter();
 		
-		public async void OnStop() => await CurrentState.Exit();
+		public async void Pause() => await CurrentState.Pause();
 		
-		public async void OnJump() => await CurrentState.Jump();
+		public async void Stop() => await CurrentState.Exit();
+		
+		public async void Jump() => await CurrentState.Jump();
 	}
 }

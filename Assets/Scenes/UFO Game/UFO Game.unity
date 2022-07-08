@@ -572,7 +572,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 0.5943671, y: 1}
+    m_SensorSize: {x: 0.671022, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -592,7 +592,7 @@ GameObject:
   - component: {fileID: 1562229215}
   - component: {fileID: 1562229216}
   m_Layer: 2
-  m_Name: UFO Game System
+  m_Name: Game Script
   m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -622,12 +622,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1562229214}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: acefaa15c6c247b887c57c15a8c27b4c, type: 3}
+  m_Script: {fileID: 11500000, guid: afd51271e940454f92c8100f54a24ee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameSettings: {fileID: 11400000, guid: 1ca65ba2be2ee0a4e8e9f4305ec485f8, type: 2}
   _inputActionAsset: {fileID: -944628639613478452, guid: 1b0226b2197469e49a1c0d0a7861b65b, type: 3}
   _player: {fileID: 1286840498}
-  _mainCamera: {fileID: 1049768827}
+  _camera: {fileID: 1049768827}
 --- !u!1001 &1566337983
 PrefabInstance:
   m_ObjectHideFlags: 0

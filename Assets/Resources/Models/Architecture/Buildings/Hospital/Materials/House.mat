@@ -21,10 +21,9 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: House
-  m_Shader: {fileID: -6465566751694194690, guid: b875cb06beb22944288093b491507123, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 4bc05988c2349cd4bb1e1281991d7ad3, type: 3}
   m_ValidKeywords: []
-  m_InvalidKeywords:
-  - _GLOSSYREFLECTIONS_OFF
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -116,6 +115,7 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
+    - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Saturation: 0
@@ -128,9 +128,9 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _Accent: {r: 0, g: 0, b: 0, a: 0}
+    - _Accent: {r: 1, g: 1, b: 1, a: 0}
     - _BaseColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
-    - _Base_Color: {r: 0, g: 0, b: 0, a: 0}
+    - _Base_Color: {r: 1, g: 1, b: 1, a: 0}
     - _Color: {r: 0.8, g: 0.8, b: 0.8, a: 1}
     - _Decal_Color: {r: 1, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

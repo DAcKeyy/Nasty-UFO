@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace SceneBehavior.NastyUFOGame.Base
 {
-	public abstract class StateMachine: MonoBehaviour
+	public abstract class StateMachine
 	{
 		protected GameState CurrentState;
 		

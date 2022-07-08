@@ -7,6 +7,10 @@ namespace Miscellaneous.Pools
     public class MonoPool<T> where T : MonoBehaviour
     {
         public List<T> PrefabPool { get; }
+        public Action<T> ObjectAdded = delegate(T behaviour) {  };
+        public Action<T> ObjectRemoved = delegate(T behaviour) {  };
+        //TODO Костыль, из за которого все кто на это подписан должны будут проверять тип этого Т если они пользуются объектами из общего пула
+        public Action<T> ObjectChanged = delegate(T behaviour) {  };
 
         public MonoPool() {
             PrefabPool = new List<T>();
@@ -15,6 +19,7 @@ namespace Miscellaneous.Pools
         public void AddObject(T prefab)
         {
             PrefabPool.Add(prefab);
+            ObjectAdded(prefab);
         }
 
         public T GetLast()
@@ -43,8 +48,14 @@ namespace Miscellaneous.Pools
             }
         }
 
+        public void ChangeObject(T monoBehaviour)
+        {
+            ObjectChanged(monoBehaviour);
+        }
+        
         public void DestroyAt(int index)
         {
+            ObjectRemoved(PrefabPool[index]);
             UnityEngine.Object.Destroy(PrefabPool[index].gameObject);
             PrefabPool.RemoveAt(index);
         }

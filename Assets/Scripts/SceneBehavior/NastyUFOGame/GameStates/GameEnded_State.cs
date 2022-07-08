@@ -6,7 +6,7 @@ namespace SceneBehavior.NastyUFOGame.GameStates
 {
 	public class GameEnded_State : GameState
 	{
-		private UFO _player;
+		private readonly UFO _player;
 		
 		public GameEnded_State(UFO player) : base()
 		{
