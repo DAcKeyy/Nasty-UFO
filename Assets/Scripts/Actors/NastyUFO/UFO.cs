@@ -1,4 +1,6 @@
+using System;
 using Actors.Movement;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,12 +10,12 @@ namespace Actors.NastyUFO
     [RequireComponent(typeof(UFOMovement))]
     public class UFO : MonoBehaviour
     {
-        public bool IsAlive => !_isDied;
-        [SerializeField] private UnityEvent _dieEvent;
+        public Action<UFO> Died = delegate(UFO ufo) {  };
         private bool _isDied;
 
         private void Start()
         {
+            Died += dsd => _isDied = true;
             /*
             _signalBus.Subscribe<BuildingTouchedSignal>(x => {
                 //TODO Исправить двойную проверку что тут, что в доме
@@ -42,10 +44,8 @@ namespace Actors.NastyUFO
         {
             if(_isDied) return;
             
-            _dieEvent.Invoke();
-            
-            _isDied = true;
-            
+            Died(this);
+
             //TODO Анимация смээрти
             
             GetComponent<UFOMovement>().enabled = false;

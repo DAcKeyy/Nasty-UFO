@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Actors.Movement;
 using Actors.NastyUFO;
 using Data.Generators;
 using Generation.Base;
@@ -17,7 +18,7 @@ namespace SceneBehavior.NastyUFOGame
 		//TODO Прокидывать сюда UI
 		public UFOGameSystem(
 			NastyUFOLevelGeneration_Settings settings, 
-			UFO player
+			UFO player, UFOMovement ufoMovement
 			/*, UISetting uiSettings*/)
 		{
 			settings._generationCenter = player.transform;
@@ -27,7 +28,7 @@ namespace SceneBehavior.NastyUFOGame
 			MachineSatesList = new List<GameState>()
 			{
 				new GameStartup_State(ref ufoObjectGenerator, this, settings, ref objectPool, player),
-				new GameLunched_State(ref ufoObjectGenerator, settings, player, ref objectPool),
+				new GameLunched_State(ref ufoObjectGenerator, settings, player, ufoMovement, this, ref objectPool),
 				new GameEnded_State(player)
 			};
 

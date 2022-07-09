@@ -1,4 +1,5 @@
-﻿using Actors.NastyUFO;
+﻿using Actors.Movement;
+using Actors.NastyUFO;
 using Data.Generators;
 using SceneBehavior.NastyUFOGame;
 using UnityEngine;
@@ -11,6 +12,7 @@ namespace SceneBehavior
 		[SerializeField] private LevelGenerationSettings_ScriptableObject _gameSettings;
 		[SerializeField] private InputActionAsset _inputActionAsset;
 		[SerializeField] private UFO _player;
+		[SerializeField] private UFOMovement _ufoMovement;
 
 		private InputAction _jumpAction;
 		private InputAction _pauseAction;
@@ -19,7 +21,7 @@ namespace SceneBehavior
 		public void Start()
 		{
 			//По сути я ебать как скрыл логику игры что на сверхверхнем уровне можно заняться чем-нибудь другим
-			_theGame = new UFOGameSystem(_gameSettings._settings, _player);
+			_theGame = new UFOGameSystem(_gameSettings._settings, _player, _ufoMovement);
 
 			_jumpAction = _inputActionAsset.FindActionMap("Game").FindAction("Jump");
 			_pauseAction = _inputActionAsset.FindActionMap("Game").FindAction("Pause");

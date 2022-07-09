@@ -24,7 +24,7 @@ namespace SceneBehavior.NastyUFOGame.GameStates
 			StateMachine thisMachine, 
 			NastyUFOLevelGeneration_Settings levelGenerationSetting,
 			ref MonoPool<MonoBehaviour> monoPool,
-			UFO player) : base()
+			UFO player)
 		{
 			_player = player;
 			_monoPool = monoPool;
@@ -35,13 +35,14 @@ namespace SceneBehavior.NastyUFOGame.GameStates
 		
 		public override async Task Enter()
 		{
+			await base.Enter();
 			Debug.Log("wolaaaaaaaa");
 			_ufoObjectGenerator.SwitchState(new NastyUfoObjectGenerator_AwaitInputState());
 			await _ufoObjectGenerator.Create();
 			
 			NastyUFOGC gc = new NastyUFOGC(new InRadiusStrategy(ref _monoPool, _levelGenerationSetting._clearingRange, _player.transform));
 			
-			while (true)
+			while (IsActive)
 			{
 				await Task.Delay((int)(_levelGenerationSetting._levelUpdateRate * 1000));
 				await _ufoObjectGenerator.Update();
@@ -49,7 +50,7 @@ namespace SceneBehavior.NastyUFOGame.GameStates
 			}
 		}
 
-		public async override Task Jump()
+		public override async Task Jump()
 		{
 			await _thisMachine.SwitchState<GameLunched_State>();
 		}
