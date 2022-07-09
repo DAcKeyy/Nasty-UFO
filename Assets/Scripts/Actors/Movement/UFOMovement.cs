@@ -31,7 +31,7 @@ namespace Actors.Movement
         public void Jump()
         {
 	        if(_state == MovementState.Fly) return;
-	        if(this.enabled == false) return;//UnityEventы могут вызывать методы в выключеных компонентах kekw0_0
+	        if(enabled == false) return;//UnityEventы могут вызывать методы в выключеных компонентах kekw0_0
             
 	        _jumpEvent.Invoke();
 	        _rigidbody.velocity = Vector2.zero;
@@ -51,6 +51,8 @@ namespace Actors.Movement
 			        _rigidbody.useGravity = true;
 			        Jump();
 			        break;
+		        default:
+			        throw new ArgumentOutOfRangeException(nameof(state), state, null);
 	        }
         }
         

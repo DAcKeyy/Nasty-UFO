@@ -7,8 +7,7 @@ namespace SceneBehavior.NastyUFOGame.Base
 {
 	public abstract class StateMachine
 	{
-		protected GameState CurrentState;
-		
+		public GameState CurrentState { get; protected set; }
 		protected List<GameState> MachineSatesList;
 
 		public async Task SwitchState<T>() where T : GameState

@@ -32,5 +32,10 @@ namespace SceneBehavior.NastyUFOGame.Base
 		{
 			return Task.CompletedTask;
 		}
+
+		public override string ToString()
+		{
+			return this.GetType().Name;
+		}
 	}
 }

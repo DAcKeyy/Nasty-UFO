@@ -56,7 +56,7 @@ namespace Generation.Contexts.NastyUFO.States
 			return Task.CompletedTask;
 		}
 
-		public override Task Update()
+		public override Task Update()	
 		{
 			//берём последнее облако
 			var lastCreatedCloud = _cloudsPool.GetLast();
