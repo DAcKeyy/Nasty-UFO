@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Threading.Tasks;
 using Generation.Base;
 using Miscellaneous.Pools;
 using UnityEngine;
@@ -8,9 +8,9 @@ namespace Generation.GarbageCollection.NastyUFO.Strategies
 {
 	public class InRadiusStrategy : BusinessGarbageCollectorStrategy
 	{
-		private MonoPool<MonoBehaviour> _monoPool;
-		private float _radius;
-		private Transform _centerObj;
+		private readonly MonoPool<MonoBehaviour> _monoPool;
+		private readonly float _radius;
+		private readonly Transform _centerObj;
 		
 		public InRadiusStrategy(
 			ref MonoPool<MonoBehaviour> monoPool,
@@ -22,11 +22,11 @@ namespace Generation.GarbageCollection.NastyUFO.Strategies
 			_centerObj = centerObj;
 		}
 		
-		public void DestroyFuckingObjects()
+		public override Task DestroyFuckingObjects()
 		{
 			Vector3 centerPosition = _centerObj.transform.position;
 			
-			for (int i = 0; i < _monoPool.PrefabPool.Count; i++)
+			for (var i = 0; i < _monoPool.PrefabPool.Count; i++)
 			{
 				Vector3 objPosition = _monoPool.PrefabPool[i].transform.position;
 				
@@ -35,6 +35,7 @@ namespace Generation.GarbageCollection.NastyUFO.Strategies
 				if(math.abs(objPosition.z - centerPosition.z) > _radius) _monoPool.DestroyAt(i);
 			}
 			
+			return Task.CompletedTask;
 		}
 	}
 }

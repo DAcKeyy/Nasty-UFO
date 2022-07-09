@@ -4,34 +4,33 @@ namespace SceneBehavior.NastyUFOGame.Base
 {
 	public abstract class GameState
 	{
-		public GameState()
+		protected bool IsActive;
+		
+		public virtual Task Enter()
 		{
-
+			IsActive = true;//!!!!!!!!
+			return Task.CompletedTask;
 		}
 
-		public async virtual Task Enter()
+		public virtual Task Pause()
 		{
-			
-		}
-
-		public async virtual Task Pause()
-		{
-			
+			return Task.CompletedTask;
 		}	
 
-		public async virtual Task Exit()
+		public virtual Task Exit()
 		{
-			
+			IsActive = false;//!!!!!!!!
+			return Task.CompletedTask;
 		}
 
-		public async virtual Task Jump()
+		public virtual Task Jump()
 		{
-			
+			return Task.CompletedTask;
 		}
 		
-		public async virtual Task Reset()
+		public virtual Task Reset()
 		{
-			
+			return Task.CompletedTask;
 		}
 	}
 }

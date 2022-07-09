@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using UnityEngine;
 
 namespace SceneBehavior.NastyUFOGame.Base
 {
@@ -15,10 +14,14 @@ namespace SceneBehavior.NastyUFOGame.Base
 		public async Task SwitchState<T>() where T : GameState
 		{
 			var state = MachineSatesList.FirstOrDefault(gameState => gameState is T);
+			
 			if (state is T == false) throw new NotFiniteNumberException($"{typeof(T)} not initialized in states list");
+			
 			await CurrentState.Exit();
-			await state.Enter();
+			
 			CurrentState = state;
+			
+			await state.Enter();
 		}
 	}
 }

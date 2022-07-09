@@ -4,6 +4,7 @@ using Data.Generators;
 using Generation.Base;
 using Generation.GarbageCollection.NastyUFO;
 using Generation.GarbageCollection.NastyUFO.Strategies;
+using Generation.Generators.NastyUFO.States;
 using Miscellaneous.Pools;
 using SceneBehavior.NastyUFOGame.Base;
 using UnityEngine;
@@ -12,13 +13,13 @@ namespace SceneBehavior.NastyUFOGame.GameStates
 {
 	public class GameLunched_State : GameState
 	{
-		private readonly LevelGenerator<MonoBehaviour> _levelGenerator;
+		private readonly ObjectGenerator<MonoBehaviour> _levelGenerator;
 		private readonly NastyUFOLevelGeneration_Settings _settings;
 		private MonoPool<MonoBehaviour> _monoPool;
 		private readonly UFO _player;
-		
+
 		public GameLunched_State(
-			ref LevelGenerator<MonoBehaviour> levelGenerator, 
+			ref ObjectGenerator<MonoBehaviour> levelGenerator, 
 			NastyUFOLevelGeneration_Settings settings,
 			UFO player,
 			ref MonoPool<MonoBehaviour> monoPool) : base()
@@ -29,17 +30,19 @@ namespace SceneBehavior.NastyUFOGame.GameStates
 			_player = player;
 		}
 
-		public async override Task Enter()
+		public override async Task Enter()
 		{
+			await base.Enter();
+			
 			_player.BeginSweeping();
-			_levelGenerator.SetMode(2);
+			_levelGenerator.SwitchState(new NastyUfoObjectGenerator_RunState());
 			
 			var gc = new NastyUFOGC(new InRadiusStrategy(ref _monoPool, _settings._clearingRange, _player.transform));
 			
-			while (true)
+			while (IsActive)
 			{
-				_levelGenerator.Update();
-				gc.DoJob();
+				await _levelGenerator.Update();
+				await gc.DoJob();
 				await Task.Delay((int)(_settings._levelUpdateRate * 1000));
 			}
 		}

@@ -11,16 +11,15 @@ namespace SceneBehavior
 		[SerializeField] private LevelGenerationSettings_ScriptableObject _gameSettings;
 		[SerializeField] private InputActionAsset _inputActionAsset;
 		[SerializeField] private UFO _player;
-		[SerializeField] private Camera _camera;
-		
+
 		private InputAction _jumpAction;
 		private InputAction _pauseAction;
 		private UFOGameSystem _theGame;
 		
 		public void Start()
 		{
-			//По сути я ебать как скрыл логику игры что на сверхверхнем уровне можно заняться чем нибуть другим
-			_theGame = new UFOGameSystem(_gameSettings._settings, _player, _camera);
+			//По сути я ебать как скрыл логику игры что на сверхверхнем уровне можно заняться чем-нибудь другим
+			_theGame = new UFOGameSystem(_gameSettings._settings, _player);
 
 			_jumpAction = _inputActionAsset.FindActionMap("Game").FindAction("Jump");
 			_pauseAction = _inputActionAsset.FindActionMap("Game").FindAction("Pause");

@@ -1,23 +1,28 @@
-﻿using Miscellaneous.Pools;
+﻿using System.Threading.Tasks;
+using Miscellaneous.Pools;
 using UnityEngine;
 
 namespace Generation.Base
 {
+	//Асинхронная стратегия сборщика игрового мусора
 	public abstract class BusinessGarbageCollectorStrategy
 	{
 		private readonly MonoPool<MonoBehaviour> _pool;
-		
-		public BusinessGarbageCollectorStrategy(ref MonoPool<MonoBehaviour> monos)
+
+		protected BusinessGarbageCollectorStrategy(ref MonoPool<MonoBehaviour> monoPool)
 		{
-			_pool = monos;
+			_pool = monoPool;
 		}
 
-		public virtual void DestroyFuckingObjects()
+		//По умолчанию уничтожает весь данный ему пул
+		public virtual Task DestroyFuckingObjects()
 		{
-			for (int i = 0; i < _pool.PrefabPool.Count; i++)
+			for (var i = 0; i < _pool.PrefabPool.Count; i++)
 			{
 				_pool.PrefabPool.RemoveAt(i);
 			}
+
+			return Task.CompletedTask;
 		}
 	}
 }

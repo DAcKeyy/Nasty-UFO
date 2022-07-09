@@ -4,6 +4,7 @@ using Data.Generators;
 using Generation.Base;
 using Generation.GarbageCollection.NastyUFO;
 using Generation.GarbageCollection.NastyUFO.Strategies;
+using Generation.Generators.NastyUFO.States;
 using Miscellaneous.Pools;
 using SceneBehavior.NastyUFOGame.Base;
 using UnityEngine;
@@ -12,14 +13,14 @@ namespace SceneBehavior.NastyUFOGame.GameStates
 {
 	public class GameStartup_State : GameState
 	{
-		private readonly LevelGenerator<MonoBehaviour> _ufoLevelGenerator;
+		private readonly ObjectGenerator<MonoBehaviour> _ufoObjectGenerator;
 		private readonly StateMachine _thisMachine;
 		private readonly UFO _player;
 		private readonly NastyUFOLevelGeneration_Settings _levelGenerationSetting;
 		private MonoPool<MonoBehaviour> _monoPool;
 		
 		public GameStartup_State(
-			ref LevelGenerator<MonoBehaviour> levelGenerator, 
+			ref ObjectGenerator<MonoBehaviour> objectGenerator, 
 			StateMachine thisMachine, 
 			NastyUFOLevelGeneration_Settings levelGenerationSetting,
 			ref MonoPool<MonoBehaviour> monoPool,
@@ -27,23 +28,24 @@ namespace SceneBehavior.NastyUFOGame.GameStates
 		{
 			_player = player;
 			_monoPool = monoPool;
-			_ufoLevelGenerator = levelGenerator;
+			_ufoObjectGenerator = objectGenerator;
 			_thisMachine = thisMachine;
 			_levelGenerationSetting = levelGenerationSetting;
 		}
 		
-		public async override Task Enter()
+		public override async Task Enter()
 		{
-			_ufoLevelGenerator.SetMode(1);
+			Debug.Log("wolaaaaaaaa");
+			_ufoObjectGenerator.SwitchState(new NastyUfoObjectGenerator_AwaitInputState());
+			await _ufoObjectGenerator.Create();
 			
-			_ufoLevelGenerator.Create();
-			NastyUFOGC GC = new NastyUFOGC(new InRadiusStrategy(ref _monoPool, _levelGenerationSetting._clearingRange, _player.transform));
+			NastyUFOGC gc = new NastyUFOGC(new InRadiusStrategy(ref _monoPool, _levelGenerationSetting._clearingRange, _player.transform));
 			
 			while (true)
 			{
 				await Task.Delay((int)(_levelGenerationSetting._levelUpdateRate * 1000));
-				_ufoLevelGenerator.Update();
-				GC.DoJob();
+				await _ufoObjectGenerator.Update();
+				await gc.DoJob();
 			}
 		}
 

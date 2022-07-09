@@ -1,23 +1,26 @@
-using System.Collections.Generic;
-using Miscellaneous.Pools;
-using UnityEngine;
+using System.Threading.Tasks;
 
 namespace Generation.Base
 {
+	//Сборщик бизнесс мусора по заданным правилам
 	public abstract class BusinessGarbageCollector
 	{
 		private BusinessGarbageCollectorStrategy _currentStrategy;
 
-		//Ну типа идея такая что собрищик хуйни не знает что он делает и можно будет потом менять контекст его работы
-		protected BusinessGarbageCollector(
-			BusinessGarbageCollectorStrategy workingStrategy)
+		protected BusinessGarbageCollector(BusinessGarbageCollectorStrategy workingStrategy)
 		{
 			_currentStrategy = workingStrategy;
 		}
-		
-		public virtual void DoJob()
+
+		public virtual async Task DoJob()
 		{
-			_currentStrategy.DestroyFuckingObjects();
+			//Ну типа идея такая что собрищик хуйни не знает что он делает и можно будет потом менять контекст его работы
+			await _currentStrategy.DestroyFuckingObjects();
+		}
+		
+		public void SwitchStrategy(BusinessGarbageCollectorStrategy newStrategy)
+		{
+			_currentStrategy = newStrategy;
 		}
 	}
 }

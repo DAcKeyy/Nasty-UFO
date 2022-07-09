@@ -5,6 +5,7 @@ using Random = UnityEngine.Random;
 
 namespace Generation.Base
 {
+	//просто методы для просчёта
 	public static class GeneratorTools<T> where T : MonoBehaviour
     {
 	    public static void ClearFarObjects(MonoPool<T> objList, float radius, Transform centerObj)

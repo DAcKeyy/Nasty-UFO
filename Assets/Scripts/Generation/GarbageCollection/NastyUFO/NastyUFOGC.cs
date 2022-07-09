@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using Generation.Base;
-using Miscellaneous.Pools;
-using UnityEngine;
+﻿using Generation.Base;
 
 namespace Generation.GarbageCollection.NastyUFO
 {

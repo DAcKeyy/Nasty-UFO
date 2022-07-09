@@ -2,7 +2,7 @@
 using Actors.NastyUFO;
 using Data.Generators;
 using Generation.Base;
-using Generation.Contexts.NastyUFO;
+using Generation.Generators.NastyUFO;
 using Miscellaneous.Pools;
 using SceneBehavior.NastyUFOGame.Base;
 using SceneBehavior.NastyUFOGame.GameStates;
@@ -12,26 +12,25 @@ namespace SceneBehavior.NastyUFOGame
 {
 	public class UFOGameSystem : StateMachine
 	{
-		private readonly LevelGenerator<MonoBehaviour> _ufoLevelGenerator;
 		//TODO Можно сделать счётки созданных обектов, хз, по проекту это не надо (но можно)
-		private readonly MonoPool<MonoBehaviour> _objectPool;
-		
+
 		//TODO Прокидывать сюда UI
 		public UFOGameSystem(
 			NastyUFOLevelGeneration_Settings settings, 
-			UFO player,
-			Camera camera 
+			UFO player
 			/*, UISetting uiSettings*/)
 		{
-			_objectPool = new MonoPool<MonoBehaviour>();
-			_ufoLevelGenerator = new NastyUFOLevelGenerator(ref _objectPool, settings, player, camera);
+			settings._generationCenter = player.transform;
+			var objectPool = new MonoPool<MonoBehaviour>();
+			ObjectGenerator<MonoBehaviour> ufoObjectGenerator = new NastyUfoObjectGenerator(ref objectPool, settings);
+			
 			MachineSatesList = new List<GameState>()
 			{
-				new GameStartup_State(ref _ufoLevelGenerator, this, settings, ref _objectPool, player),
-				new GameLunched_State(ref _ufoLevelGenerator, settings, player, ref _objectPool),
+				new GameStartup_State(ref ufoObjectGenerator, this, settings, ref objectPool, player),
+				new GameLunched_State(ref ufoObjectGenerator, settings, player, ref objectPool),
 				new GameEnded_State(player)
 			};
-			
+
 			CurrentState = MachineSatesList[0];
 		}
 
