@@ -11,6 +11,7 @@ namespace Generation.Base
 		protected MonoPool<T> MonoPool;
 		protected NastyUFOLevelGeneration_Settings Settings;
 		
+		
 		protected GeneratorState(
 			ref MonoPool<T> pool,
 			NastyUFOLevelGeneration_Settings settings)

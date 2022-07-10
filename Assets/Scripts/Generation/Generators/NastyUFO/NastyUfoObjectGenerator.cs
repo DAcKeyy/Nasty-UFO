@@ -7,7 +7,6 @@ using Generation.Base;
 using Generation.Contexts.NastyUFO;
 using Generation.Factories.NastyUFO;
 using Generation.Generators.NastyUFO.Parts.Buildings;
-using Generation.Generators.NastyUFO.Parts.Buildings.States;
 using Generation.Generators.NastyUFO.States;
 using Miscellaneous.Pools;
 using UnityEngine;
@@ -33,8 +32,8 @@ namespace Generation.Generators.NastyUFO
 			
 			StatesList = new List<GeneratorState<MonoBehaviour>>()
 			{
-				new NastyUfoObjectGenerator_AwaitInputState(ref MonoPool, settings),
-				new NastyUfoObjectGenerator_RunState(ref MonoPool, settings),
+				new NastyUfoObjectGenerator_AwaitInputState(ref MonoPool, settings, _buildingsGenerator, _cloudsGenerator),
+				new NastyUfoObjectGenerator_RunState(ref MonoPool, settings, _buildingsGenerator, _cloudsGenerator),
 				new NastyUfoObjectGenerator_StopState(ref MonoPool, settings)
 			};
 

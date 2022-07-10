@@ -4,6 +4,7 @@ using Data.Generators;
 using Generation.Base;
 using Generation.GarbageCollection.NastyUFO;
 using Generation.GarbageCollection.NastyUFO.Strategies;
+using Generation.Generators.NastyUFO.Parts.Buildings;
 using Generation.Generators.NastyUFO.States;
 using Miscellaneous.Pools;
 using SceneBehavior.NastyUFOGame.Base;
@@ -36,7 +37,6 @@ namespace SceneBehavior.NastyUFOGame.GameStates
 		public override async Task Enter()
 		{
 			await base.Enter();
-			Debug.Log("wolaaaaaaaa");
 			_ufoObjectGenerator.SwitchState(new NastyUfoObjectGenerator_AwaitInputState(ref _monoPool, _levelGenerationSetting));
 			await _ufoObjectGenerator.Create();
 			
