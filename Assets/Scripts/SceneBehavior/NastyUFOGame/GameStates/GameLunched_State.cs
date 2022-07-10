@@ -42,7 +42,7 @@ namespace SceneBehavior.NastyUFOGame.GameStates
 			
 			_player.BeginSweeping();
 			_player.Died += async ufo => await _thisMachine.SwitchState<GameEnded_State>();
-			_levelGenerator.SwitchState(new NastyUfoObjectGenerator_RunState());
+			_levelGenerator.SwitchState(new NastyUfoObjectGenerator_RunState(ref _monoPool, _settings));
 			
 			var gc = new NastyUFOGC(new InRadiusStrategy(ref _monoPool, _settings._clearingRange, _player.transform));
 			

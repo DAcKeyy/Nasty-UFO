@@ -9,14 +9,14 @@ namespace Generation.Base
 {
     public abstract class ObjectGenerator<T> where T : MonoBehaviour //То что возврощает
     {
-        private MonoPool<T> _pool;
-        public List<GeneratorState> StatesList { get; protected set; }
-        public GeneratorState CurrentState { get; protected set; }
+        protected MonoPool<T> MonoPool;
+        public List<GeneratorState<T>> StatesList { get; protected set; }
+        public GeneratorState<T> CurrentState { get; protected set; }
 
         //У него есть пул и в него он срёт контекстную генерацию по заданной логике
-        protected ObjectGenerator(ref MonoPool<T> pool)
+        protected ObjectGenerator(ref MonoPool<T> monoPool)
         {
-            _pool = pool;
+            MonoPool = monoPool;
         }
 
         public virtual async Task Create()
@@ -33,7 +33,7 @@ namespace Generation.Base
             Debug.Log("Обновляю хуйню");
         }
 
-        public void SwitchState<TStateType>(TStateType newState) where TStateType : GeneratorState
+        public void SwitchState<TStateType>(TStateType newState) where TStateType : GeneratorState<T>
         {
             var state = StatesList.FirstOrDefault(state => state is TStateType);
             if (state == null) throw new NotFiniteNumberException($"{typeof(T)} not initialized in states list");

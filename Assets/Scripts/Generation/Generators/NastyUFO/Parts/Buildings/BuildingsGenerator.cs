@@ -14,11 +14,12 @@ namespace Generation.Generators.NastyUFO.Parts.Buildings
 	public class BuildingsGenerator : ObjectGenerator<ModularBuilding>
 	{
 		public BuildingsGenerator(
-			ref MonoPool<ModularBuilding> buildingsPool) : base(ref buildingsPool)
+			ref MonoPool<ModularBuilding> buildingsMonoPool,
+			NastyUFOLevelGeneration_Settings settings) : base(ref buildingsMonoPool)
 		{
-			StatesList = new List<GeneratorState>()
+			StatesList = new List<GeneratorState<ModularBuilding>>()
 			{
-				new BuildingsGenerator_RunState()
+				new BuildingsGenerator_RunState(ref buildingsMonoPool, settings)
 			};
 
 			CurrentState = StatesList[0];

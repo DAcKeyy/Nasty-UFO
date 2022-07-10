@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Actors.NastyUFO;
 using Data.Generators;
@@ -7,21 +6,19 @@ using Generation.Base;
 using Generation.Contexts.NastyUFO.States;
 using Generation.Factories.NastyUFO;
 using Miscellaneous.Pools;
-using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Generation.Contexts.NastyUFO
 {
 	public class CloudsGenerator : ObjectGenerator<Cloud>
 	{
 		public CloudsGenerator(
-			ref MonoPool<Cloud> cloudsPool,
+			ref MonoPool<Cloud> cloudsMonoPool,
 			NastyUFOLevelGeneration_Settings settings, 
-			CloudsFactory cloudsFactory) : base(ref cloudsPool)
+			CloudsFactory cloudsFactory) : base(ref cloudsMonoPool)
 		{
-			StatesList = new List<GeneratorState>()
+			StatesList = new List<GeneratorState<Cloud>>()
 			{
-				new CloudsGenerator_AwaitngState(ref cloudsPool, settings, cloudsFactory)
+				new CloudsGenerator_AwaitngState(ref cloudsMonoPool, settings, cloudsFactory)
 			};
 
 			CurrentState = StatesList[0];

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Actors.NastyUFO;
+using Data.Generators;
 using Generation.Base;
 using Generation.Contexts.NastyUFO.State;
 using Miscellaneous.Pools;
@@ -9,19 +10,18 @@ namespace Generation.Contexts.NastyUFO
 {
 	public class LandGenerator : ObjectGenerator<Land>
 	{
-		private MonoPool<Land> _landPool;
-		
-		public LandGenerator(ref MonoPool<Land> pool) : base(ref pool)
+		public LandGenerator(
+			ref MonoPool<Land> monoPool,
+			NastyUFOLevelGeneration_Settings settings) : base(ref monoPool)
 		{
-			_landPool = pool;
-
-			StatesList = new List<GeneratorState>()
+			StatesList = new List<GeneratorState<Land>>()
 			{
-				new LandGenerator_RunState()
+				new LandGenerator_RunState(ref monoPool, settings)
 			};
 
 			CurrentState = StatesList[0];
 		}
+		
 		public override Task Create()
 		{
 			throw new System.NotImplementedException();

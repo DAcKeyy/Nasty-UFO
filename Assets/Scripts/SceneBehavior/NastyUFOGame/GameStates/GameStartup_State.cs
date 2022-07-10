@@ -37,7 +37,7 @@ namespace SceneBehavior.NastyUFOGame.GameStates
 		{
 			await base.Enter();
 			Debug.Log("wolaaaaaaaa");
-			_ufoObjectGenerator.SwitchState(new NastyUfoObjectGenerator_AwaitInputState());
+			_ufoObjectGenerator.SwitchState(new NastyUfoObjectGenerator_AwaitInputState(ref _monoPool, _levelGenerationSetting));
 			await _ufoObjectGenerator.Create();
 			
 			NastyUFOGC gc = new NastyUFOGC(new InRadiusStrategy(ref _monoPool, _levelGenerationSetting._clearingRange, _player.transform));

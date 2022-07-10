@@ -11,7 +11,7 @@ using Random = UnityEngine.Random;
 
 namespace Generation.Contexts.NastyUFO.States
 {
-	public class CloudsGenerator_AwaitngState : GeneratorState
+	public class CloudsGenerator_AwaitngState : GeneratorState<Cloud>
 	{
 		private readonly NastyUFOLevelGeneration_Settings _settings;
 		private readonly MonoPool<Cloud> _cloudsPool;
@@ -20,10 +20,8 @@ namespace Generation.Contexts.NastyUFO.States
 		public CloudsGenerator_AwaitngState(
 			ref MonoPool<Cloud> cloudsPool,
 			NastyUFOLevelGeneration_Settings settings, 
-			CloudsFactory cloudsFactory)
+			CloudsFactory cloudsFactory) : base(ref cloudsPool, settings)
 		{
-			_cloudsPool = cloudsPool;
-			_settings = settings;
 			_cloudsFactory = cloudsFactory;
 		}
 		

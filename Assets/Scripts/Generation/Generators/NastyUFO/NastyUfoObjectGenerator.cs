@@ -18,8 +18,6 @@ namespace Generation.Generators.NastyUFO
 	{
 		private readonly ObjectGenerator<ModularBuilding> _buildingsGenerator;
 		private readonly ObjectGenerator<Cloud> _cloudsGenerator;
-		private readonly NastyUFOLevelGeneration_Settings _levelGenerationSettings;
-		private readonly MonoPool<MonoBehaviour> _monoPool;
 		private MonoPool<ModularBuilding> _buildingPool;
 		private MonoPool<Cloud> _cloudPool;
 
@@ -27,18 +25,17 @@ namespace Generation.Generators.NastyUFO
 			ref MonoPool<MonoBehaviour> monoPool,
 			NastyUFOLevelGeneration_Settings settings) : base(ref monoPool)
 		{
-			_monoPool = monoPool;
 			InitPools();
 			
 			//Делаем генераторы по бизнесс логике
-			_buildingsGenerator = new BuildingsGenerator(ref _buildingPool);
+			_buildingsGenerator = new BuildingsGenerator(ref _buildingPool, settings);
 			_cloudsGenerator = new CloudsGenerator(ref _cloudPool,settings, new CloudsFactory(settings._cloudsFactorySettings));
 			
-			StatesList = new List<GeneratorState>()
+			StatesList = new List<GeneratorState<MonoBehaviour>>()
 			{
-				new NastyUfoObjectGenerator_AwaitInputState(),
-				new NastyUfoObjectGenerator_RunState(),
-				new NastyUfoObjectGenerator_StopState()
+				new NastyUfoObjectGenerator_AwaitInputState(ref MonoPool, settings),
+				new NastyUfoObjectGenerator_RunState(ref MonoPool, settings),
+				new NastyUfoObjectGenerator_StopState(ref MonoPool, settings)
 			};
 
 			CurrentState = StatesList[0];
@@ -62,8 +59,8 @@ namespace Generation.Generators.NastyUFO
 			_buildingPool = new MonoPool<ModularBuilding>();
 			_cloudPool = new MonoPool<Cloud>();
 			//Собскрайбимся к тому что там создалось и прокидываем в основной пул
-			_buildingPool.ObjectAdded += building => _monoPool.AddObject(building);
-			_cloudPool.ObjectAdded += cloud => _monoPool.AddObject(cloud);
+			_buildingPool.ObjectAdded += building => MonoPool.AddObject(building);
+			_cloudPool.ObjectAdded += cloud => MonoPool.AddObject(cloud);
 		}
 	}
 }
