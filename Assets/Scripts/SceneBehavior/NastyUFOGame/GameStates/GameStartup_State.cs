@@ -6,6 +6,7 @@ using Generation.GarbageCollection.NastyUFO;
 using Generation.GarbageCollection.NastyUFO.Strategies;
 using Generation.Generators.NastyUFO.Parts.Buildings;
 using Generation.Generators.NastyUFO.States;
+using Miscellaneous.Generators.ObjectGenerator;
 using Miscellaneous.Pools;
 using SceneBehavior.NastyUFOGame.Base;
 using UnityEngine;
@@ -34,25 +35,25 @@ namespace SceneBehavior.NastyUFOGame.GameStates
 			_levelGenerationSetting = levelGenerationSetting;
 		}
 		
-		public override async Task Enter()
+		public override void Enter()
 		{
-			await base.Enter();
-			_ufoObjectGenerator.SwitchState(new NastyUfoObjectGenerator_AwaitInputState(ref _monoPool, _levelGenerationSetting));
-			await _ufoObjectGenerator.Create();
+			base.Enter();
+			_ufoObjectGenerator.SwitchState(new UFOObjectGenerator_AwaitInputState(ref _monoPool, _levelGenerationSetting));
+			_ufoObjectGenerator.Create();
 			
 			NastyUFOGC gc = new NastyUFOGC(new InRadiusStrategy(ref _monoPool, _levelGenerationSetting._clearingRange, _player.transform));
 			
 			while (IsActive)
 			{
-				await Task.Delay((int)(_levelGenerationSetting._levelUpdateRate * 1000));
-				await _ufoObjectGenerator.Update();
-				await gc.DoJob();
+				Task.Delay((int)(_levelGenerationSetting._levelUpdateRate * 1000));
+				_ufoObjectGenerator.Update();
+				gc.DoJob();
 			}
 		}
 
-		public override async Task Jump()
+		public override void Jump()
 		{
-			await _thisMachine.SwitchState<GameLunched_State>();
+			_thisMachine.SwitchState<GameLunched_State>();
 		}
 	}
 }

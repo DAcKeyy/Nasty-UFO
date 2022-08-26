@@ -1,4 +1,5 @@
 ﻿using Generation.Base;
+using Miscellaneous.GC;
 
 namespace Generation.GarbageCollection.NastyUFO
 {

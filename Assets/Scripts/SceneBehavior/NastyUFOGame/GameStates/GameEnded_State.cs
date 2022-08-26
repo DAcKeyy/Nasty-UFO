@@ -14,26 +14,24 @@ namespace SceneBehavior.NastyUFOGame.GameStates
 		}
 
 
-		public override Task Enter()
+		public override void Enter()
 		{
 			_player.Die();
 			
 			//TODO Получить доступ к UI, вывести "gameover"
 			
-			return Task.CompletedTask;
 		}
 
-		public override Task Exit()
+		public override void Exit()
 		{
 			//TODO Выход из игры
-			return Task.CompletedTask;
+
 		}
 
-		public override Task Reset()
+		public override void Reset()
 		{
 			//TODO начало новой игры..
 			
-			return Task.CompletedTask;
 		}
 	}
 }

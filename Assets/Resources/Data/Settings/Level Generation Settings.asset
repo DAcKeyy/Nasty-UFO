@@ -17,9 +17,12 @@ MonoBehaviour:
     _levelUpdateRate: 1
     _clearingRange: 80
     _generationCenter: {fileID: 0}
+    _gameCamera: {fileID: 0}
     _buildingsFactorySettings:
-      _buildPrefabPool:
-      - {fileID: 2340096964073113256, guid: 1564435503f11d344acf5bcfed57acf5, type: 3}
+      _buildingDataList: []
+      _randomFloorsGap:
+        min: 3
+        max: 5
     _buildingDistanceGap: 13.87
     _buildingsFloorsRandomRange: {x: 4, y: 8}
     _cloudsRandomShift: {x: 50, y: 50, z: 50}

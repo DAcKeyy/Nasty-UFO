@@ -16,11 +16,11 @@ namespace SceneBehavior.NastyUFOGame.Base
 			
 			if (state is T == false) throw new NotFiniteNumberException($"{typeof(T)} not initialized in states list");
 			
-			await CurrentState.Exit();
+			CurrentState.Exit();
 			
 			CurrentState = state;
 			
-			await state.Enter();
+			state.Enter();
 		}
 	}
 }

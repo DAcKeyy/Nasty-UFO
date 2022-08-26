@@ -6,31 +6,31 @@ namespace SceneBehavior.NastyUFOGame.Base
 	{
 		protected bool IsActive;
 		
-		public virtual Task Enter()
+		public virtual void Enter()
 		{
 			IsActive = true;//!!!!!!!!
-			return Task.CompletedTask;
+
 		}
 
-		public virtual Task Pause()
+		public virtual void Pause()
 		{
-			return Task.CompletedTask;
+
 		}	
 
-		public virtual Task Exit()
+		public virtual void Exit()
 		{
 			IsActive = false;//!!!!!!!!
-			return Task.CompletedTask;
+
 		}
 
-		public virtual Task Jump()
+		public virtual void Jump()
 		{
-			return Task.CompletedTask;
+
 		}
 		
-		public virtual Task Reset()
+		public virtual void Reset()
 		{
-			return Task.CompletedTask;
+
 		}
 
 		public override string ToString()

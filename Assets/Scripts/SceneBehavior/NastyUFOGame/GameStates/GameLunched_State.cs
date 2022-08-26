@@ -6,6 +6,7 @@ using Generation.Base;
 using Generation.GarbageCollection.NastyUFO;
 using Generation.GarbageCollection.NastyUFO.Strategies;
 using Generation.Generators.NastyUFO.States;
+using Miscellaneous.Generators.ObjectGenerator;
 using Miscellaneous.Pools;
 using SceneBehavior.NastyUFOGame.Base;
 using UnityEngine;
@@ -36,31 +37,29 @@ namespace SceneBehavior.NastyUFOGame.GameStates
 			_player = player;
 		}
 
-		public override async Task Enter()
+		public override void Enter()
 		{
-			await base.Enter();
+			base.Enter();
 			
 			_player.BeginSweeping();
-			_player.Died += async ufo => await _thisMachine.SwitchState<GameEnded_State>();
-			_levelGenerator.SwitchState(new NastyUfoObjectGenerator_RunState(ref _monoPool, _settings));
+			_player.Died +=  ufo => _thisMachine.SwitchState<GameEnded_State>();
+			_levelGenerator.SwitchState(new UFOObjectGenerator_RunState(ref _monoPool, _settings));
 			
 			var gc = new NastyUFOGC(new InRadiusStrategy(ref _monoPool, _settings._clearingRange, _player.transform));
 			
 			while (IsActive)
 			{
-				await _levelGenerator.Update();
-				await gc.DoJob();
-				await Task.Delay((int)(_settings._levelUpdateRate * 1000));
+				_levelGenerator.Update();
+				gc.DoJob();
+				Task.Delay((int)(_settings._levelUpdateRate * 1000));
 			}
 		}
 
-		public override Task Jump()
+		public override void Jump()
 		{
 			//TODO Либо тут либо в тарелке делать задержку пока идёт прыжок
 			
 			_ufoMovement.Jump();
-			
-			return Task.CompletedTask;
 		}
 	}
 }

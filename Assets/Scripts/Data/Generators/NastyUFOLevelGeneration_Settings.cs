@@ -16,8 +16,10 @@ namespace Data.Generators
 		public float _levelUpdateRate;
 		[Tooltip("Дальность чистки обектов в метрах от камеры")]
 		[Range(0f, 100f)]public float _clearingRange;
-		[Tooltip("Центр от чего всё будет генерироваться и просчитываться (этот трансформ может двигаться)")]
+		[HideInInspector]
 		public Transform _generationCenter;
+		[HideInInspector]
+		public Camera _gameCamera;
 		
 
 		[Header("Дома")]

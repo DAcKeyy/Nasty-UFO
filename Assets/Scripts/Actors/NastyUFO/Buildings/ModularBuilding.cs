@@ -1,20 +1,28 @@
 ﻿using System;
+using Actors.Base;
 using UnityEngine;
 
 namespace Actors.NastyUFO.Buildings
 {
+	[SelectionBase]
+	[ExecuteInEditMode]
+	[RequireComponent(typeof(Rigidbody), typeof(BoxCollider))]
 	public class ModularBuilding : MonoBehaviour
 	{
-		[SerializeField] private BuildingFloor _groundFloorElement;
-		[SerializeField] private BuildingFloor _middleFloorElement;
-		[SerializeField] private BuildingFloor _roofFloorElement;
-		[SerializeField] private Vector3 _roofCenterPosition;
+		public BuildingData BuildingData => _buildingData;
+		[SerializeField] private BuildingData _buildingData;
+		private Vector3 _roofCenterPosition;
+
+		public void Init(BuildingData data)
+		{
+			_buildingData = data;
+		}
 		
 		public void AssembleBuilding(ushort requiredFloors)
 		{
-			//Debug.Log(transform.rotation.eulerAngles);
-			
-			if (requiredFloors == 0) throw new Exception("Сторить дом без этажей не прикольно");
+			if(_buildingData.GroundFloorElement == null) throw new Exception("Объект не проинициализирован");
+			//я не подразумиваю строить цокольные этажи, угомонись
+			if (requiredFloors <= 0) throw new Exception("Сторить дом без этажей не прикольно");
 			
 			var newBuildingColliderSize = Vector3.zero;
 			var newBuildingColliderCenter = Vector3.zero;
@@ -25,49 +33,57 @@ namespace Actors.NastyUFO.Buildings
 			
 			for (ushort floorIterator = 1; floorIterator <= requiredFloors; floorIterator++)
 			{
-				if(floorIterator == 1) {
+				if (floorIterator == 1) {
 					MakeFirstFloor();
 				}
 				else if (floorIterator < requiredFloors) {
 					MakeMiddleFloor();
 				}
-				else if(floorIterator == requiredFloors) {
+				if (floorIterator == requiredFloors) {
 					MakeRoof();
 				}
 
-				if (requiredFloors == 1) { //Если только один этаж нужен то пусть будет крыша
-					MakeRoof();
-				}
-				
-				//Debug.Log(buildingFloorComponent.transform.rotation.eulerAngles);
-				
 				ClearBuildModule();
 			}
 
-			SetNewBulidingColliderValues(newBuildingColliderSize, newBuildingColliderCenter);
+			var coll = GetComponent<BoxCollider>();
+			coll.enabled = false;
+			coll.size = newBuildingColliderSize;
+			coll.center = newBuildingColliderCenter;
 			
 			#region Logic
 				void MakeFirstFloor()
 	            {
-            		buildingFloorComponent = Instantiate(_groundFloorElement, this.transform.position, transform.rotation, transform);
+		            buildingFloorComponent = Instantiate(
+			            _buildingData.GroundFloorElement, 
+			            this.transform.position,
+			            this.transform.rotation,
+			            this.transform);
+
                     moduleRenderBounds = buildingFloorComponent.GetComponent<Renderer>().bounds;
 
                     var localBoundsCenter = moduleRenderBounds.center - buildingFloorComponent.transform.position;
                     
             		newBuildingColliderSize = moduleRenderBounds.size;
-            		newBuildingColliderCenter = localBoundsCenter;
+                       newBuildingColliderCenter = localBoundsCenter;
 	            }
 				
 	            void MakeMiddleFloor()
 	            {
-            		buildingFloorComponent = Instantiate(_middleFloorElement, this.transform.position, transform.rotation, transform);
+            		buildingFloorComponent = Instantiate(
+	                    _buildingData.MiddleFloorElement, 
+	                    this.transform.position, 
+	                    this.transform.rotation, 
+	                    this.transform);
+                    
             		moduleRenderBounds = buildingFloorComponent.GetComponent<Renderer>().bounds;
+                    
                     var boundsLocalCenter = moduleRenderBounds.center - buildingFloorComponent.transform.position;
 
             		buildingFloorComponent.transform.position = new Vector3(
-            			transform.position.x,
-            			newBuildingColliderSize.y + transform.position.y,
-            			transform.position.z);
+	                    this.transform.position.x,
+            			this.transform.position.y + newBuildingColliderSize.y,
+	                    this.transform.position.z);
 
             		newBuildingColliderSize += new Vector3(0, moduleRenderBounds.size.y, 0);
             		newBuildingColliderCenter += new Vector3(0, boundsLocalCenter.y, 0);
@@ -75,34 +91,30 @@ namespace Actors.NastyUFO.Buildings
 	            
 	            void MakeRoof()
 	            {
-            		buildingFloorComponent = Instantiate(_roofFloorElement, this.transform.position, transform.rotation, transform);
+            		buildingFloorComponent = Instantiate(
+	                    _buildingData.RoofFloorElement, 
+	                    this.transform.position, 
+	                    this.transform.rotation, 
+	                    this.transform);
+                    
             		moduleRenderBounds = buildingFloorComponent.GetComponent<Renderer>().bounds;
                     var boundsLocalCenter = moduleRenderBounds.center - buildingFloorComponent.transform.position;
                     
             		buildingFloorComponent.transform.position = new Vector3(
-            			transform.position.x, 
-            			newBuildingColliderSize.y  + transform.position.y,
-            			transform.position.z);
+	                    this.transform.position.x, 
+            			this.transform.position.y + newBuildingColliderSize.y,
+	                    this.transform.position.z);
                     
                     newBuildingColliderSize += new Vector3(0, moduleRenderBounds.size.y, 0);
             		newBuildingColliderCenter += new Vector3(0, boundsLocalCenter.y, 0);
                     
                     _roofCenterPosition = new Vector3(
-	                    transform.position.x,
-	                    transform.position.y + newBuildingColliderSize.y + moduleRenderBounds.size.y * 2,
-	                    transform.position.z);
+	                    this.transform.position.x,
+	                    this.transform.position.y + newBuildingColliderSize.y + moduleRenderBounds.size.y * 2,
+	                    this.transform.position.z);
 	            }
 
-	            void SetNewBulidingColliderValues(Vector3 newBuildingColliderSize, Vector3 newBuildingColliderCenter)
-				{
-					if (gameObject.TryGetComponent<BoxCollider>(out var colliderComp) == false)
-						colliderComp = gameObject.AddComponent<BoxCollider>();
-					
-					colliderComp.center = newBuildingColliderCenter;
-					colliderComp.size = newBuildingColliderSize;
-				}
-
-				void ClearBuildModule() //убираем лишнее с модуля чтобы осталась только текстура
+	            void ClearBuildModule() //убираем лишнее с модуля чтобы осталась только текстура
 				{
 #if UNITY_EDITOR	
 					DestroyImmediate(buildingFloorComponent);
@@ -112,23 +124,22 @@ namespace Actors.NastyUFO.Buildings
 				}
 			#endregion
 		}
-
-
+		
 		public Vector3 GetRoofPosition()
 		{
-			if (_roofCenterPosition == null) 
-				throw new ArgumentNullException($"Дом непроиницализирован");
-			
 			return _roofCenterPosition;
+		}
+
+		public Bounds GetBuildingSize()
+		{
+			return GetComponent<Collider>().bounds;
 		}
 		
 		private void OnCollisionEnter(Collision col)
 		{
-			//TODO Подумать как это скейлить проеврки на коллизии
-			if (col.gameObject.GetComponent<UFO>() != null)
+			if (col.gameObject.TryGetComponent<ICrushable>(out var obstacle))
 			{
-				//TODO Magic number
-				//_signalBus.TryFire(new BuildingTouchedSignal(col));
+				obstacle.Crush();
 			}
 		}
 	}

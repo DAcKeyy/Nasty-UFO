@@ -1,4 +1,5 @@
 using System;
+using Actors.Base;
 using Actors.Movement;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -8,7 +9,7 @@ namespace Actors.NastyUFO
 {
     [SelectionBase]
     [RequireComponent(typeof(UFOMovement))]
-    public class UFO : MonoBehaviour
+    public class UFO : MonoBehaviour, ICrushable
     {
         public Action<UFO> Died = delegate(UFO ufo) {  };
         private bool _isDied;
@@ -54,6 +55,11 @@ namespace Actors.NastyUFO
             
             //_signalBus.TryFire<PlayerDiedSignal>();
             
+        }
+
+        public void Crush()
+        {
+            //TODO Логика ломания
         }
     }
 }

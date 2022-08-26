@@ -2,8 +2,8 @@
 using Actors.Movement;
 using Actors.NastyUFO;
 using Data.Generators;
-using Generation.Base;
 using Generation.Generators.NastyUFO;
+using Miscellaneous.Generators.ObjectGenerator;
 using Miscellaneous.Pools;
 using SceneBehavior.NastyUFOGame.Base;
 using SceneBehavior.NastyUFOGame.GameStates;
@@ -23,10 +23,10 @@ namespace SceneBehavior.NastyUFOGame
 		{
 			settings._generationCenter = player.transform;
 			var objectPool = new MonoPool<MonoBehaviour>();
-			ObjectGenerator<MonoBehaviour> ufoObjectGenerator = new NastyUfoObjectGenerator(ref objectPool, settings);
 			
-			MachineSatesList = new List<GameState>()
-			{
+			ObjectGenerator<MonoBehaviour> ufoObjectGenerator = new UFOObjectGenerator(ref objectPool, settings);
+			
+			MachineSatesList = new List<GameState>() {
 				new GameStartup_State(ref ufoObjectGenerator, this, settings, ref objectPool, player),
 				new GameLunched_State(ref ufoObjectGenerator, settings, player, ufoMovement, this, ref objectPool),
 				new GameEnded_State(player)
@@ -35,12 +35,12 @@ namespace SceneBehavior.NastyUFOGame
 			CurrentState = MachineSatesList[0];
 		}
 
-		public async void Start() => await CurrentState.Enter();
+		public  void Start() =>  CurrentState.Enter();
 		
-		public async void Pause() => await CurrentState.Pause();
+		public  void Pause() =>  CurrentState.Pause();
 		
-		public async void Stop() => await CurrentState.Exit();
+		public  void Stop() =>  CurrentState.Exit();
 		
-		public async void Jump() => await CurrentState.Jump();
+		public  void Jump() =>  CurrentState.Jump();
 	}
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Actors.NastyUFO.Buildings;
+using Data.Generators;
+using Miscellaneous.Extensions.Variables;
 using Miscellaneous.Interfaces;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -12,6 +14,7 @@ namespace Generation.Factories.NastyUFO
 		private BuildingFactorySettings _settings;
 		//родитель для удобства поиска в иерахрхии
 		private readonly GameObject _buildingParent;
+		private int _createCounter;
 		
 		public BuildingsFactory(BuildingFactorySettings settings)
 		{
@@ -26,18 +29,30 @@ namespace Generation.Factories.NastyUFO
 		
 		public ModularBuilding Create(Vector2 position, Quaternion rotation)
 		{
-			return UnityEngine.Object.Instantiate(
-					_settings._buildPrefabPool[Random.Range(0,_settings._buildPrefabPool.Count)], //рандом дом из списка
-					position, 
-					rotation, 
-					_buildingParent.transform)
-				.GetComponent<ModularBuilding>();
+			GameObject modularBuildingGameObj = new GameObject($"Modular Building {++_createCounter}")
+			{
+				transform =
+				{
+					position = position,
+					rotation = rotation
+				}
+			};
+
+			ModularBuilding modularBuildingComponent = modularBuildingGameObj.AddComponent<ModularBuilding>();
+
+			BuildingData_ScriptableObject randomBuildingData = _settings._buildingDataList[Random.Range(0, _settings._buildingDataList.Count)];
+			BuildingData buildingData = randomBuildingData._buildingData;
+			
+			modularBuildingComponent.Init(buildingData);
+
+			return modularBuildingComponent;
 		}
 		
 		[Serializable]
 		public struct BuildingFactorySettings
 		{
-			public List<GameObject> _buildPrefabPool;
+			public List<BuildingData_ScriptableObject> _buildingDataList;
+			public MinMaxInt _randomFloorsGap;
 		}
 	}
 }

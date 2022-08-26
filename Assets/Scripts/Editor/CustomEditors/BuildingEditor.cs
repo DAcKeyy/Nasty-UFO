@@ -13,19 +13,18 @@ namespace Editor.CustomEditors
 		public void OnEnable()
 		{
 			_modularBuilding = (ModularBuilding)target;
-			
 		}
 
 		public override void OnInspectorGUI()
 		{
 			base.OnInspectorGUI();
-			
 			EditorGUILayout.LabelField("CustomEditor:");
 			
 			этажи = (ushort)EditorGUILayout.IntField( "Сколько этажей", этажи);
 			
 			if(GUILayout.Button("Построить дом")) 
 			{
+				_modularBuilding.Init(_modularBuilding.BuildingData);
 				_modularBuilding.AssembleBuilding(этажи);
 			}
 

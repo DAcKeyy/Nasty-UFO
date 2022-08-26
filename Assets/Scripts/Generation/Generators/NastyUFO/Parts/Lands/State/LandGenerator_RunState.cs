@@ -2,6 +2,7 @@
 using Actors.NastyUFO;
 using Data.Generators;
 using Generation.Base;
+using Miscellaneous.Generators.ObjectGenerator;
 using Miscellaneous.Pools;
 
 namespace Generation.Contexts.NastyUFO.State
@@ -10,19 +11,19 @@ namespace Generation.Contexts.NastyUFO.State
 	{
 		public LandGenerator_RunState(
 			ref MonoPool<Land> pool,
-			NastyUFOLevelGeneration_Settings settings) : base(ref pool, settings)
+			NastyUFOLevelGeneration_Settings settings) : base(pool)
 		{
 			
 		}
 		
-		public override Task Create()
+		public override void Create()
 		{
-			return base.Create();
+			base.Create();
 		}
 
-		public override Task Update()
+		public override void Update()
 		{
-			return base.Update();
+			base.Update();
 		}
 	}
 }

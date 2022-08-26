@@ -5,6 +5,7 @@ using Data.Generators;
 using Generation.Base;
 using Generation.Contexts.NastyUFO.States;
 using Generation.Factories.NastyUFO;
+using Miscellaneous.Generators.ObjectGenerator;
 using Miscellaneous.Pools;
 
 namespace Generation.Contexts.NastyUFO
@@ -14,7 +15,7 @@ namespace Generation.Contexts.NastyUFO
 		public CloudsGenerator(
 			ref MonoPool<Cloud> cloudsMonoPool,
 			NastyUFOLevelGeneration_Settings settings, 
-			CloudsFactory cloudsFactory) : base(ref cloudsMonoPool)
+			CloudsFactory cloudsFactory) : base(cloudsMonoPool)
 		{
 			StatesList = new List<GeneratorState<Cloud>>()
 			{
@@ -26,8 +27,8 @@ namespace Generation.Contexts.NastyUFO
 		
 		//TODO Создавать облака не только в даль по игре но и в ширь, в горизонт
 		
-		public override async Task Create() => await CurrentState.Create();
+		public override void Create() => CurrentState.Create();
 		
-		public override async Task Update() => await CurrentState.Update();
+		public override void Update() => CurrentState.Update();
 	}
 }
