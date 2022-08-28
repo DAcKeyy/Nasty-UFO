@@ -34,7 +34,7 @@ namespace Generation.Factories.NastyUFO
 				transform =
 				{
 					position = position,
-					rotation = rotation
+					rotation = rotation//возможно localRotation
 				}
 			};
 

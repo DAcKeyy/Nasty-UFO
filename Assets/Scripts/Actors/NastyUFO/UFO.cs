@@ -1,7 +1,6 @@
 using System;
 using Actors.Base;
 using Actors.Movement;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 

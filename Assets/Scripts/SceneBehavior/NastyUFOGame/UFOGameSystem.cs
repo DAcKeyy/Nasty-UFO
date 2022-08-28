@@ -13,14 +13,11 @@ namespace SceneBehavior.NastyUFOGame
 {
 	public class UFOGameSystem : StateMachine
 	{
-		//TODO Можно сделать счётки созданных обектов, хз, по проекту это не надо (но можно)
-
-		//TODO Прокидывать сюда UI
 		public UFOGameSystem(
 			NastyUFOLevelGeneration_Settings settings, 
-			UFO player, UFOMovement ufoMovement
-			/*, UISetting uiSettings*/)
+			UFO player, UFOMovement ufoMovement, Camera gameCamera)
 		{
+			settings._gameCamera = gameCamera;
 			settings._generationCenter = player.transform;
 			var objectPool = new MonoPool<MonoBehaviour>();
 			
@@ -35,12 +32,12 @@ namespace SceneBehavior.NastyUFOGame
 			CurrentState = MachineSatesList[0];
 		}
 
-		public  void Start() =>  CurrentState.Enter();
+		public void Start() =>  CurrentState.Enter();
 		
-		public  void Pause() =>  CurrentState.Pause();
+		public void Pause() =>  CurrentState.Pause();
 		
-		public  void Stop() =>  CurrentState.Exit();
+		public void Stop() =>  CurrentState.Exit();
 		
-		public  void Jump() =>  CurrentState.Jump();
+		public void Jump() =>  CurrentState.Jump();
 	}
 }

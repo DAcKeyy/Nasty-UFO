@@ -1,11 +1,11 @@
-﻿using Actors.NastyUFO.Buildings;
+﻿using System;
+using Actors.NastyUFO.Buildings;
 using Data.Generators;
 using Generation.Factories.NastyUFO;
 using Miscellaneous.Generators.ObjectGenerator;
 using Miscellaneous.Pools;
 using UnityEngine;
-using Vector2 = UnityEngine.Vector2;
-using Vector3 = System.Numerics.Vector3;
+using Random = UnityEngine.Random;
 
 namespace Generation.Generators.NastyUFO.Parts.Buildings.States
 {
@@ -24,15 +24,7 @@ namespace Generation.Generators.NastyUFO.Parts.Buildings.States
 		
 		public override void Create()
 		{
-			ModularBuilding building =_factory.Create(Vector2.zero, _generalSettings._gameCamera.transform.rotation);
-
-			var buildingsDataList = _generalSettings._buildingsFactorySettings._buildingDataList;
-			var buildingsData = buildingsDataList[Random.Range(
-				_generalSettings._buildingsFactorySettings._randomFloorsGap.min,
-				_generalSettings._buildingsFactorySettings._randomFloorsGap.max)]._buildingData;
-			
-			building.Init(buildingsData);
-			
+			CreateFirstBuilding();
 		}
 
 		public override void Update()
@@ -40,10 +32,26 @@ namespace Generation.Generators.NastyUFO.Parts.Buildings.States
 			base.Update();
 		}
 
-		private Vector3 CalculatePlace()
+		private ModularBuilding CreateFirstBuilding()
 		{
+			//TODO Magic number
+			ModularBuilding building = _factory.Create(Vector2.zero, Quaternion.Euler(0,180,0));
+
+			Bounds buildingBounds = building.BuildingData.GetMaxRenderBoxSize();
+
+			var centerPos = _generalSettings._generationCenter.position;
 			
-			return Vector3.Zero;
+			building.transform.position = new Vector3(centerPos.x + buildingBounds.size.x - _generalSettings._clearingRange ,0,centerPos.z);
+			
+			building.AssembleBuilding((ushort)Random.Range(_generalSettings._buildingsFactorySettings._randomFloorsGap.min,
+				_generalSettings._buildingsFactorySettings._randomFloorsGap.max));
+
+			return building;
+		}
+	
+		private Vector3 CalculatePlace(Vector3 place, Bounds buildingBounds)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

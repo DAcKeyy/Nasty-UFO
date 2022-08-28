@@ -22,7 +22,7 @@ namespace SceneBehavior
 		public void Start()
 		{
 			//По сути я ебать как скрыл логику игры что на сверхверхнем уровне можно заняться чем-нибудь другим
-			_theGame = new UFOGameSystem(_gameSettings._settings, _player, _ufoMovement);
+			_theGame = new UFOGameSystem(_gameSettings._settings, _player, _ufoMovement, Camera.main);
 			_jumpAction = _inputActionAsset.FindActionMap("Game").FindAction("Jump");
 			_pauseAction = _inputActionAsset.FindActionMap("Game").FindAction("Pause");
 			

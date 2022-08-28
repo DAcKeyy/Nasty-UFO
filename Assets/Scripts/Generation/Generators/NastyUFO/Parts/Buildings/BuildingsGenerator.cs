@@ -20,7 +20,8 @@ namespace Generation.Generators.NastyUFO.Parts.Buildings
 		{
 			StatesList = new List<GeneratorState<ModularBuilding>>()
 			{
-				new BuildingsGenerator_RunState(buildingsMonoPool, settings)
+				new BuildingsGenerator_RunState(buildingsMonoPool, settings),
+				new BuildingsGenerator_StopState(buildingsMonoPool)
 			};
 
 			CurrentState = StatesList[0];

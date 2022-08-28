@@ -19,9 +19,9 @@ namespace Actors.NastyUFO.Buildings
 			{
 				Bounds temp = GroundFloorElement.GetComponent<Renderer>().bounds;
 
-				if (temp.size.x > best.size.x ||
-				    temp.size.z > best.size.z ||
-				    temp.size.y > best.size.y)
+				if (Mathf.Abs(temp.center.x) + Mathf.Abs(temp.size.x) > Mathf.Abs(temp.center.x) + Mathf.Abs(best.size.x) ||
+				    Mathf.Abs(temp.center.x) + Mathf.Abs(temp.size.z) > Mathf.Abs(temp.center.x) + Mathf.Abs(best.size.z) || 
+				    Mathf.Abs(temp.center.x) + Mathf.Abs(temp.size.y) > Mathf.Abs(temp.center.x) + Mathf.Abs(best.size.y))
 				{
 					best = temp;
 				}
