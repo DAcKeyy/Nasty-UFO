@@ -9,13 +9,12 @@ namespace Data.Generators
 	{
 		[Header("Общее")]
 		[Space(10)]
-		//TODO От _generationStartPosition можно избавиться просчитывая _clearingRange и позицию игрока
-		[Tooltip("Точка от которой в начале всё созадётся")]
-		public Vector2 _generationStartPosition;
+		[Tooltip("Дальность чистки обектов в метрах от камеры")]
+		[Range(0f, 100f)]public float _spawnRange;
 		[Tooltip("Частота обновления уровня в секундах (костыль прозводительности)")]
 		public float _levelUpdateRate;
 		[Tooltip("Дальность чистки обектов в метрах от камеры")]
-		[Range(0f, 100f)]public float _clearingRange;
+		[Range(0f, 150f)]public float _clearingRange;
 		[HideInInspector]
 		public Transform _generationCenter;
 		[HideInInspector]
@@ -25,8 +24,6 @@ namespace Data.Generators
 		[Header("Дома")]
 		[Space(10)]
 		public BuildingsFactory.BuildingFactorySettings _buildingsFactorySettings;
-		[Tooltip("Дистанция в метрах между границами зданий")]
-		[Range(0, 20)] public float _buildingDistanceGap;
 		[Tooltip("Передел этажей создаваемых домов где X - Минимум этажей а Y - Максимум")]
 		public Vector2Int _buildingsFloorsRandomRange;
 		

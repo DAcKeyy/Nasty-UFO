@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Miscellaneous.Pools
@@ -9,7 +10,6 @@ namespace Miscellaneous.Pools
         public List<T> PrefabPool { get; }
         public Action<T> ObjectAdded = delegate(T behaviour) {  };
         public Action<T> ObjectRemoved = delegate(T behaviour) {  };
-        //TODO Костыль, из за которого все кто на это подписан должны будут проверять тип этого Т если они пользуются объектами из общего пула
         public Action<T> ObjectChanged = delegate(T behaviour) {  };
 
         public MonoPool() {
@@ -24,15 +24,19 @@ namespace Miscellaneous.Pools
 
         public T GetLast()
         {
-            try
+            //TODO Этот код можно ускорить
+
+            var LastOne = PrefabPool.Last();
+            if (PrefabPool.Last() == null)
             {
-                return PrefabPool[PrefabPool.Count - 1];
+                //
             }
-            catch (ArgumentOutOfRangeException e)
+            else
             {
-                Console.WriteLine(e);
-                return null;
+                
             }
+            
+            return LastOne;
         }
         
         public T GetFirst()

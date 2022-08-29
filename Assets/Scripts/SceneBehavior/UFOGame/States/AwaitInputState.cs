@@ -16,17 +16,15 @@ namespace SceneBehavior.UFOGame.States
 			_generator = generator;
 		}
 		
-		public override Task OnEnter()
+		public override async Task OnEnter()
 		{
 			InputManager.CurrentInputManager.JumpAction.performed += ActionSubscription;
-			_generator.CurrentState.Create();
-			return Task.CompletedTask;
+			await _generator.CurrentState.Create();
 		}
 
-		public override Task Update()
+		public override async Task Update()
 		{
-			_generator.CurrentState.Update();
-			return Task.CompletedTask;
+			await _generator.CurrentState.Update();
 		}
 
 		public override Task OnExit()

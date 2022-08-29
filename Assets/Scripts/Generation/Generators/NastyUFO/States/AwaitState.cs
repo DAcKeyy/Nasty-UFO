@@ -2,6 +2,8 @@
 using Actors.NastyUFO;
 using Actors.NastyUFO.Buildings;
 using Data.Generators;
+using Generation.Contexts.NastyUFO;
+using Generation.Generators.NastyUFO.Parts.Buildings;
 using Miscellaneous.Generators.ObjectGenerator;
 using Miscellaneous.Pools;
 using UnityEngine;
@@ -10,8 +12,8 @@ namespace Generation.Generators.NastyUFO.States
 {
 	public class AwaitState : GeneratorState<MonoBehaviour>
 	{
-		private readonly ObjectGenerator<ModularBuilding> _buildingsGenerator;
-		private readonly ObjectGenerator<Cloud> _cloudsGenerator;
+		private readonly BuildingsGenerator _buildingsGenerator;
+		private readonly CloudsGenerator _cloudsGenerator;
 
 		public AwaitState(
 			ref MonoPool<MonoBehaviour> pool,
@@ -23,8 +25,8 @@ namespace Generation.Generators.NastyUFO.States
 		public AwaitState(
 			ref MonoPool<MonoBehaviour> pool,
 			NastyUFOLevelGeneration_Settings settings,
-			ObjectGenerator<ModularBuilding> buildingsGenerator,
-			ObjectGenerator<Cloud> cloudsGenerator) : base(pool)
+			BuildingsGenerator buildingsGenerator,
+			CloudsGenerator cloudsGenerator) : base(pool)
 		{
 			_buildingsGenerator = buildingsGenerator;
 			_cloudsGenerator = cloudsGenerator;

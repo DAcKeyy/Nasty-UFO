@@ -50,8 +50,8 @@ namespace SceneBehavior.UFOGame
 			var pauseState = StateMachine.GetState(typeof(PauseState)) as PauseState;
 			pauseState.Exit += base.Exit;
 
-			InvokeRepeating("UpdateGC", 0, _generalSettings._settings._levelUpdateRate);
-			InvokeRepeating("UpdateGenerator", 0, _generalSettings._settings._levelUpdateRate);
+			InvokeRepeating("UpdateGC", 1, _generalSettings._settings._levelUpdateRate);//TODO Magic number
+			InvokeRepeating("UpdateGenerator", 0, _generalSettings._settings._levelUpdateRate);//TODO Magic number
 		}
 
 		private void UpdateGC()

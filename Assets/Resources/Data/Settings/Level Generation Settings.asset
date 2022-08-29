@@ -13,16 +13,15 @@ MonoBehaviour:
   m_Name: Level Generation Settings
   m_EditorClassIdentifier: 
   _settings:
-    _generationStartPosition: {x: -40, y: 0}
+    _spawnRange: 70
     _levelUpdateRate: 1
     _clearingRange: 80
     _generationCenter: {fileID: 0}
     _gameCamera: {fileID: 0}
     _buildingsFactorySettings:
-      _modularBuildingPrefab: {fileID: 0}
+      _modularBuildingPrefab: {fileID: 3080823996633152959, guid: 368872bf344b47249b821b1e88e60974, type: 3}
       _buildingDataList:
       - {fileID: 11400000, guid: 2449ca59395081d49b9c9462b2aa9fbc, type: 2}
-    _buildingDistanceGap: 13.87
     _buildingsFloorsRandomRange: {x: 4, y: 8}
     _cloudsRandomShift: {x: 50, y: 50, z: 50}
     _cloudsSpawnChance: 1

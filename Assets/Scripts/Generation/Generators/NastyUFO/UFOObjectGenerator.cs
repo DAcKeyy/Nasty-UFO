@@ -15,8 +15,6 @@ namespace Generation.Generators.NastyUFO
 {
 	public class UFOObjectGenerator : ObjectGenerator<MonoBehaviour>
 	{
-		private readonly ObjectGenerator<ModularBuilding> _buildingsGenerator;
-		private readonly ObjectGenerator<Cloud> _cloudsGenerator;
 		private MonoPool<ModularBuilding> _buildingPool;
 		private MonoPool<Cloud> _cloudPool;
 
@@ -27,16 +25,15 @@ namespace Generation.Generators.NastyUFO
 			InitPools();
 			
 			//Делаем генераторы по бизнесс логике
-			_buildingsGenerator = new BuildingsGenerator(ref _buildingPool, settings);
-			_cloudsGenerator = new CloudsGenerator(ref _cloudPool,settings, new CloudsFactory(settings._cloudsFactorySettings));
+			var buildingsGenerator = new BuildingsGenerator(ref _buildingPool, settings);
+			var cloudsGenerator = new CloudsGenerator(ref _cloudPool,settings, new CloudsFactory(settings._cloudsFactorySettings));
 			
 			StatesList = new List<GeneratorState<MonoBehaviour>>()
 			{
-				new AwaitState(ref MonoPool, settings, _buildingsGenerator, _cloudsGenerator),
-				new RunState(ref MonoPool, settings, _buildingsGenerator, _cloudsGenerator),
+				new AwaitState(ref MonoPool, settings, buildingsGenerator, cloudsGenerator),
+				new RunState(ref MonoPool, settings, buildingsGenerator, cloudsGenerator),
 				new StopState(ref MonoPool, settings)
 			};
-
 			CurrentState = StatesList[0];
 		}
 		

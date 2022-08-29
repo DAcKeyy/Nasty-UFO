@@ -23,8 +23,8 @@ namespace Generation.Generators.NastyUFO.Parts.Buildings
 			CurrentState = StatesList[0];
 		}
 
-		public override Task Create() => CurrentState.Create();
+		public override async Task Create() => await CurrentState.Create();
 		
-		public override Task Update() => CurrentState.Update();
+		public override async Task Update() => await CurrentState.Update();
 	}
 }

@@ -33,21 +33,26 @@ namespace Generation.Generators.NastyUFO.Parts.Buildings.States
 			if (_monoPool.PrefabPool.Count == 0)
 			{
 				var edgePoint = new Vector3(
-					-_generalSettings._clearingRange, 
-					0,
+					-_generalSettings._spawnRange, 
+					0,//TODO Magic number
 					_generalSettings._generationCenter.position.z);
 				
-				currentBuilding = CreateBuilding(edgePoint, Quaternion.Euler(0,-180, 0));
+				currentBuilding = CreateBuilding(edgePoint, Quaternion.Euler(0,-180, 0));//TODO Magic number
 				
 				AssembleAndPool(currentBuilding);
 			}
 			
 			//до края чистки
-			while (_monoPool.PrefabPool[_monoPool.PrefabPool.Count-1].transform.position.x < _generalSettings._clearingRange)
+			while (_monoPool.GetLast().transform.position.x < _generalSettings._spawnRange)
 			{
-				currentBuilding = CreateBuilding(_monoPool.PrefabPool[_monoPool.PrefabPool.Count-1].transform.position + new Vector3(1,0,0), Quaternion.Euler(0,-180, 0));
+				Quaternion newRotation = Quaternion.Euler(0, -180, 0);//TODO Magic number
+				Vector3 lastBuildingPos = _monoPool.GetLast().transform.position;
+				ModularBuilding building = _factory.Create(lastBuildingPos, newRotation);
+				Vector3 newBuildPosition = GetAbleToBuildPoint(lastBuildingPos, building.BuildingData.GetGreatestRenderBounds());
 
-				currentBuilding.transform.position = GetAbleToBuildPoint(currentBuilding.transform.position, currentBuilding.BuildingData.GetMaxRenderBoxSize());
+				currentBuilding = CreateBuilding(newBuildPosition, newRotation);
+
+				currentBuilding.transform.position = newBuildPosition;
 
 				AssembleAndPool(currentBuilding);
 			}
@@ -57,7 +62,20 @@ namespace Generation.Generators.NastyUFO.Parts.Buildings.States
 
 		public override Task Update()
 		{
-			base.Update();
+			ModularBuilding currentBuilding = null;
+
+			//TODO Костыль на подвязку по оси Х, хз как фиксить
+			while (_monoPool.GetLast().transform.position.x < _generalSettings._spawnRange + _generalSettings._generationCenter.position.x)
+			{
+				Vector3 newBuildPosition = _monoPool.GetLast().transform.position;
+				Quaternion newRotation = Quaternion.Euler(0, -180, 0);
+				
+				currentBuilding = CreateBuilding(newBuildPosition, newRotation);
+
+				currentBuilding.transform.position = GetAbleToBuildPoint(currentBuilding.transform.position, currentBuilding.BuildingData.GetGreatestRenderBounds());
+
+				AssembleAndPool(currentBuilding);
+			}
 			
 			return Task.CompletedTask;
 		}
@@ -85,11 +103,11 @@ namespace Generation.Generators.NastyUFO.Parts.Buildings.States
 		private Vector3 GetAbleToBuildPoint(Vector3 place, Bounds buildBounds)
 		{
 			//TODO Костыльный метод. Возможно в нём происходит арефмитический пиздец
-			var lastBound = _monoPool.PrefabPool[_monoPool.PrefabPool.Count-1].BuildingData.GetMaxRenderBoxSize();
+			var lastBound = _monoPool.GetLast().BuildingData.GetGreatestRenderBounds();
 			lastBound.Contains(new Vector3(place.x,place.y + 0.001f, place.z));
 			var awayDistance = buildBounds.size.x + lastBound.size.x;
 			
-			var correctPoint = new Vector3(_monoPool.PrefabPool[_monoPool.PrefabPool.Count-1].transform.position.x + awayDistance, place.y, place.z);
+			var correctPoint = new Vector3(_monoPool.GetLast().transform.position.x + awayDistance, place.y, place.z);
 			
 			return correctPoint;
 		}

@@ -11,7 +11,7 @@ namespace Actors.NastyUFO.Buildings
 		//Вставь нужные модули сверху и число элементов снизу 
 		private const byte MODULES_COUNT = 3;
 		
-		public Bounds GetMaxRenderBoxSize()
+		public Bounds GetGreatestRenderBounds()
 		{
 			Bounds best = GroundFloorElement.GetComponent<Renderer>().bounds;
 
