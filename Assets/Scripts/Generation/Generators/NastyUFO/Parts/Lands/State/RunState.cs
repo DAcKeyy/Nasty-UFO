@@ -1,29 +1,30 @@
 ﻿using System.Threading.Tasks;
 using Actors.NastyUFO;
 using Data.Generators;
-using Generation.Base;
 using Miscellaneous.Generators.ObjectGenerator;
 using Miscellaneous.Pools;
 
-namespace Generation.Contexts.NastyUFO.State
+namespace Generation.Generators.NastyUFO.Parts.Lands.State
 {
-	public class LandGenerator_RunState : GeneratorState<Land>
+	public class RunState : GeneratorState<Land>
 	{
-		public LandGenerator_RunState(
+		public RunState(
 			ref MonoPool<Land> pool,
 			NastyUFOLevelGeneration_Settings settings) : base(pool)
 		{
 			
 		}
 		
-		public override void Create()
+		public override Task Create()
 		{
 			base.Create();
+			return Task.CompletedTask;
 		}
 
-		public override void Update()
+		public override Task Update()
 		{
 			base.Update();
+			return Task.CompletedTask;
 		}
 	}
 }

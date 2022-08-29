@@ -17,10 +17,7 @@ namespace Miscellaneous.GC
 		//По умолчанию уничтожает весь данный ему пул
 		public virtual Task DestroyFuckingObjects()
 		{
-			for (var i = 0; i < _pool.PrefabPool.Count; i++)
-			{
-				_pool.PrefabPool.RemoveAt(i);
-			}
+			_pool.PrefabPool.Clear();
 
 			return Task.CompletedTask;
 		}

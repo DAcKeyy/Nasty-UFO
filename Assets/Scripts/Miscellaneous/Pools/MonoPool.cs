@@ -53,7 +53,7 @@ namespace Miscellaneous.Pools
             ObjectChanged(monoBehaviour);
         }
         
-        public void DestroyAt(int index)
+        public void DestroyThis(int index)
         {
             ObjectRemoved(PrefabPool[index]);
             UnityEngine.Object.Destroy(PrefabPool[index].gameObject);

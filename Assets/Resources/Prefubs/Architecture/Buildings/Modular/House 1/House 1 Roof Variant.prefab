@@ -53,7 +53,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9d21d5d2010895e4892b65a0d5cd6ffb, type: 3}
       propertyPath: m_Name
-      value: House 1 Roof
+      value: House 1 Roof Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d21d5d2010895e4892b65a0d5cd6ffb, type: 3}
@@ -73,8 +73,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.071873, y: 0.13293552, z: 1.0718758}
-  m_Center: {x: 0, y: 0.06646538, z: -0.0000014007092}
+  m_Size: {x: 3.2156188, y: 0.39880657, z: 3.2156277}
+  m_Center: {x: 0, y: 0.19939613, z: -0.00000423193}
 --- !u!114 &7269908334469049214
 MonoBehaviour:
   m_ObjectHideFlags: 0

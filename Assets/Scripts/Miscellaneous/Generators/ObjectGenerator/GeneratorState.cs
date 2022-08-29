@@ -1,4 +1,5 @@
-﻿using Miscellaneous.Pools;
+﻿using System.Threading.Tasks;
+using Miscellaneous.Pools;
 using UnityEngine;
 
 namespace Miscellaneous.Generators.ObjectGenerator
@@ -6,21 +7,35 @@ namespace Miscellaneous.Generators.ObjectGenerator
 	//Дублирует методы генератора
 	public abstract class GeneratorState<T> where T : MonoBehaviour
 	{
-		protected MonoPool<T> MonoPool;
+		protected readonly MonoPool<T> MonoPool;
 
 		protected GeneratorState(MonoPool<T> pool)
 		{
 			MonoPool = pool;
 		}
-		
-		public virtual void Create()
+
+		public virtual Task OnEnter()
 		{
-			Debug.Log("Генерирую хуйню");
+			Debug.Log($"{GetType().Name} state enter OnEnter");
+			return Task.CompletedTask;
+		}
+		
+		public virtual Task Create()
+		{
+			Debug.Log($"{GetType().Name} state enter Create");
+			return Task.CompletedTask;
 		}
 
-		public virtual void Update()
+		public virtual Task Update()
 		{
-			Debug.Log("Обновляю хуйню");
+			Debug.Log($"{GetType().Name} state enter Update");
+			return Task.CompletedTask;
+		}
+		
+		public virtual Task OnExit()
+		{
+			Debug.Log($"{GetType().Name} state enter OnExit");
+			return Task.CompletedTask;
 		}
 	}
 }

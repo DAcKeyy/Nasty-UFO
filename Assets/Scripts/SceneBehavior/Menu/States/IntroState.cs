@@ -6,7 +6,7 @@ namespace SceneBehavior.Menu.States
 {
 	public class IntroState : State
 	{
-		public override async Task Update()
+		public override Task Update()
 		{
 			CurrentTask = Task.Delay(3000);
 			
@@ -16,6 +16,8 @@ namespace SceneBehavior.Menu.States
 			}
 			
 			CurrentStateMachine.SwitchState(typeof(MainMenuActiveState));
+			
+			return Task.CompletedTask;
 		}
 	}
 }

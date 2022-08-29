@@ -19,9 +19,14 @@ namespace Miscellaneous.GameController
             StateMachine = new StateMachine(listState);
         }
         
-        async void Update()
+        protected virtual async void Update()
         {
             await StateMachine?.Update()!;
+        }
+
+        public virtual void Exit()
+        {
+            Application.Quit();
         }
     }
 }

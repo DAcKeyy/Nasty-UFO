@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using Generation.Base;
+﻿using System;
+using System.Threading.Tasks;
 using Miscellaneous.GC;
 using Miscellaneous.Pools;
 using UnityEngine;
@@ -18,7 +18,8 @@ namespace Generation.GarbageCollection.NastyUFO.Strategies
 			float radius,
 			Transform centerObj) : base(ref monoPool)
 		{
-			_monoPool = monoPool;
+			if (radius <= 0) throw new Exception("GS clear radius must be greater than zero!");
+			_monoPool = monoPool ?? throw new NullReferenceException();
 			_radius = radius;
 			_centerObj = centerObj;
 		}
@@ -27,13 +28,17 @@ namespace Generation.GarbageCollection.NastyUFO.Strategies
 		{
 			Vector3 centerPosition = _centerObj.transform.position;
 			
+			//TODO Этот код можно ускорить
 			for (var i = 0; i < _monoPool.PrefabPool.Count; i++)
 			{
 				Vector3 objPosition = _monoPool.PrefabPool[i].transform.position;
-				
-				if(math.abs(objPosition.x - centerPosition.x) > _radius) _monoPool.DestroyAt(i);
-				if(math.abs(objPosition.y - centerPosition.y) > _radius) _monoPool.DestroyAt(i);
-				if(math.abs(objPosition.z - centerPosition.z) > _radius) _monoPool.DestroyAt(i);
+
+				if ((math.abs(centerPosition.x - objPosition.x)) > _radius ||
+				    (math.abs(centerPosition.y - objPosition.y)) > _radius ||
+				    (math.abs(centerPosition.z - objPosition.z)) > _radius)
+				{
+					_monoPool.DestroyThis(i);
+				}
 			}
 			
 			return Task.CompletedTask;

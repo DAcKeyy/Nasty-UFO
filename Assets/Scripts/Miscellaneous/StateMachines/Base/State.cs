@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using System;
 using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Miscellaneous.StateMachines.Base
 {
+	[Serializable]
 	public class State
 	{
 		protected StateMachine CurrentStateMachine;

@@ -9,15 +9,21 @@ namespace Actors.NastyUFO.Buildings
 	[RequireComponent(typeof(Rigidbody), typeof(BoxCollider))]
 	public class ModularBuilding : MonoBehaviour
 	{
+		public BoxCollider _boxCollider;
 		public BuildingData BuildingData => _buildingData;
 		[SerializeField] private BuildingData _buildingData;
 		private Vector3 _roofCenterPosition;
+
+		public void Reset()
+		{
+			_boxCollider = GetComponent<BoxCollider>();
+		}
 
 		public void Init(BuildingData data)
 		{
 			_buildingData = data;
 		}
-		
+
 		public void AssembleBuilding(ushort requiredFloors)
 		{
 			if(_buildingData.GroundFloorElement == null) throw new Exception("Объект не проинициализирован");
@@ -30,99 +36,81 @@ namespace Actors.NastyUFO.Buildings
 			BuildingFloor buildingFloorComponent = null;
 			
 			//TODO Как это разбить на потоки?
-			
 			for (ushort floorIterator = 1; floorIterator <= requiredFloors; floorIterator++)
 			{
 				if (floorIterator == 1) {
-					MakeFirstFloor();
+					buildingFloorComponent = Instantiate(
+						_buildingData.GroundFloorElement, 
+						this.transform.position,
+						this.transform.rotation,
+						this.transform);
+
+					CalculateColliderBounds();
 				}
 				else if (floorIterator < requiredFloors) {
-					MakeMiddleFloor();
+					buildingFloorComponent = Instantiate(
+						_buildingData.MiddleFloorElement, 
+						this.transform.position, 
+						this.transform.rotation, 
+						this.transform);
+
+					CalculateColliderBounds();
 				}
 				if (floorIterator == requiredFloors) {
-					MakeRoof();
+					buildingFloorComponent = Instantiate(
+						_buildingData.RoofFloorElement, 
+						this.transform.position, 
+						this.transform.rotation, 
+						this.transform);
+
+					CalculateColliderBounds();
+                    
+					_roofCenterPosition = new Vector3(
+						this.transform.position.x,
+						this.transform.position.y + newBuildingColliderSize.y + moduleRenderBounds.size.y * 2, //* 2 чтобы точка надвисала над крышей
+						this.transform.position.z);
 				}
 
 				ClearBuildModule();
 			}
 
-			var coll = GetComponent<BoxCollider>();
-			coll.enabled = false;
-			coll.size = newBuildingColliderSize;
-			coll.center = newBuildingColliderCenter;
+			var colliderComponent = GetComponent<BoxCollider>();
+			colliderComponent.enabled = false;
+			colliderComponent.size = newBuildingColliderSize;
+			colliderComponent.center = newBuildingColliderCenter;
 			
-			#region Logic
-				void MakeFirstFloor()
+			
+			void CalculateColliderBounds()
+            {
+	            moduleRenderBounds = buildingFloorComponent.GetComponent<Renderer>().bounds;
+	            var localBoundsCenter = buildingFloorComponent.transform.position - moduleRenderBounds.center;
+
+	            if (newBuildingColliderSize == Vector3.zero || newBuildingColliderCenter == Vector3.zero)
 	            {
-		            buildingFloorComponent = Instantiate(
-			            _buildingData.GroundFloorElement, 
-			            this.transform.position,
-			            this.transform.rotation,
-			            this.transform);
-
-                    moduleRenderBounds = buildingFloorComponent.GetComponent<Renderer>().bounds;
-
-                    var localBoundsCenter = moduleRenderBounds.center - buildingFloorComponent.transform.position;
-                    
-            		newBuildingColliderSize = moduleRenderBounds.size;
-                       newBuildingColliderCenter = localBoundsCenter;
-	            }
-				
-	            void MakeMiddleFloor()
-	            {
-            		buildingFloorComponent = Instantiate(
-	                    _buildingData.MiddleFloorElement, 
-	                    this.transform.position, 
-	                    this.transform.rotation, 
-	                    this.transform);
-                    
-            		moduleRenderBounds = buildingFloorComponent.GetComponent<Renderer>().bounds;
-                    
-                    var boundsLocalCenter = moduleRenderBounds.center - buildingFloorComponent.transform.position;
-
-            		buildingFloorComponent.transform.position = new Vector3(
-	                    this.transform.position.x,
-            			this.transform.position.y + newBuildingColliderSize.y,
-	                    this.transform.position.z);
-
-            		newBuildingColliderSize += new Vector3(0, moduleRenderBounds.size.y, 0);
-            		newBuildingColliderCenter += new Vector3(0, boundsLocalCenter.y, 0);
+		            //TODO Где то тут скрываются алгебраические костыли, их надо переделать
+		            newBuildingColliderSize = moduleRenderBounds.size;
+		            newBuildingColliderCenter = new Vector3(localBoundsCenter.x,-localBoundsCenter.y,localBoundsCenter.z);
+		            return;
 	            }
 	            
-	            void MakeRoof()
-	            {
-            		buildingFloorComponent = Instantiate(
-	                    _buildingData.RoofFloorElement, 
-	                    this.transform.position, 
-	                    this.transform.rotation, 
-	                    this.transform);
-                    
-            		moduleRenderBounds = buildingFloorComponent.GetComponent<Renderer>().bounds;
-                    var boundsLocalCenter = moduleRenderBounds.center - buildingFloorComponent.transform.position;
-                    
-            		buildingFloorComponent.transform.position = new Vector3(
-	                    this.transform.position.x, 
-            			this.transform.position.y + newBuildingColliderSize.y,
-	                    this.transform.position.z);
-                    
-                    newBuildingColliderSize += new Vector3(0, moduleRenderBounds.size.y, 0);
-            		newBuildingColliderCenter += new Vector3(0, boundsLocalCenter.y, 0);
-                    
-                    _roofCenterPosition = new Vector3(
-	                    this.transform.position.x,
-	                    this.transform.position.y + newBuildingColliderSize.y + moduleRenderBounds.size.y * 2,
-	                    this.transform.position.z);
-	            }
-
-	            void ClearBuildModule() //убираем лишнее с модуля чтобы осталась только текстура
-				{
+	            buildingFloorComponent.transform.position = new Vector3(
+		            this.transform.position.x, 
+		            this.transform.position.y + newBuildingColliderSize.y,
+		            this.transform.position.z);
+	            
+	            newBuildingColliderSize += new Vector3(0, moduleRenderBounds.size.y, 0);
+	            newBuildingColliderCenter -= new Vector3(0, localBoundsCenter.y);
+            }
+			
+            void ClearBuildModule() //убираем лишнее с модуля чтобы осталась только текстура
+			{
 #if UNITY_EDITOR	
-					DestroyImmediate(buildingFloorComponent);
-					if(Application.isPlaying)
+				DestroyImmediate(buildingFloorComponent);
+				if(Application.isPlaying)
 #endif
-						Destroy(buildingFloorComponent);
-				}
-			#endregion
+					Destroy(buildingFloorComponent);
+			}
+				
 		}
 		
 		public Vector3 GetRoofPosition()

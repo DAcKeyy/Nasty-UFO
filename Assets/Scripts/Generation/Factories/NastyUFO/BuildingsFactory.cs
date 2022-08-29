@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using Actors.NastyUFO.Buildings;
 using Data.Generators;
-using Miscellaneous.Extensions.Variables;
 using Miscellaneous.Interfaces;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Generation.Factories.NastyUFO
 {
+	[Serializable]
 	public class BuildingsFactory : IFactory<Vector2, Quaternion, ModularBuilding>
 	{
 		private BuildingFactorySettings _settings;
@@ -29,21 +29,13 @@ namespace Generation.Factories.NastyUFO
 		
 		public ModularBuilding Create(Vector2 position, Quaternion rotation)
 		{
-			GameObject modularBuildingGameObj = new GameObject($"Modular Building {++_createCounter}")
-			{
-				transform =
-				{
-					position = position,
-					rotation = rotation//возможно localRotation
-				}
-			};
-
-			ModularBuilding modularBuildingComponent = modularBuildingGameObj.AddComponent<ModularBuilding>();
-
-			BuildingData_ScriptableObject randomBuildingData = _settings._buildingDataList[Random.Range(0, _settings._buildingDataList.Count)];
-			BuildingData buildingData = randomBuildingData._buildingData;
+			ModularBuilding modularBuildingComponent = UnityEngine.Object.Instantiate(_settings._modularBuildingPrefab, position, rotation, _buildingParent.transform);
 			
-			modularBuildingComponent.Init(buildingData);
+			BuildingData_ScriptableObject randomBuildingData = _settings._buildingDataList[Random.Range(0, _settings._buildingDataList.Count)];
+
+			modularBuildingComponent.Init(randomBuildingData._buildingData);
+
+			modularBuildingComponent.name = modularBuildingComponent.name + ++_createCounter;
 
 			return modularBuildingComponent;
 		}
@@ -51,8 +43,8 @@ namespace Generation.Factories.NastyUFO
 		[Serializable]
 		public struct BuildingFactorySettings
 		{
+			[HideInInspector] public ModularBuilding _modularBuildingPrefab;
 			public List<BuildingData_ScriptableObject> _buildingDataList;
-			public MinMaxInt _randomFloorsGap;
 		}
 	}
 }

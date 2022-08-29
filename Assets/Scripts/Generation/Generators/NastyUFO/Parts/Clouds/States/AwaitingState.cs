@@ -2,22 +2,21 @@
 using System.Threading.Tasks;
 using Actors.NastyUFO;
 using Data.Generators;
-using Generation.Base;
 using Generation.Factories.NastyUFO;
 using Miscellaneous.Generators.ObjectGenerator;
 using Miscellaneous.Pools;
 using UnityEngine;
-using Random = UnityEngine.Random;
+using Random = UnityEngine.Random; 
 
-namespace Generation.Contexts.NastyUFO.States
+namespace Generation.Generators.NastyUFO.Parts.Clouds.States
 {
-	public class CloudsGenerator_AwaitngState : GeneratorState<Cloud>
+	public class AwaitingState : GeneratorState<Cloud>
 	{
 		private readonly NastyUFOLevelGeneration_Settings _settings;
 		private readonly MonoPool<Cloud> _cloudsPool;
 		private readonly CloudsFactory _cloudsFactory;
 
-		public CloudsGenerator_AwaitngState(
+		public AwaitingState(
 			ref MonoPool<Cloud> cloudsPool,
 			NastyUFOLevelGeneration_Settings settings, 
 			CloudsFactory cloudsFactory) : base(cloudsPool)
@@ -25,14 +24,14 @@ namespace Generation.Contexts.NastyUFO.States
 			_cloudsFactory = cloudsFactory;
 		}
 		
-		public override void Create()
+		public override Task Create()
 		{
-			
+			return Task.CompletedTask;
 		}
 
-		public override void Update()	
+		public override Task Update()	
 		{
-			
+			return Task.CompletedTask;
 		}
 		
 		private Cloud[] SpawnCloudsLine(Cloud originCloud)

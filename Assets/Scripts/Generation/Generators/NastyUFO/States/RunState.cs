@@ -8,20 +8,13 @@ using UnityEngine;
 
 namespace Generation.Generators.NastyUFO.States
 {
-	public class UFOObjectGenerator_AwaitInputState : GeneratorState<MonoBehaviour>
+	public class RunState : GeneratorState<MonoBehaviour>
 	{
 		private readonly ObjectGenerator<ModularBuilding> _buildingsGenerator;
 		private readonly ObjectGenerator<Cloud> _cloudsGenerator;
 
-		public UFOObjectGenerator_AwaitInputState(
-			ref MonoPool<MonoBehaviour> pool,
-			NastyUFOLevelGeneration_Settings settings) : base(pool)
-		{
-			
-		}
-		
-		public UFOObjectGenerator_AwaitInputState(
-			ref MonoPool<MonoBehaviour> pool,
+		public RunState(
+			ref MonoPool<MonoBehaviour> pool, 
 			NastyUFOLevelGeneration_Settings settings,
 			ObjectGenerator<ModularBuilding> buildingsGenerator,
 			ObjectGenerator<Cloud> cloudsGenerator) : base(pool)
@@ -30,16 +23,16 @@ namespace Generation.Generators.NastyUFO.States
 			_cloudsGenerator = cloudsGenerator;
 		}
 		
-		public override void Create()
+		public override async Task Create()
 		{
-			_buildingsGenerator.Create();
-			_cloudsGenerator.Create();
+			await _buildingsGenerator.Create();
+			await _cloudsGenerator.Create();
 		}
 
-		public override void Update()
+		public override async Task Update()
 		{
-			_buildingsGenerator.Update();
-			_cloudsGenerator.Update();
+			await _buildingsGenerator.Update();
+			await _cloudsGenerator.Update();
 		}
 	}
 }

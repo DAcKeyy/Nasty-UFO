@@ -5,15 +5,13 @@ using UnityEngine;
 
 namespace Generation.Generators.NastyUFO.States
 {
-	public class UFOObjectGenerator_StopState : GeneratorState<MonoBehaviour>
+	public class StopState : GeneratorState<MonoBehaviour>
 	{
-		public UFOObjectGenerator_StopState(
+		public StopState(
 			ref MonoPool<MonoBehaviour> pool, 
 			NastyUFOLevelGeneration_Settings settings) : base(pool)
 		{
 			
 		}
-		
-		
 	}
 }

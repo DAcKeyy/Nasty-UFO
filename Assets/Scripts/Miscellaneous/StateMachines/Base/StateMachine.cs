@@ -26,19 +26,27 @@ namespace Miscellaneous.StateMachines.Base
 			if(CurrentState == null) throw new Exception($"{GetType().Name} Current State is null");
 			await CurrentState.Update();
 		}
-		
-		
-		public void SwitchState(Type newState)
+
+		public State GetState(Type newState)
+		{
+			var state = StateList.Find(x => x.GetType() == newState);
+			
+			if (state != null) return state;
+			
+			else throw new Exception($"{newState.Name} not initialized in states list");
+		}
+
+		public async void SwitchState(Type newState)
 		{
 			var state = StateList.Find(x => x.GetType() == newState);
 			
 			if (state != null)
 			{
-				if(CurrentState != null) CurrentState.OnExit();
+				if(CurrentState != null) await CurrentState.OnExit();
 				
 				CurrentState = state;
 				
-				CurrentState.OnEnter();
+				await CurrentState.OnEnter();
 			}
 			else
 			{

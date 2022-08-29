@@ -22,7 +22,7 @@ namespace Generation.Base
     			if (distance < radius) continue; 
     				
     			//и по индексу его уничтожаем
-    			objList.DestroyAt(i);
+    			objList.DestroyThis(i);
     		}
     	}
 	    

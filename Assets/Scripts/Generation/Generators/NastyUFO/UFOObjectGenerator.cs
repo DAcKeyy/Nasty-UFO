@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Actors.NastyUFO;
 using Actors.NastyUFO.Buildings;
 using Data.Generators;
@@ -31,24 +32,22 @@ namespace Generation.Generators.NastyUFO
 			
 			StatesList = new List<GeneratorState<MonoBehaviour>>()
 			{
-				new UFOObjectGenerator_AwaitInputState(ref MonoPool, settings, _buildingsGenerator, _cloudsGenerator),
-				new UFOObjectGenerator_RunState(ref MonoPool, settings, _buildingsGenerator, _cloudsGenerator),
-				new UFOObjectGenerator_StopState(ref MonoPool, settings)
+				new AwaitState(ref MonoPool, settings, _buildingsGenerator, _cloudsGenerator),
+				new RunState(ref MonoPool, settings, _buildingsGenerator, _cloudsGenerator),
+				new StopState(ref MonoPool, settings)
 			};
 
 			CurrentState = StatesList[0];
 		}
 		
-		public override void Create()
+		public override async Task Create()
 		{
-			_buildingsGenerator.Create();
-			_cloudsGenerator.Create();
+			await CurrentState.Create();
 		}
 
-		public override void Update()
+		public override async Task Update()
 		{
-			_buildingsGenerator.Update();
-			_cloudsGenerator.Update();
+			await CurrentState.Update();
 		}
 
 		private void InitPools()
@@ -56,6 +55,7 @@ namespace Generation.Generators.NastyUFO
 			//Создаём пулы
 			_buildingPool = new MonoPool<ModularBuilding>();
 			_cloudPool = new MonoPool<Cloud>();
+			
 			//Собскрайбимся к тому что там создалось и прокидываем в основной пул
 			_buildingPool.ObjectAdded += building => MonoPool.AddObject(building);
 			_cloudPool.ObjectAdded += cloud => MonoPool.AddObject(cloud);
