@@ -5,6 +5,7 @@ using Data.Generators;
 using Generation.Factories.NastyUFO;
 using Miscellaneous.Generators.ObjectGenerator;
 using Miscellaneous.Pools;
+using SceneBehavior.UFOGame.Difficulty;
 using UnityEngine;
 using Random = UnityEngine.Random; 
 
@@ -12,13 +13,13 @@ namespace Generation.Generators.NastyUFO.Parts.Clouds.States
 {
 	public class AwaitingState : GeneratorState<Cloud>
 	{
-		private readonly NastyUFOLevelGeneration_Settings _settings;
+		private readonly NastyUFO_GenerationSettings _settings;
 		private readonly MonoPool<Cloud> _cloudsPool;
 		private readonly CloudsFactory _cloudsFactory;
 
 		public AwaitingState(
 			ref MonoPool<Cloud> cloudsPool,
-			NastyUFOLevelGeneration_Settings settings, 
+			UFO_DifficultyController difficultyController, 
 			CloudsFactory cloudsFactory) : base(cloudsPool)
 		{
 			_cloudsFactory = cloudsFactory;

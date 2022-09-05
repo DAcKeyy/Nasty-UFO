@@ -17,14 +17,6 @@ namespace Generation.Generators.NastyUFO.States
 
 		public AwaitState(
 			ref MonoPool<MonoBehaviour> pool,
-			NastyUFOLevelGeneration_Settings settings) : base(pool)
-		{
-			
-		}
-		
-		public AwaitState(
-			ref MonoPool<MonoBehaviour> pool,
-			NastyUFOLevelGeneration_Settings settings,
 			BuildingsGenerator buildingsGenerator,
 			CloudsGenerator cloudsGenerator) : base(pool)
 		{

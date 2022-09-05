@@ -4,6 +4,7 @@ using Generation.Generators.NastyUFO.States;
 using Input;
 using Miscellaneous.Generators.ObjectGenerator;
 using Miscellaneous.StateMachines.Base;
+using SceneBehavior.UFOGame.Difficulty;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,51 +12,67 @@ namespace SceneBehavior.UFOGame.States
 {
 	public class GameRunState : State
 	{
-		private ObjectGenerator<MonoBehaviour> _generator;
+		private UFO_DifficultyController _difficultyController;
+		private readonly ObjectGenerator<MonoBehaviour> _generator;
+		private readonly UFO _player;
 			
-		public GameRunState(UFO player, ObjectGenerator<MonoBehaviour> generator)
+		public GameRunState(
+			UFO player, 
+			ObjectGenerator<MonoBehaviour> generator,
+			UFO_DifficultyController difficultyController)
 		{
+			_difficultyController = difficultyController;
 			_generator = generator;
-			player.Died += Die;
+			_player = player;
+			
+			_player.Died += Die;
 		}
 		
-		public override Task OnEnter()
+		public override async Task OnEnter()
 		{
-			_generator.SwitchState(typeof(RunState));
-			//InputManager.CurrentInputManager.JumpAction.performed += context => _gameSystem.Jump();
-			InputManager.CurrentInputManager.PauseAction.performed += ActionSubscription;
-			return Task.CompletedTask;
+			InputManager.CurrentInputManager.JumpAction.performed += PerformedActionSubscription;
+			InputManager.CurrentInputManager.PauseAction.performed += PerformedActionSubscription;
+			InputManager.CurrentInputManager.JumpAction.canceled += CanceledActionSubscription;
+			
+			await _generator.SwitchState(typeof(RunState));
 		}
 
+		public override async Task Update()
+		{
+			await _generator.CurrentState.Update();
+		}
+		
 		public override Task OnExit()
 		{
-			//InputManager.CurrentInputManager.JumpAction.performed -= context => _gameSystem.Jump();
-			InputManager.CurrentInputManager.PauseAction.performed -= ActionSubscription;
+			InputManager.CurrentInputManager.JumpAction.performed -= PerformedActionSubscription;
+			InputManager.CurrentInputManager.PauseAction.performed -= PerformedActionSubscription;
+			InputManager.CurrentInputManager.JumpAction.canceled -= CanceledActionSubscription;
 			
 			return Task.CompletedTask;
 		}
 
-		public override Task Update()
-		{
-			_generator.CurrentState.Update();
-			
-			return Task.CompletedTask;
-		}
-
-		private void ActionSubscription(InputAction.CallbackContext context)
+		private void PerformedActionSubscription(InputAction.CallbackContext context)
 		{
 			if (context.action == InputManager.CurrentInputManager.PauseAction)
-			{
 				CurrentStateMachine.SwitchState(typeof(PauseState));
-			}
+
 			if (context.action == InputManager.CurrentInputManager.JumpAction)
 			{
-				
+				_player.Accelerating(true);
 			}
+			
+				
 		}
 
-		private void Die(UFO palyer)
+		private void CanceledActionSubscription(InputAction.CallbackContext context)
 		{
+			if (context.action == InputManager.CurrentInputManager.JumpAction)
+				_player.Accelerating(false);
+		}
+		
+		private void Die(UFO player)
+		{
+			_player.Died -= Die;
 			CurrentStateMachine.SwitchState(typeof(GameOverState));
 		}
 	}

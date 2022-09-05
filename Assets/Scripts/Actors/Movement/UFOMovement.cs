@@ -4,52 +4,57 @@ using UnityEngine.Events;
 
 namespace Actors.Movement
 {
+	[Serializable]
 	[RequireComponent(typeof(Rigidbody))]
 	public class UFOMovement : MonoBehaviour
 	{
-		public MovementState State => _state;
+		[SerializeField] private MovementState _currentState;
+		[SerializeField] private float _flyForce;
+		[SerializeField] private float _speedFixedUpdate;
+		[SerializeField] private UnityEvent _thrustersStart;
+		[SerializeField] private UnityEvent _thrustersStop;
 		
-		[SerializeField] private MovementState _state = MovementState.Fly;
-		[SerializeField] [Range(0, 20f)] private float _jumpForce;
-		[SerializeField] [Range(-5, 5f)] private float _xPositionMovement;
-		[SerializeField] [Range(0, 100f)] private float _rotationMultiplier = 20;
-		[SerializeField] private UnityEvent _jumpEvent;
 		private Rigidbody _rigidbody;
+		private bool _isAccelerate;
 		
 		private void Awake()
 		{
 			_rigidbody = GetComponent<Rigidbody>();
-			ChangeState((int)_state);
+			ChangeState(_currentState);
 		}
 		
         private void FixedUpdate()
         {
-            MoveToward(new Vector2(_xPositionMovement, _rigidbody.velocity.y));
-            RotateDown();
-        }
-        
-        public void Jump()
-        {
-	        if(_state == MovementState.Fly) return;
-	        if(enabled == false) return;//UnityEventы могут вызывать методы в выключеных компонентах kekw0_0
+            MoveToward(new Vector2(_speedFixedUpdate, _rigidbody.velocity.y));
             
-	        _jumpEvent.Invoke();
-	        _rigidbody.velocity = Vector2.zero;
-	        _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode.Impulse);
+            if(_isAccelerate) _rigidbody.AddForce(_flyForce * Vector3.up, ForceMode.Acceleration);
         }
 
-        public void ChangeState(int state)
+        public void StartAcceleration()
         {
-	        switch ((MovementState) state)
+	        _thrustersStart.Invoke();
+	        _isAccelerate = true;
+        }
+
+        public void StopAcceleration()
+        {
+	        _thrustersStop.Invoke();
+	        _isAccelerate = false;
+        }
+        
+        public void ChangeState(MovementState state)
+        {
+	        if (_currentState == state) return;
+	        
+	        switch (state)
 	        {
 		        case MovementState.Fly:
-			        _state = MovementState.Fly;
+			        _currentState = MovementState.Fly;
 			        _rigidbody.useGravity = false;
 			        break;
 		        case MovementState.Falling:
-			        _state = MovementState.Falling;
+			        _currentState = MovementState.Falling;
 			        _rigidbody.useGravity = true;
-			        Jump();
 			        break;
 		        default:
 			        throw new ArgumentOutOfRangeException(nameof(state), state, null);
@@ -61,13 +66,7 @@ namespace Actors.Movement
 	        _rigidbody.velocity = direction;
         }
 
-        private void RotateDown()
-        {
-	        //TODO: Remove magic number
-	        transform.eulerAngles = new Vector3(0, 0, Mathf.Clamp(_rigidbody.velocity.y * (_rotationMultiplier / 2), -80, 50));
-        }
-		
-		[Serializable]
+        [Serializable]
 		public enum MovementState
 		{
 			Fly = 1,

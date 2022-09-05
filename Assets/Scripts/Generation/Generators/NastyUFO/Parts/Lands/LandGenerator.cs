@@ -12,7 +12,7 @@ namespace Generation.Generators.NastyUFO.Parts.Lands
 	{
 		public LandGenerator(
 			ref MonoPool<Land> monoPool,
-			NastyUFOLevelGeneration_Settings settings) : base(monoPool)
+			NastyUFO_GenerationSettings settings) : base(monoPool)
 		{
 			StatesList = new List<GeneratorState<Land>>()
 			{

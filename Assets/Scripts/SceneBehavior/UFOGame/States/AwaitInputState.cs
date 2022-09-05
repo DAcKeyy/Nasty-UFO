@@ -1,7 +1,8 @@
-﻿using System.Threading.Tasks;
-using Input;
+﻿using Input;
+using System.Threading.Tasks;
 using Miscellaneous.Generators.ObjectGenerator;
 using Miscellaneous.StateMachines.Base;
+using SceneBehavior.UFOGame.Difficulty;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,16 +10,21 @@ namespace SceneBehavior.UFOGame.States
 {
 	public class AwaitInputState : State
 	{
-		private ObjectGenerator<MonoBehaviour> _generator;
+		private readonly ObjectGenerator<MonoBehaviour> _generator;
+		private UFO_DifficultyController _difficultyController;
 		
-		public AwaitInputState(ObjectGenerator<MonoBehaviour> generator)
+		public AwaitInputState(
+			ObjectGenerator<MonoBehaviour> generator,
+			UFO_DifficultyController difficultyController)
 		{
 			_generator = generator;
+			_difficultyController = difficultyController;
 		}
 		
 		public override async Task OnEnter()
 		{
 			InputManager.CurrentInputManager.JumpAction.performed += ActionSubscription;
+			
 			await _generator.CurrentState.Create();
 		}
 

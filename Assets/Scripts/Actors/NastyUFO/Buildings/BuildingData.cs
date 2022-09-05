@@ -7,27 +7,27 @@ namespace Actors.NastyUFO.Buildings
 	public struct BuildingData
 	{
 		[Tooltip("Модуль дома")]
-		public BuildingFloor GroundFloorElement, MiddleFloorElement, RoofFloorElement;
-		//Вставь нужные модули сверху и число элементов снизу 
+		public BuildingFloor _groundFloorElement, _middleFloorElement, _roofFloorElement;
 		private const byte MODULES_COUNT = 3;
 		
-		public Bounds GetGreatestRenderBounds()
+		public Bounds GetSumOfBounds()
 		{
-			Bounds best = GroundFloorElement.GetComponent<Renderer>().bounds;
-
-			for (var i = 0; i < MODULES_COUNT - 1; i++)
+			Bounds sumOfBounds = new Bounds();
+			Bounds temp;
+			
+			for (ushort i = 1; i <= MODULES_COUNT; i++)
 			{
-				Bounds temp = GroundFloorElement.GetComponent<Renderer>().bounds;
-
-				if (Mathf.Abs(temp.center.x) + Mathf.Abs(temp.size.x) > Mathf.Abs(temp.center.x) + Mathf.Abs(best.size.x) &&
-				    Mathf.Abs(temp.center.x) + Mathf.Abs(temp.size.z) > Mathf.Abs(temp.center.x) + Mathf.Abs(best.size.z) && 
-				    Mathf.Abs(temp.center.x) + Mathf.Abs(temp.size.y) > Mathf.Abs(temp.center.x) + Mathf.Abs(best.size.y))
-				{
-					best = temp;
-				}
+				temp = i switch {
+					1 => _groundFloorElement.RenderBounds,
+					2 => _middleFloorElement.RenderBounds,
+					3 => _roofFloorElement.RenderBounds,
+					_ => throw new Exception("")
+				};
+				
+				sumOfBounds.Encapsulate(temp);
 			}
 
-			return best;
+			return sumOfBounds;
 		}
 	}
 }

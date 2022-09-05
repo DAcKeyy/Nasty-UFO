@@ -73,8 +73,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.1755943, y: 1.237877, z: 4.314846}
-  m_Center: {x: -0.087797105, y: 0.6308246, z: 0.65742314}
+  m_Size: {x: 10.585314, y: 4.1262565, z: 14.38282}
+  m_Center: {x: -0.29265714, y: 2.1027486, z: 2.1914103}
 --- !u!114 &9152583015320210040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,4 +87,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa798820e55644d785ddcb810be65e26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _meshFilter: {fileID: 3503734838735598706}
   _floorType: 0
+--- !u!33 &3503734838735598706 stripped
+MeshFilter:
+  m_CorrespondingSourceObject: {fileID: -5754084199372789682, guid: ac9ff337e2dd78043ace0ee8ee66099a, type: 3}
+  m_PrefabInstance: {fileID: 52537609931234364}
+  m_PrefabAsset: {fileID: 0}

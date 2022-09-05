@@ -57,6 +57,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d21d5d2010895e4892b65a0d5cd6ffb, type: 3}
+--- !u!33 &240418283496069447 stripped
+MeshFilter:
+  m_CorrespondingSourceObject: {fileID: -5754084199372789682, guid: 9d21d5d2010895e4892b65a0d5cd6ffb, type: 3}
+  m_PrefabInstance: {fileID: 3707379277884862729}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4589775081402895448 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 9d21d5d2010895e4892b65a0d5cd6ffb, type: 3}
@@ -73,8 +78,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.2156188, y: 0.39880657, z: 3.2156277}
-  m_Center: {x: 0, y: 0.19939613, z: -0.00000423193}
+  m_Size: {x: 10.718729, y: 1.3293551, z: 10.718758}
+  m_Center: {x: 0, y: 0.6646537, z: -0.000014066696}
 --- !u!114 &7269908334469049214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,4 +92,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa798820e55644d785ddcb810be65e26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _meshFilter: {fileID: 240418283496069447}
   _floorType: 2

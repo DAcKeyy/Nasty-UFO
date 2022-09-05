@@ -2,9 +2,9 @@
 
 namespace Data.Generators
 {
-	[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Level Generation Settings", order = 1)]
+	[CreateAssetMenu(fileName = "Generation Settings", menuName = "ScriptableObjects/Level Generation Settings", order = 1)]
 	public class LevelGenerationSettings_ScriptableObject : ScriptableObject
 	{
-		public NastyUFOLevelGeneration_Settings _settings;
+		public NastyUFO_GenerationSettings _settings;
 	}
 }

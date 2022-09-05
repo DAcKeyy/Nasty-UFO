@@ -2,11 +2,11 @@
 using System.Threading.Tasks;
 using Actors.NastyUFO;
 using Data.Generators;
-using Generation.Base;
 using Generation.Factories.NastyUFO;
 using Generation.Generators.NastyUFO.Parts.Clouds.States;
 using Miscellaneous.Generators.ObjectGenerator;
 using Miscellaneous.Pools;
+using SceneBehavior.UFOGame.Difficulty;
 
 namespace Generation.Contexts.NastyUFO
 {
@@ -14,12 +14,12 @@ namespace Generation.Contexts.NastyUFO
 	{
 		public CloudsGenerator(
 			ref MonoPool<Cloud> cloudsMonoPool,
-			NastyUFOLevelGeneration_Settings settings, 
+			UFO_DifficultyController difficultyController, 
 			CloudsFactory cloudsFactory) : base(cloudsMonoPool)
 		{
 			StatesList = new List<GeneratorState<Cloud>>()
 			{
-				new AwaitingState(ref cloudsMonoPool, settings, cloudsFactory)
+				new AwaitingState(ref cloudsMonoPool, difficultyController, cloudsFactory)
 			};
 
 			CurrentState = StatesList[0];

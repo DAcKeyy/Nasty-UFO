@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Actors.NastyUFO;
 using Actors.NastyUFO.Buildings;
-using Data.Generators;
 using Miscellaneous.Generators.ObjectGenerator;
 using Miscellaneous.Pools;
 using UnityEngine;
@@ -14,8 +13,7 @@ namespace Generation.Generators.NastyUFO.States
 		private readonly ObjectGenerator<Cloud> _cloudsGenerator;
 
 		public RunState(
-			ref MonoPool<MonoBehaviour> pool, 
-			NastyUFOLevelGeneration_Settings settings,
+			ref MonoPool<MonoBehaviour> pool,
 			ObjectGenerator<ModularBuilding> buildingsGenerator,
 			ObjectGenerator<Cloud> cloudsGenerator) : base(pool)
 		{

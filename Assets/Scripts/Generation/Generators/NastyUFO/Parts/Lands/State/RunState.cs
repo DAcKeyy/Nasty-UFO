@@ -10,7 +10,7 @@ namespace Generation.Generators.NastyUFO.Parts.Lands.State
 	{
 		public RunState(
 			ref MonoPool<Land> pool,
-			NastyUFOLevelGeneration_Settings settings) : base(pool)
+			NastyUFO_GenerationSettings settings) : base(pool)
 		{
 			
 		}

@@ -1,12 +1,10 @@
-﻿using Generation.Base;
-using Miscellaneous.GC;
+﻿using Miscellaneous.GC;
 
 namespace Generation.GarbageCollection.NastyUFO
 {
 	public class NastyUFOGC : BusinessGarbageCollector
 	{
-		public NastyUFOGC(
-			BusinessGarbageCollectorStrategy workingStrategy) : base(workingStrategy)
+		public NastyUFOGC(BusinessGarbageCollectorStrategy workingStrategy) : base(workingStrategy)
 		{
 			
 		}

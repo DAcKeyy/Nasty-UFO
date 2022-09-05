@@ -14,15 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _settings:
     _spawnRange: 70
-    _levelUpdateRate: 1
     _clearingRange: 80
+    _levelUpdateRate: 1
+    _levelDifficultyIncreaseRate: 5
     _generationCenter: {fileID: 0}
     _gameCamera: {fileID: 0}
+    _isGameStarted: 0
     _buildingsFactorySettings:
       _modularBuildingPrefab: {fileID: 3080823996633152959, guid: 368872bf344b47249b821b1e88e60974, type: 3}
       _buildingDataList:
       - {fileID: 11400000, guid: 2449ca59395081d49b9c9462b2aa9fbc, type: 2}
-    _buildingsFloorsRandomRange: {x: 4, y: 8}
+      _biggestBuildingBounds:
+        m_Center: {x: 0, y: 0, z: 0}
+        m_Extent: {x: 0, y: 0, z: 0}
+    _buildingsFloorsRandomRange: {x: 4, y: 6}
+    _buildingsBetweenDistance: 0
     _cloudsRandomShift: {x: 50, y: 50, z: 50}
     _cloudsSpawnChance: 1
     _cloudsGapRange: 30

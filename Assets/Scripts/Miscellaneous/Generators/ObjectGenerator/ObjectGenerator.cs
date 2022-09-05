@@ -32,7 +32,7 @@ namespace Miscellaneous.Generators.ObjectGenerator
             await CurrentState.Update();
         }
 
-        public async void SwitchState(Type newState)
+        public async Task SwitchState(Type newState)
         {
             var state = StatesList.Find(x => x.GetType() == newState);
 			

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Actors.NastyUFO.Buildings;
-using Data.Generators;
 using Generation.Factories.NastyUFO;
 using Miscellaneous.Generators.ObjectGenerator;
 using Miscellaneous.Pools;
+using SceneBehavior.UFOGame.Difficulty;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -12,69 +12,78 @@ namespace Generation.Generators.NastyUFO.Parts.Buildings.States
 {
 	public class RunState : GeneratorState<ModularBuilding>
 	{
-		private BuildingsFactory _factory;
-		private NastyUFOLevelGeneration_Settings _generalSettings;
-		private MonoPool<ModularBuilding> _monoPool;
+		private readonly BuildingsFactory _factory;
+		private readonly MonoPool<ModularBuilding> _buildingsPool;
+		private readonly UFO_DifficultyController _difficultyController;
+		private readonly Quaternion _buildingRotation = Quaternion.Euler(0, -180, 0);//TODO Magic number
 		
-		public RunState(
-			MonoPool<ModularBuilding> monoPool,
-			NastyUFOLevelGeneration_Settings settings) : base(monoPool)
+		private float NewSpawnDistance_X =>
+			_difficultyController.GenerationSettings._spawnRange +
+			_difficultyController.GenerationSettings._generationCenter.position.x;
+		
+		private float LastBuildingPosition_X => 
+			_buildingsPool.GetLast().GetWorldGroundedConnectionPoint(ModularBuilding.Side.Right).x + 
+			_factory.BiggestBuildingsBound.size.x;
+		
+		private ModularBuilding _currentBuilding;
+		private ModularBuilding _lastBuilding;
+		private Vector3 _newBuildPosition;
+		private float _buildingsBetweenDistance;
+		
+		public RunState(MonoPool<ModularBuilding> buildingsPool, 
+			UFO_DifficultyController difficultyController) : base(buildingsPool)
 		{
-			_monoPool = monoPool;
-			_factory = new BuildingsFactory(settings._buildingsFactorySettings);
-			_generalSettings = settings;
+			if (difficultyController.GenerationSettings._spawnRange > difficultyController.GenerationSettings._clearingRange)
+				throw new Exception("Spawn range is greater than level Clearing range");
+			
+			_buildingsPool = buildingsPool;
+			_factory = new BuildingsFactory(difficultyController.GenerationSettings._buildingsFactorySettings);
+			_difficultyController = difficultyController;
 		}
 		
-		public override Task Create()
+		public override async Task Create()
 		{
-			ModularBuilding currentBuilding = null;
-
 			//Если самый первый дом в игре
-			if (_monoPool.PrefabPool.Count == 0)
+			if (_buildingsPool.PrefabPool.Count == 0)
 			{
+				_currentBuilding = _factory.Create(Vector2.zero, _buildingRotation);
+
+				var generationCenterPosition = _difficultyController.GenerationSettings._generationCenter.position;
+				
 				var edgePoint = new Vector3(
-					-_generalSettings._spawnRange, 
+					-_difficultyController.GenerationSettings._spawnRange + _factory.BiggestBuildingsBound.size.x + generationCenterPosition.x, 
 					0,//TODO Magic number
-					_generalSettings._generationCenter.position.z);
+					generationCenterPosition.z);
+
+				_currentBuilding.transform.position = edgePoint;
 				
-				currentBuilding = CreateBuilding(edgePoint, Quaternion.Euler(0,-180, 0));//TODO Magic number
-				
-				AssembleAndPool(currentBuilding);
+				AssembleAndPool(_currentBuilding);
 			}
 			
-			//до края чистки
-			while (_monoPool.GetLast().transform.position.x < _generalSettings._spawnRange)
-			{
-				Quaternion newRotation = Quaternion.Euler(0, -180, 0);//TODO Magic number
-				Vector3 lastBuildingPos = _monoPool.GetLast().transform.position;
-				ModularBuilding building = _factory.Create(lastBuildingPos, newRotation);
-				Vector3 newBuildPosition = GetAbleToBuildPoint(lastBuildingPos, building.BuildingData.GetGreatestRenderBounds());
-
-				currentBuilding = CreateBuilding(newBuildPosition, newRotation);
-
-				currentBuilding.transform.position = newBuildPosition;
-
-				AssembleAndPool(currentBuilding);
-			}
-
-			return Task.CompletedTask;
+			//Дострой все остальные дома как обычно
+			await Update();
 		}
 
 		public override Task Update()
 		{
-			ModularBuilding currentBuilding = null;
-
-			//TODO Костыль на подвязку по оси Х, хз как фиксить
-			while (_monoPool.GetLast().transform.position.x < _generalSettings._spawnRange + _generalSettings._generationCenter.position.x)
+			_buildingsBetweenDistance = (_currentBuilding.BuildingData.GetSumOfBounds().size.x / 2) + _difficultyController.GenerationSettings._buildingsBetweenDistance;
+			_lastBuilding = _buildingsPool.GetLast();
+			_newBuildPosition = new Vector3(
+				_lastBuilding.GetWorldGroundedConnectionPoint(ModularBuilding.Side.Right).x + _buildingsBetweenDistance,
+				_lastBuilding.GetWorldGroundedConnectionPoint(ModularBuilding.Side.Right).y,
+				_difficultyController.GenerationSettings._generationCenter.position.z);
+			
+			//TODO Подвязка по оси Х, может сделать по любой оси?...
+			while (LastBuildingPosition_X < NewSpawnDistance_X)
 			{
-				Vector3 newBuildPosition = _monoPool.GetLast().transform.position;
-				Quaternion newRotation = Quaternion.Euler(0, -180, 0);
-				
-				currentBuilding = CreateBuilding(newBuildPosition, newRotation);
+				_currentBuilding = _factory.Create(_newBuildPosition, _buildingRotation);
+				_buildingsBetweenDistance = _currentBuilding.BuildingData.GetSumOfBounds().size.x + _difficultyController.GenerationSettings._buildingsBetweenDistance;
 
-				currentBuilding.transform.position = GetAbleToBuildPoint(currentBuilding.transform.position, currentBuilding.BuildingData.GetGreatestRenderBounds());
+				_newBuildPosition.x += _buildingsBetweenDistance;
 
-				AssembleAndPool(currentBuilding);
+				_currentBuilding.transform.position = _newBuildPosition;
+
+				AssembleAndPool(_currentBuilding);
 			}
 			
 			return Task.CompletedTask;
@@ -85,31 +94,12 @@ namespace Generation.Generators.NastyUFO.Parts.Buildings.States
 			if (building == null) throw new NullReferenceException("Can't assemble null ModularBuilding");
 			
 			var floor = (ushort) Random.Range(
-				_generalSettings._buildingsFloorsRandomRange.x,
-				_generalSettings._buildingsFloorsRandomRange.y);
+				_difficultyController.GenerationSettings._buildingsFloorsRandomRange.x,
+				_difficultyController.GenerationSettings._buildingsFloorsRandomRange.y);
 			
 			building.AssembleBuilding(floor);
 			
-			_monoPool.AddObject(building);
-		}
-		
-		private ModularBuilding CreateBuilding(Vector3 position, Quaternion rotation)
-		{
-			ModularBuilding building = _factory.Create(position, rotation);
-
-			return building;
-		}
-
-		private Vector3 GetAbleToBuildPoint(Vector3 place, Bounds buildBounds)
-		{
-			//TODO Костыльный метод. Возможно в нём происходит арефмитический пиздец
-			var lastBound = _monoPool.GetLast().BuildingData.GetGreatestRenderBounds();
-			lastBound.Contains(new Vector3(place.x,place.y + 0.001f, place.z));
-			var awayDistance = buildBounds.size.x + lastBound.size.x;
-			
-			var correctPoint = new Vector3(_monoPool.GetLast().transform.position.x + awayDistance, place.y, place.z);
-			
-			return correctPoint;
+			_buildingsPool.AddObject(building);
 		}
 	}
 }

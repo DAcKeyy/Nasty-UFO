@@ -25,31 +25,17 @@ namespace Miscellaneous.Pools
         public T GetLast()
         {
             //TODO Этот код можно ускорить
-
             var LastOne = PrefabPool.Last();
-            if (PrefabPool.Last() == null)
-            {
-                //
-            }
-            else
-            {
-                
-            }
             
+            if (PrefabPool.Last() == null)
+                throw new NullReferenceException("PrefabPool.Last() is null");
+
             return LastOne;
         }
         
         public T GetFirst()
         {
-            try
-            {
-                return PrefabPool[0];
-            }
-            catch (ArgumentOutOfRangeException e)
-            {
-                Console.WriteLine(e);
-                return null;
-            }
+            return PrefabPool.First();
         }
 
         public void ChangeObject(T monoBehaviour)

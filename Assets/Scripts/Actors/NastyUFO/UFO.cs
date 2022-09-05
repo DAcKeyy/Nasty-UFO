@@ -2,7 +2,6 @@ using System;
 using Actors.Base;
 using Actors.Movement;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Actors.NastyUFO
 {
@@ -11,35 +10,24 @@ namespace Actors.NastyUFO
     public class UFO : MonoBehaviour, ICrushable
     {
         public Action<UFO> Died = delegate(UFO ufo) {  };
+        
         private bool _isDied;
+        private UFOMovement _movement;
 
         private void Start()
         {
-            Died += dsd => _isDied = true;
-            /*
-            _signalBus.Subscribe<BuildingTouchedSignal>(x => {
-                //TODO Исправить двойную проверку что тут, что в доме
-                if (x.CollisionObj2D.collider.GetComponent<UFO>() != null)
-                {
-                    Die();
-                }
-            });
-            
-            _signalBus.Subscribe<LandTouchedSignal>(x => {
-                //TODO Исправить двойную проверку что тут, что на земле
-                if (x.CollisionObj2D.collider.GetComponent<UFO>() != null)
-                {
-                    Die();
-                }
-            });
-            */
+            Died += ufo => _isDied = true;
+            _movement = GetComponent<UFOMovement>();
         }
 
-        public void BeginSweeping()
+        public void Accelerating(bool isAccelerate)
         {
-            GetComponent<UFOMovement>().ChangeState(2);
+            _movement.ChangeState(UFOMovement.MovementState.Falling);
+            
+            if(isAccelerate) _movement.StartAcceleration();
+            else _movement.StopAcceleration();
         }
-        
+
         public void Die()
         {
             if(_isDied) return;
@@ -48,12 +36,7 @@ namespace Actors.NastyUFO
 
             //TODO Анимация смээрти
             
-            GetComponent<UFOMovement>().enabled = false;
-            
-            //GetComponent<Collider2D>().isTrigger = true;
-            
-            //_signalBus.TryFire<PlayerDiedSignal>();
-            
+            _movement.enabled = false;
         }
 
         public void Crush()

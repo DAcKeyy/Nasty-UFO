@@ -8,7 +8,8 @@ namespace Miscellaneous.StateMachines.Base
 	{
 		protected List<State> StateList;
 		protected State CurrentState;
-		
+		public event Action<State> StateChanged = delegate(State state) {  };
+
 		public StateMachine(List<State> stateList)
 		{
 			StateList = stateList;
@@ -45,7 +46,7 @@ namespace Miscellaneous.StateMachines.Base
 				if(CurrentState != null) await CurrentState.OnExit();
 				
 				CurrentState = state;
-				
+				StateChanged(CurrentState);
 				await CurrentState.OnEnter();
 			}
 			else

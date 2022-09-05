@@ -8,7 +8,7 @@ namespace GameCamera
     public class FollowingCamera : MonoBehaviour , ICamera
     {
         private CinemachineVirtualCamera _camera;
-        private NastyUFOLevelGeneration_Settings _settings;
+        private NastyUFO_GenerationSettings _settings;
         
         private void Start()
         {

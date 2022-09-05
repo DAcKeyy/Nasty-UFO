@@ -5,20 +5,21 @@ using UnityEngine;
 namespace Data.Generators
 {
 	[Serializable]
-	public struct NastyUFOLevelGeneration_Settings
+	public struct NastyUFO_GenerationSettings
 	{
 		[Header("Общее")]
 		[Space(10)]
-		[Tooltip("Дальность чистки обектов в метрах от камеры")]
+		[Tooltip("Дальность чистки объектов в метрах от камеры")]
 		[Range(0f, 100f)]public float _spawnRange;
-		[Tooltip("Частота обновления уровня в секундах (костыль прозводительности)")]
-		public float _levelUpdateRate;
-		[Tooltip("Дальность чистки обектов в метрах от камеры")]
+		[Tooltip("Дальность чистки объектов в метрах от камеры")]
 		[Range(0f, 150f)]public float _clearingRange;
-		[HideInInspector]
-		public Transform _generationCenter;
-		[HideInInspector]
-		public Camera _gameCamera;
+		[Tooltip("Частота обновления уровня в секундах")]
+		public float _levelUpdateRate;
+		[Tooltip("Частота обновления сложности игры в секундах")]
+		public float _levelDifficultyIncreaseRate;
+		[HideInInspector] public Transform _generationCenter;
+		[HideInInspector] public Camera _gameCamera;
+		[HideInInspector] public bool _isGameStarted;
 		
 
 		[Header("Дома")]
@@ -26,8 +27,10 @@ namespace Data.Generators
 		public BuildingsFactory.BuildingFactorySettings _buildingsFactorySettings;
 		[Tooltip("Передел этажей создаваемых домов где X - Минимум этажей а Y - Максимум")]
 		public Vector2Int _buildingsFloorsRandomRange;
-		
-		
+		[Tooltip("Растояние между домами")]
+		[Range(0f, 10f)]
+		public float _buildingsBetweenDistance;
+
 		[Header("Облака")]
 		[Space(10)]
 		[Tooltip("Модификатор рандомности облаков от центра на линии спауна")]
