@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Level Generation Settings
   m_EditorClassIdentifier: 
   _settings:
-    _spawnRange: 70
-    _clearingRange: 80
+    _spawnRange: 100
+    _clearingRange: 150
     _levelUpdateRate: 1
     _levelDifficultyIncreaseRate: 5
+    _groundLevel: {x: 0, y: 0, z: 0}
     _generationCenter: {fileID: 0}
     _gameCamera: {fileID: 0}
     _isGameStarted: 0

@@ -25,9 +25,9 @@ namespace Data.Difficulty
 		
 		public void UpdateDifficulty(float currentTime)
 		{
-			_generationSettings._buildingsFloorsRandomRange.x *= (int)_difficultySettings._floorRandomnessMultiplierCurve.Evaluate(currentTime / 100);
-			_generationSettings._buildingsFloorsRandomRange.y *= (int)_difficultySettings._floorRandomnessMultiplierCurve.Evaluate(currentTime / 100);
-			_player.ChangeFlySpeed(_difficultySettings._playerSpeedMultiplierCurve.Evaluate(currentTime / 100));
+			_generationSettings._buildingsFloorsRandomRange.x *= (int)_difficultySettings._floorRandomnessMultiplierCurve.Evaluate(currentTime);
+			_generationSettings._buildingsFloorsRandomRange.y *= (int)_difficultySettings._floorRandomnessMultiplierCurve.Evaluate(currentTime);
+			_player.ChangeFlySpeed(_difficultySettings._playerSpeedMultiplierCurve.Evaluate(currentTime));
 		}
-	}
+	}	
 }
