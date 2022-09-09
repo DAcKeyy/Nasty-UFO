@@ -17,6 +17,7 @@ namespace Data.Generators
 		public float _levelUpdateRate;
 		[Tooltip("Частота обновления сложности игры в секундах")]
 		public float _levelDifficultyIncreaseRate;
+		[HideInInspector] public Vector3 _groundLevel;
 		[HideInInspector] public Transform _generationCenter;
 		[HideInInspector] public Camera _gameCamera;
 		[HideInInspector] public bool _isGameStarted;

@@ -13,7 +13,6 @@ using Miscellaneous.GC;
 using Miscellaneous.Generators.ObjectGenerator;
 using Miscellaneous.Pools;
 using Miscellaneous.StateMachines.Base;
-using SceneBehavior.UFOGame.Difficulty;
 using SceneBehavior.UFOGame.States;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -38,6 +37,7 @@ namespace SceneBehavior.UFOGame
 			_generationSettings._settings._buildingsFactorySettings._modularBuildingPrefab = _modularBuildingPrefab;
 			_generationSettings._settings._gameCamera = Camera.main;
 			_generationSettings._settings._generationCenter = _player.transform;
+			_generationSettings._settings._groundLevel = Vector3.zero;
 			_difficultyController = new UFO_DifficultyController(_generationSettings, _difficultySettings, _player);
 			
 			var objectPool = new MonoPool<MonoBehaviour>();

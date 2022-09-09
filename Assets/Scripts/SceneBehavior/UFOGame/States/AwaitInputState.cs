@@ -1,8 +1,8 @@
 ﻿using Input;
 using System.Threading.Tasks;
+using Data.Difficulty;
 using Miscellaneous.Generators.ObjectGenerator;
 using Miscellaneous.StateMachines.Base;
-using SceneBehavior.UFOGame.Difficulty;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

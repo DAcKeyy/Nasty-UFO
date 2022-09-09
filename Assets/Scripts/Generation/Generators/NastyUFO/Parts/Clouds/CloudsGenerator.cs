@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Actors.NastyUFO;
+using Data.Difficulty;
 using Data.Generators;
 using Generation.Factories.NastyUFO;
 using Generation.Generators.NastyUFO.Parts.Clouds.States;
 using Miscellaneous.Generators.ObjectGenerator;
 using Miscellaneous.Pools;
-using SceneBehavior.UFOGame.Difficulty;
 
 namespace Generation.Contexts.NastyUFO
 {

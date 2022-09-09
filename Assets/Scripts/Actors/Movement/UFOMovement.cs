@@ -8,6 +8,9 @@ namespace Actors.Movement
 	[RequireComponent(typeof(Rigidbody))]
 	public class UFOMovement : MonoBehaviour
 	{
+		public float SpeedFixedUpdate => _speedFixedUpdate;
+		public float SpeedMultiplier { get; set; } = 1;
+		
 		[SerializeField] private MovementState _currentState;
 		[SerializeField] private float _flyForce;
 		[SerializeField] private float _speedFixedUpdate;
@@ -17,6 +20,7 @@ namespace Actors.Movement
 		private Rigidbody _rigidbody;
 		private bool _isAccelerate;
 		
+
 		private void Awake()
 		{
 			_rigidbody = GetComponent<Rigidbody>();
@@ -25,7 +29,7 @@ namespace Actors.Movement
 		
         private void FixedUpdate()
         {
-            MoveToward(new Vector2(_speedFixedUpdate, _rigidbody.velocity.y));
+            MoveToward(new Vector2(_speedFixedUpdate * SpeedMultiplier, _rigidbody.velocity.y));
             
             if(_isAccelerate) _rigidbody.AddForce(_flyForce * Vector3.up, ForceMode.Acceleration);
         }
@@ -41,6 +45,7 @@ namespace Actors.Movement
 	        _thrustersStop.Invoke();
 	        _isAccelerate = false;
         }
+        
         
         public void ChangeState(MovementState state)
         {

@@ -43,5 +43,7 @@ namespace Actors.NastyUFO
         {
             //TODO Логика ломания
         }
+
+        public void ChangeFlySpeed(float multiplier) => _movement.SpeedMultiplier = multiplier;
     }
 }

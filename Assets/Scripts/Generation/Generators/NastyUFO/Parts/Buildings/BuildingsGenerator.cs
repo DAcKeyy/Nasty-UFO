@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Actors.NastyUFO.Buildings;
+using Data.Difficulty;
 using Generation.Generators.NastyUFO.Parts.Buildings.States;
 using Miscellaneous.Generators.ObjectGenerator;
 using Miscellaneous.Pools;
-using SceneBehavior.UFOGame.Difficulty;
 
 namespace Generation.Generators.NastyUFO.Parts.Buildings
 {

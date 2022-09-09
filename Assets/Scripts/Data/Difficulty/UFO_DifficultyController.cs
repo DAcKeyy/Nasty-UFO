@@ -1,8 +1,7 @@
 ﻿using Actors.NastyUFO;
-using Data.Difficulty;
 using Data.Generators;
 
-namespace SceneBehavior.UFOGame.Difficulty
+namespace Data.Difficulty
 {
 	public class UFO_DifficultyController
 	{
@@ -26,8 +25,9 @@ namespace SceneBehavior.UFOGame.Difficulty
 		
 		public void UpdateDifficulty(float currentTime)
 		{
-			_generationSettings._buildingsFloorsRandomRange.x = (int)_difficultySettings._buildingsMinFloorsCurve.Evaluate(currentTime / 100);
-			_generationSettings._buildingsFloorsRandomRange.y = (int)_difficultySettings._buildingsMaxFloorsCurve.Evaluate(currentTime / 100);
+			_generationSettings._buildingsFloorsRandomRange.x *= (int)_difficultySettings._floorRandomnessMultiplierCurve.Evaluate(currentTime / 100);
+			_generationSettings._buildingsFloorsRandomRange.y *= (int)_difficultySettings._floorRandomnessMultiplierCurve.Evaluate(currentTime / 100);
+			_player.ChangeFlySpeed(_difficultySettings._playerSpeedMultiplierCurve.Evaluate(currentTime / 100));
 		}
 	}
 }

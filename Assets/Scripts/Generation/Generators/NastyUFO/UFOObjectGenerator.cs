@@ -1,19 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Actors.NastyUFO;
 using Actors.NastyUFO.Buildings;
+using Data.Difficulty;
 using Generation.Contexts.NastyUFO;
 using Generation.Factories.NastyUFO;
 using Generation.Generators.NastyUFO.Parts.Buildings;
 using Generation.Generators.NastyUFO.States;
 using Miscellaneous.Generators.ObjectGenerator;
 using Miscellaneous.Pools;
-using SceneBehavior.UFOGame.Difficulty;
 using UnityEngine;
 
 namespace Generation.Generators.NastyUFO
 {
-	public class UFOObjectGenerator : ObjectGenerator<MonoBehaviour>
+	public class UFOObjectGenerator : ObjectGenerator<MonoBehaviour>, IDisposable
 	{
 		private MonoPool<ModularBuilding> _buildingPool;
 		private MonoPool<Cloud> _cloudPool;
@@ -56,6 +57,18 @@ namespace Generation.Generators.NastyUFO
 			//Собскрайбимся к тому что там создалось и прокидываем в основной пул
 			_buildingPool.ObjectAdded += building => MonoPool.AddObject(building);
 			_cloudPool.ObjectAdded += cloud => MonoPool.AddObject(cloud);
+			
+			MonoPool.ObjectRemoved += obj => _buildingPool.Destroy(obj.GetInstanceID());
+			MonoPool.ObjectRemoved += obj => _cloudPool.Destroy(obj.GetInstanceID());
+		}
+
+		public void Dispose()
+		{
+			_buildingPool.ObjectAdded -= building => MonoPool.AddObject(building);
+			_cloudPool.ObjectAdded -= cloud => MonoPool.AddObject(cloud);
+			
+			MonoPool.ObjectRemoved -= obj => _buildingPool.Destroy(obj.GetInstanceID());
+			MonoPool.ObjectRemoved -= obj => _cloudPool.Destroy(obj.GetInstanceID());
 		}
 	}
 }

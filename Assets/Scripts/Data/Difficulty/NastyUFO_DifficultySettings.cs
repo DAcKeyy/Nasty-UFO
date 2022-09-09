@@ -6,8 +6,9 @@ namespace Data.Difficulty
 	[Serializable]
 	public struct NastyUFO_DifficultySettings
 	{
-		public AnimationCurve _buildingsMinFloorsCurve;
-		public AnimationCurve _buildingsMaxFloorsCurve;
-		public AnimationCurve _playerSpeedCurve;
+		[Header("Все кривые по оси Х подразумевают собой проведённое в игре время!")]
+		[Space(10)]
+		public AnimationCurve _floorRandomnessMultiplierCurve;
+		public AnimationCurve _playerSpeedMultiplierCurve;
 	}
 }

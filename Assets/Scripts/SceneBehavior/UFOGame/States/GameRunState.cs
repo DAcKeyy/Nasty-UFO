@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 using Actors.NastyUFO;
+using Data.Difficulty;
 using Generation.Generators.NastyUFO.States;
 using Input;
 using Miscellaneous.Generators.ObjectGenerator;
 using Miscellaneous.StateMachines.Base;
-using SceneBehavior.UFOGame.Difficulty;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

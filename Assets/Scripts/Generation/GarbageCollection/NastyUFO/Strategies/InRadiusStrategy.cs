@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Miscellaneous.GC;
 using Miscellaneous.Pools;
@@ -27,17 +29,18 @@ namespace Generation.GarbageCollection.NastyUFO.Strategies
 		public override Task DestroyFuckingObjects()
 		{
 			Vector3 centerPosition = _centerObj.transform.position;
+			MonoBehaviour[] monoPoolPrefabPool =  _monoPool.PrefabPool.Values.ToArray();
 			
-			//TODO Этот код можно ускорить
-			for (var i = 0; i < _monoPool.PrefabPool.Count; i++)
+			//TODO Этот код можно ускорить!
+			foreach (var obj in monoPoolPrefabPool)
 			{
-				Vector3 objPosition = _monoPool.PrefabPool[i].transform.position;
+				Vector3 objPosition = obj.transform.position;
 
 				if ((math.abs(centerPosition.x - objPosition.x)) > _radius ||
 				    (math.abs(centerPosition.y - objPosition.y)) > _radius ||
 				    (math.abs(centerPosition.z - objPosition.z)) > _radius)
 				{
-					_monoPool.DestroyThis(i);
+					_monoPool.Destroy(obj.GetInstanceID());
 				}
 			}
 			

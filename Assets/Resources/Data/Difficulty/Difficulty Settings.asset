@@ -13,23 +13,23 @@ MonoBehaviour:
   m_Name: Difficulty Settings
   m_EditorClassIdentifier: 
   _settings:
-    _buildingsMinFloorsCurve:
+    _floorRandomnessMultiplierCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 3
-        inSlope: 7
-        outSlope: 7
+        value: 1
+        inSlope: 0.01
+        outSlope: 0.01
         tangentMode: 34
         weightedMode: 0
         inWeight: 0
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 1
-        value: 10
-        inSlope: 7
-        outSlope: 7
+        time: 100
+        value: 2
+        inSlope: 0.01
+        outSlope: 0.01
         tangentMode: 34
         weightedMode: 0
         inWeight: 0.33333334
@@ -37,33 +37,27 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    _buildingsMaxFloorsCurve:
+    _playerSpeedMultiplierCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 5
-        inSlope: 10
-        outSlope: 10
+        value: 1
+        inSlope: 0.01
+        outSlope: 0.01
         tangentMode: 34
         weightedMode: 0
         inWeight: 0
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 1
-        value: 15
-        inSlope: 10
-        outSlope: 10
+        time: 100
+        value: 2
+        inSlope: 0.01
+        outSlope: 0.01
         tangentMode: 34
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    _playerSpeedCurve:
-      serializedVersion: 2
-      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4

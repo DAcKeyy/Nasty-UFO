@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Actors.NastyUFO;
+using Data.Difficulty;
 using Data.Generators;
 using Generation.Factories.NastyUFO;
 using Miscellaneous.Generators.ObjectGenerator;
 using Miscellaneous.Pools;
-using SceneBehavior.UFOGame.Difficulty;
 using UnityEngine;
 using Random = UnityEngine.Random; 
 

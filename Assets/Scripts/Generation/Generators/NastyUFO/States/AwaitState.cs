@@ -28,12 +28,14 @@ namespace Generation.Generators.NastyUFO.States
 		{
 			await _buildingsGenerator.Create();
 			await _cloudsGenerator.Create();
+			await Task.CompletedTask;
 		}
 
 		public override async Task Update()
 		{
 			await _buildingsGenerator.Update();
 			await _cloudsGenerator.Update();
+			await Task.CompletedTask;
 		}
 	}
 }
