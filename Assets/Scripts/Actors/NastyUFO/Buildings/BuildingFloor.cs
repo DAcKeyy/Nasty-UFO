@@ -11,7 +11,7 @@ namespace Actors.NastyUFO.Buildings
 		[SerializeField] private MeshFilter _meshFilter;
 		[Header("Убедись что префаб модуля на 0 0 0 координатах")]
 		public Type _floorType = Type.MiddleFlor;
-
+		
 		private void Reset()
 		{
 			_meshFilter = GetComponent<MeshFilter>();

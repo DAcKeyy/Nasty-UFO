@@ -68,8 +68,7 @@ namespace Generation.Generators.NastyUFO.Parts.Buildings.States
 				var groundUnderCenter = new Vector3(_generationCenter.x, _groundLevel.y, _generationCenter.z);
 				var dist = Vector3.Distance(_generationCenter,groundUnderCenter);
 				var edgePoint = new Vector3(_generationCenter.x - dist, _groundLevel.y, _generationCenter.z);
-
-				Debug.Log($"{Vector3.Distance(edgePoint, _generationCenter)} > {_spawnRange}");
+				
 				if (Vector3.Distance(edgePoint, _generationCenter) > _spawnRange)
 				{
 					_lastBuilding = null;

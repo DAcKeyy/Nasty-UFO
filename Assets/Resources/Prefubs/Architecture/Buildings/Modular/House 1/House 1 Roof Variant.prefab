@@ -55,6 +55,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: House 1 Roof Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9d21d5d2010895e4892b65a0d5cd6ffb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d21d5d2010895e4892b65a0d5cd6ffb, type: 3}
 --- !u!33 &240418283496069447 stripped

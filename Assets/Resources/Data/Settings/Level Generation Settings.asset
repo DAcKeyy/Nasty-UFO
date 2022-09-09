@@ -15,7 +15,7 @@ MonoBehaviour:
   _settings:
     _spawnRange: 100
     _clearingRange: 150
-    _levelUpdateRate: 1
+    _levelUpdateRate: 0.2
     _levelDifficultyIncreaseRate: 5
     _groundLevel: {x: 0, y: 0, z: 0}
     _generationCenter: {fileID: 0}

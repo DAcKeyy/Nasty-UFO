@@ -65,6 +65,7 @@ namespace Actors.NastyUFO.Buildings
 						break;
 				}
 
+				//buildingFloorComponent.SetParent(this);
 				bounds.center += new Vector3(0, buildingFloorComponent.RenderBounds.size.y, 0);
 				bounds.Encapsulate(buildingFloorComponent.RenderBounds);
 
@@ -99,11 +100,11 @@ namespace Actors.NastyUFO.Buildings
 			};
 		}
 
-		private void OnCollisionEnter(Collision col)
+		public void OnCollisionEnter(Collision col)
 		{
 			if (col.gameObject.TryGetComponent<ICrushable>(out var obstacle))
 			{
-				obstacle.Crush();
+				obstacle.Crush(col);
 			}
 		}
 

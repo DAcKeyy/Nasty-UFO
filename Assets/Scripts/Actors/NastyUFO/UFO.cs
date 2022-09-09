@@ -39,9 +39,11 @@ namespace Actors.NastyUFO
             _movement.enabled = false;
         }
 
-        public void Crush()
+        public void Crush(Collision collision)
         {
-            //TODO Логика ломания
+            _movement.enabled = false;
+            
+            Die();
         }
 
         public void ChangeFlySpeed(float multiplier) => _movement.SpeedMultiplier = multiplier;
