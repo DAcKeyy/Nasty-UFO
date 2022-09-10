@@ -23,12 +23,10 @@ namespace Generation.Generators.NastyUFO.Parts.Buildings.States
 		private float NewSpawnDistanceOnX {
 			get
 			{
-				var groundUnderCenter = new Vector3(_generationCenter.x, _groundLevel.y, _generationCenter.z);
-				var dist = Vector3.Distance(_generationCenter,groundUnderCenter);
-				var newX = _difficultyController.GenerationSettings._generationCenter.position.x + dist;
-				var newSpawnRange = _spawnRange + _difficultyController.GenerationSettings._generationCenter.position.x;
-				if (newX < newSpawnRange) return newX;
-				else return newSpawnRange;
+				//var groundUnderCenter = new Vector3(_generationCenter.x, _groundLevel.y, _generationCenter.z);
+				//var dist = Vector3.Distance(_generationCenter,groundUnderCenter);
+				var newSpawnRange = _spawnRange + _difficultyController.GenerationSettings._generationCenter.position.x; 
+				return newSpawnRange;
 			}
 		}
 
