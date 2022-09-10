@@ -5,6 +5,7 @@ using Generation.Generators.NastyUFO.States;
 using Input;
 using Miscellaneous.Generators.ObjectGenerator;
 using Miscellaneous.StateMachines.Base;
+using UI.Canvases;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,6 +13,7 @@ namespace SceneBehavior.UFOGame.States
 {
 	public class GameRunState : State
 	{
+		private UFOGameCanvas _ufoGameCanvas;
 		private UFO_DifficultyController _difficultyController;
 		private readonly ObjectGenerator<MonoBehaviour> _generator;
 		private readonly UFO _player;
@@ -19,12 +21,13 @@ namespace SceneBehavior.UFOGame.States
 		public GameRunState(
 			UFO player, 
 			ObjectGenerator<MonoBehaviour> generator,
-			UFO_DifficultyController difficultyController)
+			UFO_DifficultyController difficultyController,
+			UFOGameCanvas ufoGameCanvas)
 		{
 			_difficultyController = difficultyController;
 			_generator = generator;
 			_player = player;
-			
+			_ufoGameCanvas = ufoGameCanvas;
 			_player.Died += Die;
 		}
 		
@@ -33,7 +36,7 @@ namespace SceneBehavior.UFOGame.States
 			InputManager.CurrentInputManager.JumpAction.performed += PerformedActionSubscription;
 			InputManager.CurrentInputManager.PauseAction.performed += PerformedActionSubscription;
 			InputManager.CurrentInputManager.JumpAction.canceled += CanceledActionSubscription;
-			
+			_ufoGameCanvas.gameObject.SetActive(true);
 			await _generator.SwitchState(typeof(RunState));
 		}
 
@@ -47,7 +50,7 @@ namespace SceneBehavior.UFOGame.States
 			InputManager.CurrentInputManager.JumpAction.performed -= PerformedActionSubscription;
 			InputManager.CurrentInputManager.PauseAction.performed -= PerformedActionSubscription;
 			InputManager.CurrentInputManager.JumpAction.canceled -= CanceledActionSubscription;
-			
+			_ufoGameCanvas.gameObject.SetActive(false);
 			return Task.CompletedTask;
 		}
 

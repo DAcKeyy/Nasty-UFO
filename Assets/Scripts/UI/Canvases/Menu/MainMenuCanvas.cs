@@ -1,5 +1,6 @@
 ﻿using UI.Base;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI.Canvases.Menu
 {
@@ -8,5 +9,12 @@ namespace UI.Canvases.Menu
 	public class MainMenuCanvas : MonoBehaviour, ICanvas
 	{
 		public Canvas Canvas => GetComponent<Canvas>();
+		public Button PlayButton => _playButton;
+		public Button SettingsButton => _settingsButton;
+		public Button DevelopersButton => _developersButton;
+
+		[SerializeField] private Button _playButton;
+		[SerializeField] private Button _settingsButton;
+		[SerializeField] private Button _developersButton;
 	}
 }

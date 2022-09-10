@@ -14,6 +14,7 @@ using Miscellaneous.Generators.ObjectGenerator;
 using Miscellaneous.Pools;
 using Miscellaneous.StateMachines.Base;
 using SceneBehavior.UFOGame.States;
+using UI.Canvases;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,6 +22,10 @@ namespace SceneBehavior.UFOGame
 {
 	public class UFOMananger : GameManager
 	{
+		[SerializeField] private UFOGameCanvas _gameCanvas;
+		[SerializeField] private UFOGameOverCanvas _gameOverCanvas;
+		[SerializeField] private UFOPauseCanvas _gamePauseCanvas;
+		[SerializeField] private AwaitInputCanvas _awaitCanvas;
 		[SerializeField] private ModularBuilding _modularBuildingPrefab;
 		[SerializeField] private LevelGenerationSettings_ScriptableObject _generationSettings;
 		[SerializeField] private DifficultySettings_ScriptableObject _difficultySettings;
@@ -47,10 +52,10 @@ namespace SceneBehavior.UFOGame
 			
 			StateMachine = new StateMachine(new List<State>()
 			{
-				new AwaitInputState(UFOObjectGenerator, _difficultyController),
-				new GameOverState(),
-				new GameRunState(_player, UFOObjectGenerator, _difficultyController),
-				new PauseState()
+				new AwaitInputState(UFOObjectGenerator, _difficultyController, _awaitCanvas),
+				new GameOverState(_gameOverCanvas),
+				new GameRunState(_player, UFOObjectGenerator, _difficultyController, _gameCanvas),
+				new PauseState(_gamePauseCanvas)
 			});
 			
 			var pauseState = StateMachine.GetState(typeof(PauseState)) as PauseState;
@@ -59,7 +64,6 @@ namespace SceneBehavior.UFOGame
 			InvokeRepeating("UpdateGC", 1, _generationSettings._settings._levelUpdateRate);
 			InvokeRepeating("UpdateGenerator", 0, _generationSettings._settings._levelUpdateRate);
 			
-			CancelInvoke("UpdateDifficulty");
 		}
 
 		private void Start()
