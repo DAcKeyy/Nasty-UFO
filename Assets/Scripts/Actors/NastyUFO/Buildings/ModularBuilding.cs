@@ -1,5 +1,6 @@
 ﻿using System;
 using Actors.Base;
+using Data.Shaders;
 using UnityEngine;
 
 namespace Actors.NastyUFO.Buildings
@@ -19,7 +20,9 @@ namespace Actors.NastyUFO.Buildings
 			_buildingData = data;
 		}	
 
-		public void AssembleBuilding(ushort requiredFloors)
+		
+		
+		public void AssembleBuilding(ushort requiredFloors, Color_Variation_URP color)
 		{
 			if(_buildingData._groundFloorElement == null) throw new Exception("Нету GroundFloorElement в префабе");
 			if(_buildingData._middleFloorElement == null) throw new Exception("Нету MiddleFloorElement в префабе");
@@ -39,6 +42,7 @@ namespace Actors.NastyUFO.Buildings
 					case 1:
 						buildingFloorComponent = Instantiate(_buildingData._groundFloorElement, 
 							buildPosition, buildRotation, this.transform);
+						buildingFloorComponent.ChangeModuleColor(color);
 						bounds.center += new Vector3(_buildingData._groundFloorElement.RenderBounds.center.x, 0,
 							_buildingData._groundFloorElement.RenderBounds.center.z);
 						break;
@@ -47,6 +51,7 @@ namespace Actors.NastyUFO.Buildings
 						newModulePosition.y = bounds.size.y;
 						buildingFloorComponent = Instantiate(_buildingData._middleFloorElement, 
 							newModulePosition, buildRotation, this.transform);
+						buildingFloorComponent.ChangeModuleColor(color);
 						bounds.center += new Vector3(_buildingData._middleFloorElement.RenderBounds.center.x, 0,
 							_buildingData._middleFloorElement.RenderBounds.center.z);
 						break;
@@ -65,6 +70,7 @@ namespace Actors.NastyUFO.Buildings
 						break;
 				}
 
+				//TODO buildingFloorComponent.ChangeModuleColor(color);, разкоменть когда моделер все моделки в нужных шейдерах сделает
 				//buildingFloorComponent.SetParent(this);
 				bounds.center += new Vector3(0, buildingFloorComponent.RenderBounds.size.y, 0);
 				bounds.Encapsulate(buildingFloorComponent.RenderBounds);

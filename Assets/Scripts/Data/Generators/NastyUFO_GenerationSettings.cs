@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Data.Shaders;
 using Generation.Factories.NastyUFO;
 using UnityEngine;
 
@@ -31,6 +33,8 @@ namespace Data.Generators
 		[Tooltip("Растояние между домами")]
 		[Range(0f, 10f)]
 		public float _buildingsBetweenDistance;
+		[Tooltip("Варианты цветов для домов")]
+		public List<Color_Variation_URP> _houseColors;
 
 		[Header("Облака")]
 		[Space(10)]

@@ -1,4 +1,5 @@
 ﻿using System;
+using Data.Shaders;
 using UnityEngine;
 
 namespace Actors.NastyUFO.Buildings
@@ -24,9 +25,16 @@ namespace Actors.NastyUFO.Buildings
 			Roof
 		}
 		
-		public void ChangeModuleColor(Color general, Color accent, Color shadow)
+		public void ChangeModuleColor(Color_Variation_URP shaderData)
 		{
-			//TODO Поиск по материалам и изменение цвета нужной переменной материала, главное чтобы материал был стандартзирован
+			var newProperties = new MaterialPropertyBlock();
+
+			newProperties.SetColor("_Base_Color",shaderData._baseColor);
+			newProperties.SetColor("_Shadow",shaderData._shadow);
+			newProperties.SetColor("_Accent",shaderData._accent);
+			newProperties.SetFloat("_Saturation",shaderData._saturation);
+			
+			GetComponent<Renderer>().SetPropertyBlock(newProperties, 0);
 		}
 	}
 }

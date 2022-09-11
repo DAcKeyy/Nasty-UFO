@@ -124,7 +124,7 @@ namespace Generation.Generators.NastyUFO.Parts.Buildings.States
 				_difficultyController.GenerationSettings._buildingsFloorsRandomRange.x,
 				_difficultyController.GenerationSettings._buildingsFloorsRandomRange.y);
 			
-			building.AssembleBuilding(floor);
+			building.AssembleBuilding(floor, _difficultyController.GenerationSettings._houseColors[Random.Range(0, _difficultyController.GenerationSettings._houseColors.Count)]);
 			
 			_buildingsPool.AddObject(building);
 		}

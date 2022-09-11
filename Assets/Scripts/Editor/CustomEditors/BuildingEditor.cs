@@ -1,4 +1,5 @@
 using Actors.NastyUFO.Buildings;
+using Data.Generators;
 using UnityEditor;
 using UnityEngine;
 
@@ -8,11 +9,14 @@ namespace Editor.CustomEditors
 	public class BuildingEditor : UnityEditor.Editor
 	{
 		private ModularBuilding _modularBuilding;
+		private NastyUFO_GenerationSettings _generationSettings;
 		public ushort этажи = 5;
 
 		public void OnEnable()
 		{
 			_modularBuilding = (ModularBuilding)target;
+			var scriptable = Resources.Load("Data/Settings/Level Generation Settings") as LevelGenerationSettings_ScriptableObject;
+			_generationSettings = scriptable._settings;
 		}
 
 		public override void OnInspectorGUI()
@@ -24,7 +28,7 @@ namespace Editor.CustomEditors
 			if(GUILayout.Button("Построить дом")) 
 			{
 				_modularBuilding.Init(_modularBuilding.BuildingData);
-				_modularBuilding.AssembleBuilding(этажи);
+				_modularBuilding.AssembleBuilding(этажи, _generationSettings._houseColors[Random.Range(0, _generationSettings._houseColors.Count)]);
 			}
 
 			if (GUILayout.Button("Снести его"))

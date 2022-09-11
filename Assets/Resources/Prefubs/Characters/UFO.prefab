@@ -63,9 +63,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 292ddc859eb44fe2856855c8ab532a0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentState: 0
-  _flyForce: 0
-  _speedFixedUpdate: 0
+  _currentState: 1
+  _flyUpForce: 25
+  _speedVelocityOnX: 3
   _thrustersStart:
     m_PersistentCalls:
       m_Calls: []

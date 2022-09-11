@@ -30,6 +30,23 @@ MonoBehaviour:
         m_Extent: {x: 0, y: 0, z: 0}
     _buildingsFloorsRandomRange: {x: 4, y: 6}
     _buildingsBetweenDistance: 0
+    _houseColors:
+    - _baseColor: {r: 1, g: 0, b: 0, a: 1}
+      _shadow: {r: 0, g: 0, b: 0, a: 0}
+      _accent: {r: 0.9960785, g: 0, b: 0, a: 0}
+      _saturation: 2
+    - _baseColor: {r: 1, g: 0.7463412, b: 0, a: 1}
+      _shadow: {r: 0, g: 0, b: 0, a: 0}
+      _accent: {r: 0.99607843, g: 0.69207174, b: 0, a: 0}
+      _saturation: 2
+    - _baseColor: {r: 0, g: 0.50762606, b: 1, a: 1}
+      _shadow: {r: 0, g: 0, b: 0, a: 0}
+      _accent: {r: 0, g: 0.55700713, b: 0.99607843, a: 0}
+      _saturation: 2
+    - _baseColor: {r: 0, g: 0.7169812, b: 0.24637373, a: 1}
+      _shadow: {r: 0, g: 0, b: 0, a: 0}
+      _accent: {r: 0, g: 0.6981132, b: 0.08765296, a: 0}
+      _saturation: 2
     _cloudsRandomShift: {x: 50, y: 50, z: 50}
     _cloudsSpawnChance: 1
     _cloudsGapRange: 30
