@@ -63,7 +63,6 @@ namespace SceneBehavior.UFOGame
 			StateMachine.StateChanged += OnStateChanged;
 			InvokeRepeating("UpdateGC", 1, _generationSettings._settings._levelUpdateRate);
 			InvokeRepeating("UpdateGenerator", 0, _generationSettings._settings._levelUpdateRate);
-			
 		}
 
 		private void Start()

@@ -20,6 +20,14 @@ namespace Actors.NastyUFO
             _movement = GetComponent<UFOMovement>();
         }
 
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.TryGetComponent(out ICrushable crushable))
+            {
+                crushable.Crush(collision);
+            }
+        }
+
         public void Accelerating(bool isAccelerate)
         {
             _movement.ChangeState(UFOMovement.MovementState.Falling);
