@@ -16,9 +16,9 @@ namespace Generation.Generators.NastyUFO.States
 		private readonly CloudsGenerator _cloudsGenerator;
 
 		public AwaitState(
-			ref MonoPool<MonoBehaviour> pool,
+			ref MonoPool<MonoBehaviour> coinPool,
 			BuildingsGenerator buildingsGenerator,
-			CloudsGenerator cloudsGenerator) : base(pool)
+			CloudsGenerator cloudsGenerator) : base(coinPool)
 		{
 			_buildingsGenerator = buildingsGenerator;
 			_cloudsGenerator = cloudsGenerator;

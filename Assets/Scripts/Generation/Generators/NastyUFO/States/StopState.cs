@@ -8,7 +8,7 @@ namespace Generation.Generators.NastyUFO.States
 	public class StopState : GeneratorState<MonoBehaviour>
 	{
 		public StopState(
-			ref MonoPool<MonoBehaviour> pool) : base(pool)
+			ref MonoPool<MonoBehaviour> coinPool) : base(coinPool)
 		{
 			
 		}

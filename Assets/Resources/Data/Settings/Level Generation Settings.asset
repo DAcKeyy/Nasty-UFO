@@ -47,6 +47,8 @@ MonoBehaviour:
       _shadow: {r: 0, g: 0, b: 0, a: 0}
       _accent: {r: 0, g: 0.6981132, b: 0.08765296, a: 0}
       _saturation: 2
+    _coinsSequences:
+    - {fileID: 5914723131801212658, guid: 2f0a1efa45bfae04ba3265c24091c745, type: 3}
     _cloudsRandomShift: {x: 50, y: 50, z: 50}
     _cloudsSpawnChance: 1
     _cloudsGapRange: 30

@@ -9,8 +9,8 @@ namespace Generation.Generators.NastyUFO.Parts.Lands.State
 	public class RunState : GeneratorState<Land>
 	{
 		public RunState(
-			ref MonoPool<Land> pool,
-			NastyUFO_GenerationSettings settings) : base(pool)
+			ref MonoPool<Land> coinPool,
+			NastyUFO_GenerationSettings settings) : base(coinPool)
 		{
 			
 		}

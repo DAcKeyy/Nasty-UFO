@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Actors.NastyUFO.Coins;
 using Data.Shaders;
 using Generation.Factories.NastyUFO;
 using UnityEngine;
@@ -24,7 +25,6 @@ namespace Data.Generators
 		[HideInInspector] public Camera _gameCamera;
 		[HideInInspector] public bool _isGameStarted;
 		
-
 		[Header("Дома")]
 		[Space(10)]
 		public BuildingsFactory.BuildingFactorySettings _buildingsFactorySettings;
@@ -35,6 +35,10 @@ namespace Data.Generators
 		public float _buildingsBetweenDistance;
 		[Tooltip("Варианты цветов для домов")]
 		public List<Color_Variation_URP> _houseColors;
+		
+		[Header("Подбираемое")]
+		[Space(10)]
+		public List<CoinsSequence> _coinsSequences;
 
 		[Header("Облака")]
 		[Space(10)]

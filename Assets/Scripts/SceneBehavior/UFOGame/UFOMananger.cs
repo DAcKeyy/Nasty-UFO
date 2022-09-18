@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Actors.Movement;
+﻿using Actors.Movement;
 using Actors.NastyUFO;
 using Actors.NastyUFO.Buildings;
 using Data.Difficulty;
@@ -13,8 +12,11 @@ using Miscellaneous.GC;
 using Miscellaneous.Generators.ObjectGenerator;
 using Miscellaneous.Pools;
 using Miscellaneous.StateMachines.Base;
+using SceneBehavior.Loading.States;
 using SceneBehavior.UFOGame.States;
+using TMPro;
 using UI.Canvases;
+using UI.Canvases.Loading;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -22,10 +24,12 @@ namespace SceneBehavior.UFOGame
 {
 	public class UFOMananger : GameManager
 	{
+		[SerializeField] private PlayerInput _playerInput;
 		[SerializeField] private UFOGameCanvas _gameCanvas;
 		[SerializeField] private UFOGameOverCanvas _gameOverCanvas;
 		[SerializeField] private UFOPauseCanvas _gamePauseCanvas;
 		[SerializeField] private AwaitInputCanvas _awaitCanvas;
+		[SerializeField] private LoadingCanvas _loadingCanvas;
 		[SerializeField] private ModularBuilding _modularBuildingPrefab;
 		[SerializeField] private LevelGenerationSettings_ScriptableObject _generationSettings;
 		[SerializeField] private DifficultySettings_ScriptableObject _difficultySettings;
@@ -34,10 +38,11 @@ namespace SceneBehavior.UFOGame
 		[SerializeField] private UFOMovement _movementComponent;
 		private BusinessGarbageCollector _gc;
 		private UFO_DifficultyController _difficultyController;
-		
+		private float _awaitTime = 0f;
+
 		private void Awake()
 		{
-			InputManager.CurrentInputManager ??= new InputManager(_UFOActionAsset);
+			InputManager.CurrentInputManager ??= new InputManager(_UFOActionAsset, _playerInput);
 			
 			_generationSettings._settings._buildingsFactorySettings._modularBuildingPrefab = _modularBuildingPrefab;
 			_generationSettings._settings._gameCamera = Camera.main;
@@ -49,36 +54,35 @@ namespace SceneBehavior.UFOGame
 			ObjectGenerator<MonoBehaviour> UFOObjectGenerator = new UFOObjectGenerator(ref objectPool, _difficultyController);
 			_gc = new NastyUFOGC(new InRadiusStrategy(ref objectPool, _generationSettings._settings._clearingRange, _generationSettings._settings._generationCenter));
 			
+			SceneStateMachine.AddState(new AwaitInputMachineState(UFOObjectGenerator, _difficultyController, _awaitCanvas));
+			SceneStateMachine.AddState(new GameOverMachineState(_gameOverCanvas));
+			SceneStateMachine.AddState(new GameRunMachineState(_player, UFOObjectGenerator, _difficultyController, _gameCanvas));
+			SceneStateMachine.AddState(new PauseMachineState(_gamePauseCanvas));
+			SceneStateMachine.AddState(new LoadingGameMachineState(_loadingCanvas));
 			
-			StateMachine = new StateMachine(new List<State>()
-			{
-				new AwaitInputState(UFOObjectGenerator, _difficultyController, _awaitCanvas),
-				new GameOverState(_gameOverCanvas),
-				new GameRunState(_player, UFOObjectGenerator, _difficultyController, _gameCanvas),
-				new PauseState(_gamePauseCanvas)
-			});
+			SceneStateMachine.GetState<PauseMachineState>().GameExit += base.Exit;
 			
-			var pauseState = StateMachine.GetState(typeof(PauseState)) as PauseState;
-			pauseState.Exit += base.Exit;
-			StateMachine.StateChanged += OnStateChanged;
+			SceneStateMachine.StateChanged += OnSceneStateChanged;
+			
 			InvokeRepeating("UpdateGC", 1, _generationSettings._settings._levelUpdateRate);
 			InvokeRepeating("UpdateGenerator", 0, _generationSettings._settings._levelUpdateRate);
 		}
 
 		private void Start()
 		{
-			StateMachine.SwitchState(typeof(AwaitInputState));
+			SceneStateMachine.SwitchStateTo<AwaitInputMachineState>();
 		}
 		
-		private void OnStateChanged(State currentState)
+		private void OnSceneStateChanged(MachineState currentMachineState)
 		{
-			if (currentState.GetType() == typeof(GameOverState))
+			if (currentMachineState.GetType() == typeof(GameOverMachineState))
 			{
-				StateMachine.StateChanged -= OnStateChanged;
+				SceneStateMachine.StateChanged -= OnSceneStateChanged;
 			}
 			
-			if (currentState.GetType() == typeof(GameRunState))
+			if (currentMachineState.GetType() == typeof(GameRunMachineState))
 			{
+				if(_awaitTime == 0f) _awaitTime = Time.time;
 				InvokeRepeating("UpdateDifficulty", _generationSettings._settings._levelDifficultyIncreaseRate, _generationSettings._settings._levelDifficultyIncreaseRate);
 			}
 		}
@@ -90,12 +94,12 @@ namespace SceneBehavior.UFOGame
 		
 		private void UpdateGenerator()
 		{
-			StateMachine.Update().GetAwaiter().GetResult();
+			SceneStateMachine.Update().GetAwaiter().GetResult();
 		}
 
 		private void UpdateDifficulty()
 		{
-			_difficultyController.UpdateDifficulty(Time.time);
+			_difficultyController.UpdateDifficulty(Time.time - _awaitTime);
 		}
 
 		protected override void Update()
@@ -105,8 +109,8 @@ namespace SceneBehavior.UFOGame
 
 		private void OnDisable()
 		{
-			var pauseState = StateMachine.GetState(typeof(PauseState)) as PauseState;
-			pauseState.Exit -= base.Exit;
+			var pauseState = SceneStateMachine.GetState<PauseMachineState>();
+			pauseState.GameExit -= base.Exit;
 		}
 	}
 }

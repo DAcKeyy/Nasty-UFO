@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using System;
 using System.Diagnostics;
 using System.Text;
@@ -82,6 +84,7 @@ namespace Miscellaneous.Editor
             return process.ExitCode;
         }
     }
+    
 
     [InitializeOnLoad]
     public static class InitializeOnLoad
@@ -96,4 +99,6 @@ namespace Miscellaneous.Editor
             };
         }
     }
+
 }
+#endif

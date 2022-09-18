@@ -7,11 +7,11 @@ namespace Miscellaneous.Generators.ObjectGenerator
 	//Дублирует методы генератора
 	public abstract class GeneratorState<T> where T : MonoBehaviour
 	{
-		protected readonly MonoPool<T> MonoPool;
+		protected readonly MonoPool<T> MonoCoinPool;
 
-		protected GeneratorState(MonoPool<T> pool)
+		protected GeneratorState(MonoPool<T> coinPool)
 		{
-			MonoPool = pool;
+			MonoCoinPool = coinPool;
 		}
 
 		public virtual Task OnEnter()

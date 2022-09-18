@@ -18,9 +18,9 @@ namespace Generation.Generators.NastyUFO.Parts.Clouds.States
 		private readonly CloudsFactory _cloudsFactory;
 
 		public AwaitingState(
-			ref MonoPool<Cloud> cloudsPool,
+			ref MonoPool<Cloud> cloudsCoinPool,
 			UFO_DifficultyController difficultyController, 
-			CloudsFactory cloudsFactory) : base(cloudsPool)
+			CloudsFactory cloudsFactory) : base(cloudsCoinPool)
 		{
 			_cloudsFactory = cloudsFactory;
 		}

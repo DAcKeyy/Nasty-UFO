@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿#if UNITY_EDITOR
+
+using UnityEngine;
 
 namespace Miscellaneous.Editor.PropertyDrawers.ReadOnly
 {
@@ -7,3 +9,4 @@ namespace Miscellaneous.Editor.PropertyDrawers.ReadOnly
 
 	}
 }
+#endif

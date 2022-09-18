@@ -13,7 +13,7 @@ namespace Generation.Generators.NastyUFO.Parts.Buildings.States
 	public class RunState : GeneratorState<ModularBuilding>
 	{
 		private readonly BuildingsFactory _factory;
-		private readonly MonoPool<ModularBuilding> _buildingsPool;
+		private readonly MonoPool<ModularBuilding> _buildingsCoinPool;
 		private readonly UFO_DifficultyController _difficultyController;
 		private readonly Quaternion _buildingRotation = Quaternion.Euler(0, -180, 0);//TODO Magic number, решить головоломку с поворотом
 		private readonly Vector3 _groundLevel;
@@ -37,8 +37,8 @@ namespace Generation.Generators.NastyUFO.Parts.Buildings.States
 		private ModularBuilding _lastBuilding;
 		private Vector3 _newBuildPosition;
 
-		public RunState(MonoPool<ModularBuilding> buildingsPool, 
-			UFO_DifficultyController difficultyController) : base(buildingsPool)
+		public RunState(MonoPool<ModularBuilding> buildingsCoinPool, 
+			UFO_DifficultyController difficultyController) : base(buildingsCoinPool)
 		{
 			if (difficultyController.GenerationSettings._spawnRange > difficultyController.GenerationSettings._clearingRange)
 				throw new Exception("Spawn range is greater than level Clearing range");
@@ -46,20 +46,20 @@ namespace Generation.Generators.NastyUFO.Parts.Buildings.States
 			_groundLevel = difficultyController.GenerationSettings._groundLevel;
 			_spawnRange = difficultyController.GenerationSettings._spawnRange;
 			_buildingsBetweenDistance = difficultyController.GenerationSettings._buildingsBetweenDistance;
-			_buildingsPool = buildingsPool;
+			_buildingsCoinPool = buildingsCoinPool;
 			_factory = new BuildingsFactory(difficultyController.GenerationSettings._buildingsFactorySettings);
 			_difficultyController = difficultyController;
 		}
 		
 		public override async Task Create()
 		{
-			if (_buildingsPool.PrefabPool.Count != 0)
+			if (_buildingsCoinPool.PrefabPool.Count != 0)
 			{
-				throw new Exception($"А дома то уже есть, аж {_buildingsPool.PrefabPool.Count} штуки");
+				throw new Exception($"А дома то уже есть, аж {_buildingsCoinPool.PrefabPool.Count} штуки");
 			}
 
 			//Если самый первый дом в игре
-			if (_buildingsPool.PrefabPool.Count == 0)
+			if (_buildingsCoinPool.PrefabPool.Count == 0)
 			{
 				_generationCenter = _difficultyController.GenerationSettings._generationCenter.position;
 				
@@ -126,7 +126,7 @@ namespace Generation.Generators.NastyUFO.Parts.Buildings.States
 			
 			building.AssembleBuilding(floor, _difficultyController.GenerationSettings._houseColors[Random.Range(0, _difficultyController.GenerationSettings._houseColors.Count)]);
 			
-			_buildingsPool.AddObject(building);
+			_buildingsCoinPool.AddObject(building);
 		}
 	}
 }

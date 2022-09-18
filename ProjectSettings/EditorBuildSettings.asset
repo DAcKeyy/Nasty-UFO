@@ -5,8 +5,14 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: Assets/Samples/Input System/1.4.2/On-Screen Controls/OnScreenControlsSample.unity
+    guid: 011b162d4daa13c4ab03e94ad47b8258
   - enabled: 1
-    path: Assets/Scenes/Tests/SampleScene/SampleScene.unity
-    guid: d1c3109bdb54ad54c8a2b2838528e640
+    path: Assets/Scenes/Main Menu/MainMenu.unity
+    guid: f3d29f1bfc428bd409b4d5bd8540386f
+  - enabled: 1
+    path: Assets/Scenes/UFO Game/UFO Game.unity
+    guid: d91ed70a3fdeee14894e34e7f42aa18f
   m_configObjects:
-    com.unity.input.settings: {fileID: 11400000, guid: 9c7503c6671a05641847c0a00664be77, type: 2}
+    com.unity.input.settings: {fileID: 11400000, guid: 7d98080b5b50c4f4ca0be5a57262c0c9, type: 2}

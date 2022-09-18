@@ -10,7 +10,7 @@ namespace Generation.Generators.NastyUFO.Parts.Buildings.States
 	public class StopState : GeneratorState<ModularBuilding>
 	{
 		public StopState(
-			MonoPool<ModularBuilding> monoPool) : base(monoPool)
+			MonoPool<ModularBuilding> monoCoinPool) : base(monoCoinPool)
 		{
 
 		}

@@ -4,55 +4,59 @@ using System.Threading.Tasks;
 
 namespace Miscellaneous.StateMachines.Base
 {
-	public class StateMachine
+	public sealed class StateMachine
 	{
-		protected List<State> StateList;
-		protected State CurrentState;
-		public event Action<State> StateChanged = delegate(State state) {  };
+		public MachineState CurrentMachineState { get; private set; }
+		public event Action<MachineState> StateChanged = delegate(MachineState state) {  };
+		private readonly List<MachineState> _statesList;
 
-		public StateMachine(List<State> stateList)
+		public StateMachine()
 		{
-			StateList = stateList;
+			_statesList = new List<MachineState>();
+		}
 
-			foreach (var state in StateList)
-			{
-				state.SetStateMachine(this);
-			}
+		public async Task Update()
+		{
+			if(CurrentMachineState == null) throw new Exception($"{GetType().Name} Current State is null");
+			await CurrentMachineState.Update();
+		}
+
+		public void AddState<T>(T newState) where T : MachineState
+		{
+			CurrentMachineState ??= newState;
+			_statesList.Add(newState);
+			newState.SetStateMachine(this);
 		}
 		
-		//Logic
-
-		public virtual async Task Update()
+		public T GetState<T>() where T : MachineState
 		{
-			if(CurrentState == null) throw new Exception($"{GetType().Name} Current State is null");
-			await CurrentState.Update();
+			var state = _statesList.Find(x => x.GetType() == typeof(T));
+			if (state != null) return state as T;
+			else throw new Exception($"{typeof(T).BaseType} not initialized in states list");
 		}
 
-		public State GetState(Type newState)
+		public async void SwitchStateTo<T>() where T : MachineState
 		{
-			var state = StateList.Find(x => x.GetType() == newState);
-			
-			if (state != null) return state;
-			
-			else throw new Exception($"{newState.Name} not initialized in states list");
-		}
-
-		public async void SwitchState(Type newState)
-		{
-			var state = StateList.Find(x => x.GetType() == newState);
+			var state = _statesList.Find(x => x.GetType() == typeof(T));
 			
 			if (state != null)
 			{
-				if(CurrentState != null) await CurrentState.OnExit();
+				if(CurrentMachineState != null) await CurrentMachineState.OnExit();
 				
-				CurrentState = state;
-				StateChanged(CurrentState);
-				await CurrentState.OnEnter();
+				CurrentMachineState = state;
+				StateChanged(CurrentMachineState);
+				await CurrentMachineState.OnEnter();
 			}
 			else
 			{
-				throw new Exception($"{newState.Name} not initialized in states list");
+				throw new Exception($"{typeof(T).BaseType} not initialized in states list");
 			}
+		}
+
+		public async void ShutDown()
+		{
+			await CurrentMachineState.OnExit();
+			CurrentMachineState = null;
 		}
 	}
 }
