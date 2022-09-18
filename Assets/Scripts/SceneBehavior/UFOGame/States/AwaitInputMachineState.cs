@@ -48,7 +48,7 @@ namespace SceneBehavior.UFOGame.States
 		{
 			if (context.action == InputManager.CurrentInputManager.JumpAction)
 			{
-				CurrentStateMachine.SwitchStateTo<GameRunMachineState>();
+				CurrentStateMachine.SwitchStateTo<GameRunState>();
 			}
 		}
 	}

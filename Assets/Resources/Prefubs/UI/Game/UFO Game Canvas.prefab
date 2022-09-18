@@ -360,7 +360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 566578aca12a9c445864a74cf341309c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isCounter: 1
+  _tmpText: {fileID: 9155584803006647515}
 --- !u!1 &4548068375440071446
 GameObject:
   m_ObjectHideFlags: 0
@@ -614,8 +614,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ecd49332ea645c3bcfcc0f9b3353403, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scoreCounter: {fileID: 1097221078160761048}
   _menuButton: {fileID: 1733346150104034558}
+  _metersCounter: {fileID: 1097221078160761048}
+  _coinsCounter: {fileID: 4006177008864240145}
 --- !u!1 &5244900617386866517
 GameObject:
   m_ObjectHideFlags: 0
@@ -764,7 +765,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 566578aca12a9c445864a74cf341309c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isCounter: 1
+  _tmpText: {fileID: 389289424428392314}
 --- !u!1 &5771844717793281455
 GameObject:
   m_ObjectHideFlags: 0

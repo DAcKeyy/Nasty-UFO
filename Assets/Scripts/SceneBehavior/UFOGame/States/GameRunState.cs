@@ -11,14 +11,15 @@ using UnityEngine.InputSystem;
 
 namespace SceneBehavior.UFOGame.States
 {
-	public class GameRunMachineState : MachineState
+	public class GameRunState : MachineState
 	{
 		private readonly UFOGameCanvas? _ufoGameCanvas;
 		private UFO_DifficultyController _difficultyController;
 		private readonly ObjectGenerator<MonoBehaviour> _generator;
 		private readonly UFO _player;
+		private Vector3 _onEnterPlayerPos;
 			
-		public GameRunMachineState(
+		public GameRunState(
 			UFO player, 
 			ObjectGenerator<MonoBehaviour> generator,
 			UFO_DifficultyController difficultyController,
@@ -33,6 +34,7 @@ namespace SceneBehavior.UFOGame.States
 		
 		public override async Task OnEnter()
 		{
+			if(_onEnterPlayerPos != Vector3.zero) _onEnterPlayerPos = _player.transform.position;
 			InputManager.CurrentInputManager.JumpAction.performed += PerformedActionSubscription;
 			InputManager.CurrentInputManager.PauseAction.performed += PerformedActionSubscription;
 			InputManager.CurrentInputManager.JumpAction.canceled += CanceledActionSubscription;
@@ -43,6 +45,7 @@ namespace SceneBehavior.UFOGame.States
 		public override async Task Update()
 		{
 			await _generator.CurrentState.Update();
+			_ufoGameCanvas.MetersCounter.SetNumber(_player.transform.position.x - _onEnterPlayerPos.x);
 		}
 		
 		public override Task OnExit()

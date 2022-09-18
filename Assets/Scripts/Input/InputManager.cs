@@ -16,7 +16,7 @@ namespace Input
 		
 		private static InputManager currentInputManager;
 		
-		public InputManager(InputActionAsset actionAsset, PlayerInput playerInput)
+		public InputManager(InputActionAsset actionAsset)
 		{
 			JumpAction = actionAsset.FindActionMap("UI").FindAction("Jump");
 			PauseAction = actionAsset.FindActionMap("UI").FindAction("Pause");

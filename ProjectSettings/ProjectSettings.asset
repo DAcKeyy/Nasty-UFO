@@ -134,7 +134,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: '[18.9.2022] commit:97f2726'
+  bundleVersion: '[18.9.2022] commit:dbb285b'
   preloadedAssets:
   - {fileID: 0}
   - {fileID: 0}
